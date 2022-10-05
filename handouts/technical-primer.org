@@ -1,0 +1,66 @@
+#+title: Technical primer 
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Prerequisites
+
+I'll be teaching this class presupposing the following background:
+
+- At least one introductory course on compositional semantics, with similar coverage to, e.g., /Semantics in Generative Grammar/ [cite:@HeimKratzer1998].
+- Basic knowledge of:
+  * Set theory.
+  * Logic (propositional and first order).
+    
+The main formal analytical tool we'll be making use of in this class is the /Simply-Typed Lambda Calculus/. Before we dive into linguistic issues, we'll spend some time going through the basics.
+    
+* The Simply-Typed Lambda Calculus (SLTC)
+
+The lambda calculus was invented by Alonso Church in the early 20th century as a formal language for talking about functions.
+
+The simply-typed variant has been overwhelmingly adopted in formal semantics as a kind of /lingua france/ for reasoning about how complex meanings are composed from simpler meanings.
+
+Note that the discussion here is primarily based on Chapters 2 and 3 of [cite:@Carpenter1998].
+
+** Syntax of the STLC
+
+*** Types
+
+You can think of types as the /syntactic categories/ of the SLTC - they provide formal constraints on what kind of things can combine.
+
+There are just two kinds of types we'll see in this course:
+
+- Basic types: \(E, T\)
+- Function types.
+  
+The basic types are just that - primitives. \(E\) is used to classify expressions of the STLC which denote /individuals/, and \(T\) is is used to classify expressions which denote /truth-values/.
+
+We'll exploit a general recipe for talking about /function types/.
+
+#+begin_definition
+*Function types*. If \(\sigma\) and \(\tau\) are *types*, then \(\sigma \to \tau \) is a *function type*.
+#+end_definition
+
+Note that we can use our function type recipe to generate an /infinite/ number of types! Unlike in many grammatical formalisms (with the notable exception of categorial grammars), we have, in essence, an infinite number of syntactic categor
+
+We use function types to classify expressions which denote functions. For example, \(T \to T\) is the type of a function from truth-values to truth-values (this might be exploited for something like negation).
+
+N.b. that \(\to\) is /right-associative/, which means that, e.g., \(E \to E \to  T\) is parsed as \(E \to (E \to T)\) (not \((E \to  E) \to  T\)!).
+
+*** Variables and constants
+
+Expressions of the STLC are built up out of variables and constants, which you can conveniently think of as the 'lexical items'.
+
+Unlike in other logical languages you might be familiar with, here variables and constants are categorized by /type/.
+
+Every type is associated with a (countably infinite!) set of variables.
+
+We'll typically use \(x,y,z,\ldots\) for variables of type \(E\), \(P,Q,R,\ldots\) for variables of type \(E \to T\), etc., but ultimately it doesn't matter much what we use as variable names. 
+
+Constants will typically be used to talk about 'lexical' concepts, i.e., \(\mathbf{Louise}\) is a constant of type \(E\), \(\mathbf{run}\) is a constant of type \(E \to T\), and \(\mathbf{not}\) is a constant of type \(T \to T\)
+
+* References
+
+#+print_bibliography:
