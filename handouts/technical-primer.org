@@ -9,14 +9,14 @@
 
 I'll be teaching this class presupposing the following background:
 
-- At least one introductory course on compositional semantics, with similar coverage to, e.g., /Semantics in Generative Grammar/ [cite:@HeimKratzer1998].
+- At least one introductory course on compositional semantics, with similar coverage to, e.g., /Semantics in Generative Grammar/ [cite:@HeimKratzer1998] or /Invitation to Formal Semantics/ ([[https://eecoppock.info/bootcamp/semantics-boot-camp.pdf]]).
 - Basic knowledge of:
   * Set theory.
   * Logic (propositional and first order).
     
 The main formal analytical tool we'll be making use of in this class is the /Simply-Typed Lambda Calculus/. Before we dive into linguistic issues, we'll spend some time going through the basics.
     
-* The Simply-Typed Lambda Calculus (SLTC)
+* Syntax of the Simply-Typed Lambda Calculus (STLC)
 
 The lambda calculus was invented by Alonso Church in the early 20th century as a formal language for talking about functions.
 
@@ -24,11 +24,9 @@ The simply-typed variant has been overwhelmingly adopted in formal semantics as 
 
 Note that the discussion here is primarily based on Chapters 2 and 3 of [cite:@Carpenter1998].
 
-** Syntax of the STLC
+** Types
 
-*** Types
-
-You can think of types as the /syntactic categories/ of the SLTC - they provide formal constraints on what kind of things can combine.
+You can think of types as the /syntactic categories/ of the STLC - they provide formal constraints on what kind of things can combine.
 
 There are just two kinds of types we'll see in this course:
 
@@ -49,7 +47,7 @@ We use function types to classify expressions which denote functions. For exampl
 
 N.b. that \(\to\) is /right-associative/, which means that, e.g., \(E \to E \to  T\) is parsed as \(E \to (E \to T)\) (not \((E \to  E) \to  T\)!).
 
-*** Variables and constants
+** Variables and constants
 
 Expressions of the STLC are built up out of variables and constants, which you can conveniently think of as the 'lexical items'.
 
@@ -59,7 +57,122 @@ Every type is associated with a (countably infinite!) set of variables.
 
 We'll typically use \(x,y,z,\ldots\) for variables of type \(E\), \(P,Q,R,\ldots\) for variables of type \(E \to T\), etc., but ultimately it doesn't matter much what we use as variable names. 
 
-Constants will typically be used to talk about 'lexical' concepts, i.e., \(\mathbf{Louise}\) is a constant of type \(E\), \(\mathbf{run}\) is a constant of type \(E \to T\), and \(\mathbf{not}\) is a constant of type \(T \to T\)
+Constants will typically be used to talk about 'lexical' concepts, i.e., \(\mathbf{Louise}\) is a constant of type \(E\), \(\mathbf{run}\) is a constant of type \(E \to T\), and \(\mathbf{not}\) is a constant of type \(T \to T\).
+
+You can be explicit about the types of constants and variables using type annotations, but these can be omitted when the type is obvious:
+
+
+- \(\mathbf{Louise}_E\), \(\mathbf{run}_{E \to T}\)
+- \(x_E\), \(R_{E \to E \to T}\) 
+  
+It's also common to use a colon when declaring the type of an expression:
+
+- \(\mathbf{Louise} : E\)
+
+** functional applications
+
+This is where the magic starts to happen - we're going to define some recursive syntactic rules for constructing expressions from expressions.
+
+The most fundamental such complex expression is a *functional application*.
+
+#+begin_definition
+*functional application*: If \(\alpha \) is an expression of type \(\sigma \to  \tau\), and, \(\beta\) is an expression of type \(\tau \), then \(\alpha (\beta)\) is a /functional application/ of type \(\tau \).
+#+end_definition
+
+Crucially, the type system restricts what counts as a well-formed application (just like syntactic categories restrict what can merge with what).
+
+For example, \(\mathbf{not}(\mathbf{Josie})\) is an ill-formed application, assuming that \(\mathbf{not}: T \to T\), and \(\mathbf{Josie}: E\).
+
+Are the following valid functional applications? Make explicit what you're assuming about types:
+
+#+name: fa
+#+begin_exe
+\ex \(\mathbf{hugs}(\mathbf{Louise})\)
+\ex \(\mathbf{Josie}(\mathbf{left})\)
+\ex \(\mathbf{not}(\mathbf{sad}(\mathbf{Sarah}))\)
+#+end_exe
+
+Unlike in predicate logic, we have no way of talking about \(n\)-ary predicates in the \(STLC\), rather an \(n\)-ary predicate is always encoded as a /curried/ function; complex expressions are then built up by successive applications.
+
+#+name: 
+#+begin_exe
+\ex \(\mathbf{give}: E \to E \to E \to T\)
+\ex \(\mathbf{kiss}: E \to  E \to T\)
+\ex \(\mathbf{and}: T \to T \to T\)
+#+end_exe
+
+One way of visualizing the structure of a complex expression is as a tree diagram, where each non-terminal node represents a functional application.
+
+#+begin_export latex
+\begin{exe}
+\ex
+  \begin{forest}
+    [{\((((\mathbf{show}(\mathbf{thePendant}))(\mathbf{Chrono}))(\mathbf{Marle}): T\)}
+      [{\((\mathbf{show}(\mathbf{thePendant}))(\mathbf{Chrono}): E \to T\)}
+        [{\(\mathbf{show}(\mathbf{thePendant}) : E \to E \to T\)}
+          [{\(\mathbf{show}: E \to E \to E \to T\)}]
+          [{\(\mathbf{ThePendant} : E\)}]
+    ]
+        [{\(\mathbf{Chrono} : E\)}]
+    ]
+      [{\(\mathbf{Marle} :E\)}]
+    ]
+  \end{forest}
+  \end{exe}
+#+end_export
+
+That's a lot of parentheses! We'll typically assume that functional application associates to the left, so we can rewrite the above as:
+
+#+name: left-assoc
+#+begin_exe
+\ex \(\mathbf{show}(\mathbf{thePendant})(\mathbf{Chrono})(\mathbf{Marle})\)
+#+end_exe
+
+This brings out what's so compelling about the STLC as a tool for analyzing natural languages - there's a parallelism between the structures implicit in natural language syntax, and the structure of the logical language. This makes it especially easy to translate expressions of natural language into expressions of the STLC.
+
+Compare and contrast the flat structure of a first-order logic expression such as \(S(m,c,p)\)
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\ldots}
+    [{\(S\)}]
+    [{\(m\)}]
+    [{\(c\)}]
+    [{\(p\)}]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+** Functional abstraction
+
+The trademark feature of the lambda calculus (and when its name), is the complex expression known as a /functional abstraction/.
+
+#+begin_definition
+*Functional abstraction*: If \(x\) is a variable of type \(\sigma\), and \(\alpha \) is an expression of type \(\tau \), then \(\lambda x\,.\,\alpha \) is a functional abstraction of type \(\sigma \to \tau\).
+#+end_definition
+
+Abstraction always produces a function type.
+
+Once we come round to the semantics of the STLC, we'll see that there's a special rule for interpreting variables that occur within the body of a functional abstraction.
+
+Are the following all well-formed functional abstractions? Comment on any assumptions we need to make about types.
+
+#+name: example
+#+begin_exe
+\ex \(\lambda x\,.\,\mathbf{likes}_{E \to E \to T}(x)(x)\)
+\ex \(\lambda y\,.\,\mathbf{hug}_{E \to E \to T}(\mathbf{Louise})(x)\)
+\ex \(\lambda x\,.\,\mathbf{Josie}\)
+\ex \((\lambda x\,.\,x)(\mathbf{Nathan})\)
+#+end_exe
+
+* Semantics of the STLC
+
+That's all there is to the syntax of the SLTC, but, since this is a semantics course, we need a way of connecting up these representations with some language-external reality.
+
+
 
 * References
 
