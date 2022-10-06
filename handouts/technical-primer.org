@@ -172,7 +172,119 @@ Are the following all well-formed functional abstractions? Comment on any assump
 
 That's all there is to the syntax of the SLTC, but, since this is a semantics course, we need a way of connecting up these representations with some language-external reality.
 
+** Typed domains
 
+Each type is mapped to a /domain/ of values - given that we have a recipe for constructing an infinite number of types, we need a recipe for constructing an infinite number of domains.
+
+We start by specifying the domains of the basic types (in our case, \(E, T\)).
+
+- \(\mathbf{Dom}_E = \set{x | x\text{ is an individual} }\)
+- \(\mathbf{Dom}_T = \set{\mathbf{true},\mathbf{false}}\)
+
+Functional types are assigned domains consisting of sets of /functions/; given a functional type \(\sigma \to \tau \), \(\mathbf{Dom}_{\sigma }\) gives the /domain/ of the function, and \(\mathbf{Dom}_{\tau}\) gives the /codomain/ of the function.  
+
+#+begin_definition
+*Domain of a functional type*: \(\mathbf{Dom}_{\sigma \to \tau } = \set{f | \mathbf{Dom}_\sigma \to \mathbf{Dom}_\tau }\)
+#+end_definition
+
+To give a concrete example, we can in fact enumerate every member in the domain of \(T \to T\) (do this!).
+
+** Interpreting the STLC
+
+Given typed domains, the semantics of the STLC is specified by defining the interpretation function \(\eval*{.}\), which maps constants to values, subject to the following constraint (this just makes such, for example, \(\mathbf{not}\) isn't mapped to an individual or something):
+
+#+begin_definition
+*Type-respecting interpretation:* \(\eval*{.}\) is type-respecting if, for any constant \(c: \sigma \), \(\eval*{c} \in \mathbf{Dom}_\sigma \). 
+#+end_definition
+
+Now, we recursively define the denotation of an expression relative to an assignment function \(g\) (a total function from variables to values).
+
+The denotations of variables/constants is easy:
+
+- \(\eval*[g]{x} = g(x)\), if \(x\) is a variable.
+- \(\eval*[g]{c} = \eval*{c}\), if \(c\) is a constant.
+  
+The denotation of a function application involves...applying a function to an argument!
+
+- \(\eval*[g]{\alpha(\beta)} = \eval*[g]{\alpha }(\eval*[g]{\beta })\)
+  
+The denotation of a functional abstraction is a little more involved. It always returns a function:
+
+- \(\eval*[g]{\lambda x\,.\,\alpha } = f\text{ s.t. }f(a) = \eval*[g[x \to a]]{\alpha }\)
+  
+\(g[x \to a]\) is the assignment function that is exactly like \(g\), except the variable \(x\) is mapped to \(a\) (assuming that \(x: \sigma \), and \(a \in \mathbf{Dom}_{\sigma }\)).
+
+* Proof theory for the STLC
+
+One of the beautiful features of using the STLC for compositional semantics is that it has a simple and elegant proof theory, stated in terms of a notion of simplification called /reduction/, written as \(\Rightarrow\).
+
+We can /simplify/ complex expressions using syntactic simplification rules, without having to compute the semantic value of a given expression at every step - thanks to the /soundness/ of the STLC, we can be sure that - if we don't make any mistakes in our proof - the resulting expression can be interpreted without having to interpret every intermediate step.
+
+The standard axioms for the STLC are as follows:
+
+** \(\alpha \)-reduction 
+
+The intuition behind alpha reduction is that we can freely rename bound variables, e.g.:
+
+#+name: bund
+#+begin_exe
+\ex \(\vdash \lambda x\,.\,\lambda y\,.\,\mathbf{likes}(x)(y) \Rightarrow \lambda z\,.\,\lambda y\,.\,\mathbf{likes}(z)(y)\)
+#+end_exe
+
+Th definition of alpha reduction is a little complex, since we don't want to accidentally change the meaning of the lambda term.
+
+#+name: alpha-red
+#+begin_exe
+\ex \(\vdash \lambda x\,.\,\alpha \Rightarrow\lambda y\,.,(\alpha[x \rightarrow y])\), where \(y\) isn't a free variable in \(\alpha \), and \(y\) is free for \(x\) in \(\alpha \).
+#+end_exe
+
+The first application condition ensures that we don't accidentally bind free variables using alpha reduction, i.e.:
+
+#+name: alpha
+#+begin_exe
+\ex \(\nvdash \lambda x\,.\,\mathbf{likes}(x)(y) \Rightarrow \lambda y\,.,\mathbf{likes}(y)(y)\)
+#+end_exe
+
+The second application condition ensures that, e.g., the \(y\) substituted for \(x\) is not bound in \(\alpha [x \to y]\), since:
+
+#+name: bund2
+#+begin_exe
+\ex \(\nvdash \lambda x\,.\,\lambda y\,.\,\mathbf{likes}(x)(y) \Rightarrow \lambda y\,.\,\lambda y\,.\,\mathbf{likes}(y)(y)\)
+#+end_exe
+
+** \(\beta \)-reduction
+
+Beta-reduction is a straightforward simplification scheme for applications; when we beta-reduce, we remove the \(\lambda x.\) from the functional expression, and subsistute all occurrences of \(x\) in the function body with the argument expression. 
+
+#+name: beta-red
+#+begin_exe
+\ex \(\vdash (\lambda x\,.\,\alpha)(\beta) \Rightarrow \alpha [x \to \beta]\)
+#+end_exe
+
+Example:
+
+#+name: beta
+#+begin_exe
+\ex \(\vdash (\lambda x\,.\,\mathbf{likes}(x)(x))(\mathbf{Louise}) \Rightarrow \mathbf{likes}(\mathbf{Louise})(\mathbf{Louise})\)
+#+end_exe
+
+** \(\eta\)-reduction
+
+Eta-reduction is another straightforward simplification scheme that we can use to get rid of lambda terms:
+
+#+name: eta
+#+begin_exe
+\ex \(\vdash \lambda x\,.\,(\alpha(x))\Rightarrow \alpha \)
+#+end_exe
+
+You'll often see semanticists write things like:
+
+#+name: eta-normal
+#+begin_exe
+\ex \(\lambda x\,.\,\mathbf{happy}_{E \to T}(x)\)
+#+end_exe
+
+Note that, by \(\eta\)-reduction, this is equivalent to just the typed constant \(\mathbf{happy}\). This is known as the *long form* of an expression of the STLC, and can sometimes be useful for making typing more obvious without explicit annotations.  
 
 * References
 

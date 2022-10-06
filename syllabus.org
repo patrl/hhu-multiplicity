@@ -1,0 +1,36 @@
+#+title: Going plural
+#+subtitle: Compositional routes to multiplicity in natural language
+#+author: Patrick D. Elliott
+#+bibliography: ../bibliography/master.bib
+#+setupfile: ./latex-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Class description
+
+* Prerequisites
+
+- At least one introductory class in compositional semantics, with
+  similar coverage to /Semantics in Generative Grammar/
+  [cite:@HeimKratzer1998].
+- At least one class covering basic formal methods, i.e., logic (up to first order), and set theory.
+
+* TODO Schedule
+
+This seminar takes place on Mondays 14:30-16:00.
+
+
+
+** TODO add seminar location 
+
+* TODO Topics
+
+** Week 1: Technical primer
+
+* Readings
+
+- [cite:@Winter2001]
+- [cite:@Hirsch2017a;@Hirsch2017;@Hirsch2016]
+- [cite:@Champollion2016]
+- [cite:@ParteeRooth1983]
+- [cite:@Partee1986]
