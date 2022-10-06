@@ -1,0 +1,3 @@
+#+title: Going plural
+#+subtitle: Compositional routes to multiplicity in natural language
+#+author: Patrick D. Elliott
