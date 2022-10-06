@@ -1,0 +1,289 @@
+#+title: The many lives of /and/
+#+subtitle: Handout 1
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Reading for next week
+
+- [cite:@ParteeRooth1983]
+
+*  The flexibility of coordination
+
+In the general case, selectional restrictions delimit the range of combinatorial possibilities:
+
+#+begin_export latex
+\begin{exe}
+  \ex {}[\sub{DP} Sally] went [\sub{PP} to the shops]
+  \ex *[\sub{DP} Sally] went [\sub{DP} the shops]
+  \ex *[\sub{PP} to Sally] went [\sub{PP} to the shops]
+\end{exe}
+#+end_export
+
+The combinatorial restrictions we observe associated with a predicate such as /go/, are closely related to its lexical semantics and how sentences compose. 
+
+A truly remarkable property of natural language coordination (/and/or/; /und/oder/, etc.) is its syntactic flexibility.
+
+#+begin_export latex
+\begin{exe}
+  \ex {}[\sub{TP} Louise sneezed] and/or [\sub{TP} Josie laughed].
+  \ex Louise [\sub{VP} sneezed] and/or [\sub{VP} barked].
+  \ex Louise is [\sub{DegP} very badly behaved] and/or [\sub{DegP}
+  badly trained].
+  \ex Josie skipped down the street [\sub{AdjP} happily] and/or
+  [\sub{AdjP} carelessly].
+  \ex {}[\sub{DP} Every linguist] and/or [\sub{DP} most philosophers]
+  love the lambda calculus.
+\end{exe}
+#+end_export
+
+One of the main questions we'll be investigating in this class:
+
+- What interpretive property of coordination /explains/ its flexibility?
+  
+Ultimately, we'd like our semantic theory of coordination to account for the validity of certain conjunctive/disjunctive inferences: 
+
+#+name: conj
+#+begin_exe
+\ex Every linguist and most philosophers love the lambda calculus.\\
+\(\Rightarrow\) /Every linguist loves the lambda calculus/ *and* /most philosophers love the lambda calculus/
+\ex Every linguist or most philosophers love the lambda calculus (I don't remember which)\\    
+\(\Rightarrow\) /Every linguist loves the lambda calculus/ *or* /most philosophers love the lambda calculus/
+#+end_exe
+
+But hang on, these inferences don't always go through with /and/ - sometimes it depends on the predicate!
+
+#+name: pred
+#+begin_exe
+\ex Josie and Sarah sneezed.\\
+\(\Rightarrow\) /Josie sneezed/ *and* /Sarah sneezed/.
+\ex Josie and Sarah met at the bowling alley.\\
+\(\not\Rightarrow\) /Josie met at the bowling alley/ and /Sarah met at the bowling alley/.
+\ex Josie and Sarah lifted the couch.\\
+\(\not\Rightarrow\) /Josie lifted the couch/ and /Sarah lifted the couch/.
+#+end_exe
+
+The "standard picture" which addresses this state of affairs is as follows:
+
+- /and/ in fact has two distinct lives:
+  * /and/ can convery *logical conjunction*, in which case the kinds of conjunctive inferences in ([[conj]]) go through (although we still need to say something about combinatorial flexibility).
+  * /and/ can allow us to create a *group*, in which case the kinds of conjunctive inferences in ([[conj]]) don't go through; see ([[pred]]). The most famous incarnation of this idea is [cite:@Link1983a]. We'll discuss this in some detail later in the semester.
+
+This brings us to another central question in this class:
+
+- Just how many meanings does /and/ have? Why do we use the same operator for both logical conjunction and group formation?
+  
+Logical conjunction and group formation are sufficiently different operations that it seems like there's no escape from treating /and/ as ambiguous, i.e., we have 'and_1' and 'and_2'.
+
+This is a rather strange state of affairs - using /and/ for both of these purposes is not just a quirk of English - overwhelmingly, cross-linguistically the same coordinator is used both for logical conjunction and sum formation.
+
+As we'll see later in the semester, the situation is even worse than that - we can find evidence for a third incarnation of /and/ [cite:@Link1984].
+
+The natural question is whether all of these different usages of /and/ can be unified under a single, basic, semantics. At first, this seems to be an insurmountable problem, but the resolution will ultimately be related to /flexible/ composition.
+
+Before we tackle this harder problem, we'll begin by developing an analysis of flexible boolean conjunction. 
+
+* Boolean conjunction in the STLC
+
+** Preliminaries: sentential coordination
+
+In propositional logic, the semantics of conjunction is given via a truth-table:
+
+| \(\phi \wedge \psi\)          | \(\mathbf{true}\)  | \(\mathbf{false}\) |
+|--------------------+--------------------+--------------------|
+| \(\mathbf{true}\)  | \(\mathbf{true}\)  | \(\mathbf{false}\) |
+| \(\mathbf{false}\) | \(\mathbf{false}\) | \(\mathbf{false}\) |
+
+
+Just what information does a truth table encode? One way of thinking about this is that is tells us, for any pair of truth values representing the denotations of the individual conjuncts \((t,t')\), what the denotation of the conjunctive sentence \(u\) is.
+
+In other words, a truth-table encodes a /function/.
+
+In order to maintain a simple syntax-semantics interface, however, we're not going to treat /and/ as a function from pairs of truth-values to truth-values, but rather as a /curried/ function of type \(T \to T \to T\).
+
+#+name: and-denotation
+#+begin_exe
+\ex \(\mathbf{and} : T \to T \to T\)
+#+end_exe
+
+This delimits the combinatorial properties of /and/ such that it has to combine with each conjunct successively.
+
+The standard syntactic assumption (based on evidence from the binding principles; [cite:@Kayne1994]), is that /and/ composes with the latter conjunct first, followed by the initial conjunct. It should therefore denote the following function in \(\mathbf{Dom}_{T \to T \to T}\).
+
+#+name: func
+#+begin_exe
+\ex \(\left[\begin{aligned}[c]
+&\mathbf{true} \to \left[
+\begin{aligned}[c]
+&\mathbf{true} \to \mathbf{true}\\
+&\mathbf{false} \to \mathbf{false}
+\end{aligned}\right]\\
+&\mathbf{false} \to \left[\begin{aligned}[c]
+&\mathbf{true} \to \mathbf{false}\\
+&\mathbf{false} \to \mathbf{false}
+\end{aligned}\right]
+\end{aligned}\right]\)
+#+end_exe
+
+This accounts neatly for sentential conjunction:
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(\mathbf{and}(\mathbf{laugh}(\mathbf{Josie}))(\mathbf{sneeze}(\mathbf{Louise})):T\)}
+    [{\(T\)}
+      [{\(\mathbf{laugh}:E \to T\)}]
+      [{\(\mathbf{Josie}:E\)}]
+    ]
+      [{\(T \to T\)}
+        [{\(\mathbf{and}:T \to T \to T\)}]
+        [{\(T\)}
+          [{\(\mathbf{sneezed}: E \to T\)}]
+          [{\(\mathbf{Louise}: E\)}]
+        ]
+      ]
+    ]\end{forest}
+\end{exe}
+#+end_export
+
+The sentence will be true just in case the denotations of both conjunctions are true, after ([[func]]).
+
+However, the typing of /and/ is rigid, it won't account for, e.g., VP-coordination or any varities of coordination we've seen beyond TP coordination (why?).
+
+#+name: vp-conj
+#+begin_exe
+\ex Louise [sneezed] and/or [barked].
+#+end_exe
+
+** Conjunction reduction
+
+One well-known approach to flexibility, which goes back to [cite:@Chomsky1957], is to assume that the underlying syntactic structure of ([[vp-conj]]) actually involves sentential conjunction.
+
+For Chomsky, this involved a special transformation rule, but a recent (re-)incarnation of conjunction reduction [cite:@Hirsch2017a] aims to derive conjunction reduction from the VP-internal subject hypothesis + ellipsis and across-the-board movement.
+
+For example, for ([[vp-conj]]) all we need is ATB movement from SpecVP/vP:
+
+#+name: redux
+#+begin_exe
+\ex Louise\(_1\) [\(t_1\) sneezed] and [\(t_1\) barked].
+#+end_exe
+
+We're going to put this possibility to one side for the time being, and see how far we can get by developing a flexible compositional apparatus.
+
+Later in the semester, we'll begin to explicitly compare flexible composition with syntactic approaches.
+
+** Flexible boolean coordination
+
+Consider again our illustration of flexible coordination:
+
+#+begin_export latex
+\begin{exe}
+  \ex {}[\sub{TP} Louise sneezed] and/or [\sub{TP} Josie laughed].
+  \ex Louise [\sub{VP} sneezed] and/or [\sub{VP} barked].
+  \ex Louise is [\sub{DegP} very badly behaved] and/or [\sub{DegP}
+  badly trained].
+  \ex Josie skipped down the street [\sub{AdjP} happily] and/or
+  [\sub{AdjP} carelessly].
+  \ex {}[\sub{DP} Every linguist] and/or [\sub{DP} most philosophers]
+  love the lambda calculus.
+\end{exe}
+#+end_export
+
+*** Boolean types
+
+Let's consider the /types/ of the conjuncts:[fn:1]
+
+- \(\mathbf{sneezed}(\mathbf{Louise}): T\) 
+- \(\mathbf{sneezed} : E \to T\)
+- \(\mathbf{badlyBehaved} : E \to T\)
+- \(\mathbf{happily} : (E \to T) \to E \to T\)
+- \(\mathbf{everyLinguist} : (E \to T) \to T\)
+  
+Note that every type /ends in \(T\)/. What this tells us is that, once the function has all of its arguments saturated, it will return a sentential value.
+
+This is exactly what [cite:@ParteeRooth1983] exploit in order to account for the flexibility of coordination.
+
+First, we'll state a formal algorithm for determining the types of expressions which can be conjoined - following [cite:@Winter2001] we'll call these the *boolean types*.[fn:2]
+
+#+begin_definition
+*Boolean types*: \(T\) is a boolean type.
+- If \(\tau \) is a boolean type, then \(\sigma \to \tau \) is a boolean type.
+- Nothing else is a boolean type.
+#+end_definition
+
+- As an exercise, show whether or not \(E \to (E \to E) \to T\) is a boolean type. Go step by step.
+
+*** Generalized conjunction: \(\sqcap\)  
+
+The key intuition behind our account of flexible conjunction will be that some expressions have a /polymorphic/ type-signature; instead of a fixed type, we have some /type variables/ which must be resolved before composition can proceed.
+
+The STLC doesn't really have the logical resources to capture this intuition directly.[fn:3] One way of encoding this idea is that we have an algorithm /generating/ constants, depending on the resolution of a given type.
+
+Following [cite:@Winter2001], we'll write generalized conjunction as \(\sqcap\). \(\sqcap\) specifies a /family of logical constants/ of type \(\tau \to \tau \to \tau \), where \(\tau \) is a boolean type.
+
+We'll now state an algorithm for recursively generating \(\sqcap\)s.
+
+#+begin_definition
+*Generalized boolean conjunction*: Generalized conjunction specifies a family of expressions \(\sqcap_{\tau \to \tau \to \tau }\), where \(\tau \) is a boolean type.
+
+\[\sqcap_{\tau \to \tau \to \tau } := \begin{cases}
+\mathbf{and}&\tau = T\\
+\lambda p_{\sigma \to \rho}\,.\,\lambda q_{\sigma \to \rho}\,.\,\lambda x_{\sigma }\,.\,\,\sqcap_{\rho \to \rho \to \rho}(p(x))(p(x))&\tau = \sigma \to \rho
+\end{cases}\]
+#+end_definition
+
+- \(\sqcap_{T \to T \to T} = \mathbf{and}\)
+- \(\sqcap_{ET \to ET \to ET} = \lambda p_{ET}\,.\,\lambda q_{ET}\,.\,\lambda x\,.\,\mathbf{and}(p(x))(q(x))\)
+- \(\sqcap_{ET,T \to ET,T \to ET,T} = \lambda Q_{ET \to T}\,.\,\lambda \underline{Q}_{ET \to T}\,.\,\lambda p\,.\,\mathbf{and}(Q(p))(\underline{Q}(q))\)
+
+Let's work through a complicated example together:
+
+#+name: adv
+#+begin_exe
+\ex Josie skipped [happily and carelessly]
+#+end_exe
+
+Let's assume the following Logical Form:
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(T\)}
+    [{\(ET\)}
+    [{\(ET \to ET\)}
+    [{...}
+      [{\(\sqcap:\tau \to \tau \to \tau \)}]
+      [{\textbf{carelessly}\(: ET \to ET\)}]
+    ]
+      [{\textbf{happily}\(: ET \to ET\)}]
+    ]
+      [{\textbf{skipped}\(: ET\)}]
+    ]
+      [{\textbf{Josie}\(: E\)}]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+#+name: lf
+#+begin_exe
+\ex \(\sqcap(\mathbf{carelessly})(\mathbf{happily})(\mathbf{skipped})(\mathbf{Josie})\)
+#+end_exe
+
+- What's the type of \(\sqcap\) here? Resolve the definition.
+- Reduce ([[lf]]) (remember application associates to the left).
+
+* References
+
+#+print_bibliography:
+
+* Footnotes
+
+[fn:3] This is because the STLC doesn't allow quantification over types; an extension of the STLC which allows (universal) quantification over types is called SystemF. 
+[fn:2] [cite:@ParteeRooth1983] call these /conjoinable types/; it's exactly the same notion. 
+
+[fn:1] I'm taking a shortcut here by treating some complex expressions as constants. "Every linguist" should of course be decomposed as \(\mathbf{every}(\mathbf{linguist})\), but its internal structure isn't relevant for the discussion here. One of the virtues of explicitly using an analytical tool such as the STLC is that these idealizations become transparent. 

@@ -1,0 +1,36 @@
+#+title: Test
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ../latex-template.org
+
+This is how to write an example and refer back to it:
+
+#+name: example1
+#+begin_exe
+\ex If a farmer owns a donkey, he beats it.
+#+end_exe
+
+Consider the sentence in ([[example1]]).
+
+Let's try a multipart example.
+
+#+name: example2
+#+begin_exe
+\ex If a farmer owns a donkey, he doesn't beat it.
+#+ATTR_LATEX: :environment xlist
+- Here's a sub part.
+- Here's another sub part.
+#+end_exe
+
+#+name: example3
+#+begin_exe
+\ex $\lambda x\,.\,x = y$
+#+end_exe
+
+Here's a citation:
+
+[cite:@Gotham2019]
+
+* References
+
+#+print_bibliography:
