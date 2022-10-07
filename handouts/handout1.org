@@ -276,6 +276,113 @@ Let's assume the following Logical Form:
 
 - What's the type of \(\sqcap\) here? Resolve the definition.
 - Reduce ([[lf]]) (remember application associates to the left).
+  
+* TODO Boolean algebras  
+
+* Generalized conjunction and DP coordination
+
+** QP coordination
+
+Certain instances of DP coordination fall under the remit of generalized conjunction:
+
+#+name: lam
+#+begin_exe
+\ex Every linguist and most philosophers love the lambda calculus.
+#+end_exe
+
+What's special about quantificational DPs like /every linguist/? unlike ordinary, individual-denoting arguments, the function-argument relation is reversed.
+
+- \(\mathbf{love}_{E \to E \to T}(\mathbf{LamCalc}_E)(\mathbf{Patrick}_E)\)
+- \(\mathbf{everyLing}_{ET \to T}(\mathbf{love}_{E \to E \to T}(\mathbf{LamCalc}_E))\)
+  
+N.b. it's often assumed that quantificational DPs undergo a covert movement operation (/quantifier raising/; [cite:@May1977]). We'll talk about this more later in the semester, but for now observe that there is no motivation for such a transformation in the case of a subject quantifier such as /every linguist/.
+
+Note, furthermore, that /every linguist/ has a /boolean type/.
+
+let's compute the expression \(\sqcap_{ET \to T}\):
+
+#+name: sqcap
+#+begin_exe
+\ex \(\sqcap_{ET \to T} := \lambda Q_{ET\to T}\,.\,\lambda Q'_{ET \to T}\,.\,\lambda P_{ET}\,.\,\mathbf{and}(Q(P))(Q'(P))\)
+#+end_exe
+
+Now we can compositionally translate ([[lam]]) into the STLC.
+
+The result should be the following:
+
+#+name: result
+#+begin_exe
+\ex \(\mathbf{and}(\mathbf{mostPhil}(\mathbf{love}(\mathbf{lamCalc})))(\mathbf{everyLing}(\mathbf{love}(\mathbf{lamCalc})))\)
+#+end_exe
+
+Note that generalized conjunction is a way of encoding something like conjunction reduction in the compositional semantic apparatus - essentially, the VP gets repeated in the argument of each DP. Just how different do you think these approaches really are?
+
+Note that this derives the inferences:
+
+#+name: inf
+#+begin_exe
+\ex \(\Rightarrow\) /Most philosophers love the lambda calculus/
+\ex \(\Rightarrow\) /Every linguist loves the lambda calculus/
+#+end_exe
+
+** Montague lift
+
+Consider a simple example of DP coordination such as the following:
+
+#+name: dp-coord
+#+begin_exe
+\ex Josie and Sarah love Bunny.
+#+end_exe
+
+I've implied that perhaps we need a different variant of /and/ for DP coordination, but now consider the following:
+
+#+name: phil
+#+begin_exe
+\ex Patrick and every philosopher love the lambda calculus.
+#+end_exe
+
+An insight that goes back to [cite:@Montague1973], is that even apparently individual-denoting expressions can be `lifted' into expressions that denote quantifiers.
+
+Recall from intro semantics that the standard treatment of expressions such as /every philosopher/ is in terms of /generalized quantifier theory/ [cite:@BarwiseCooper1981], i.e., as sets of sets of individuals.
+
+In STLC, we reason about functions rather than sets; the way that we encode a set is via a characteristic function, therefore a set of sets of individuals is encoded via an expression of type \((E \to T) \to T\). 
+
+The intuition behind generalized quantifier theory is that a generalized quantifier must inspect the denotation of the VP in order to determine the truth of the sentence - for example, \(\mathbf{everyPhil}(P)\) returns /true/ iff \(P\) contains every philosopher.
+
+In other words, \(\mathbf{everyPhil}\) has the following semantics:
+
+#+name: evPhil
+#+begin_exe
+\ex \(\eval*{\mathbf{everyPhil}}(P) = \mathbf{true}\text{ iff  }\set{x | x\text{ is a philosopher} } \subseteq \set{x | P(x) = \mathbf{true}}\)
+#+end_exe
+
+Now let's say we have a sentence such as "Patrick loves the lambda calculus".
+
+- What property must the set derived from the VP denotation have in order for the sentence to be true?
+  
+We can reframe the meaning of \(\mathbf{Patrick}\) as inspecting the VP denotation:
+
+#+name: pat
+#+begin_exe
+\ex \(\eval*{\mathbf{Patrick}}(P) = \mathbf{true} \text{ iff } \text{Patrick} \in \set{x | P(x) = \mathbf{true}}\)
+#+end_exe
+
+We encode this in the lambda calculus as follows (we'll write \(\alpha^\uparrow\) for the "lifted" variant of expression \(\alpha \)).
+
+#+name: lifted
+#+begin_exe
+\ex \(\mathbf{Patrick}^\uparrow := \lambda P_{ET}\,.\,P(\mathbf{Patrick})\)
+#+end_exe
+
+We can encode the lift operation itself in the STLC as a distinct function:
+
+#+name: type-shift-lift
+#+begin_exe
+\ex \(.^{\uparrow} := \lambda x\,.\,\lambda P\,.\,P(x)\)\hfill\(E \to (E \to T) \to T\)
+#+end_exe
+
+Operations like /lift/ are often referred to in the semantics literature as /type shifters/ [cite:@Partee1986].
+
 
 * References
 
