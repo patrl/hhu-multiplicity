@@ -6,6 +6,8 @@
 #+OPTIONS: ':t
 #+cite_export: biblatex
 
+Course homepage: [[https://github.com/patrl/hhu-multiplicity]]
+
 * Class description
 
 * Prerequisites
@@ -15,22 +17,81 @@
   [cite:@HeimKratzer1998].
 - At least one class covering basic formal methods, i.e., logic (up to first order), and set theory.
 
-* TODO Schedule
+* Schedule
 
-This seminar takes place on Mondays 14:30-16:00.
+This seminar takes place on Mondays 14:30-16:00. Total of 15 sessions:
 
 
-
-** TODO add seminar location 
-
-* TODO Topics
-
-** Week 1: Technical primer
+| date           | topic (tentative)                           |
+|----------------+---------------------------------------------|
+| Mon Oct 10     | Preliminaries + flexible coordination       |
+| Mon Oct 17     | Flexible coordination cont.                 |
+| Mon Oct 24     | The type-theoretic approach to multiplicity |
+| Mon Oct 31     | Hydras and pair-quantification              |
+| Mon Nov 7      | Indefinites and numerals                    |
+| Mon Nov 14     | Predicate-quantifier flexibility            |
+| Mon Nov 21     | Plural quantification and atom vs. set      |
+| Mon Nov 28     | Distributivity                              |
+| Mon Dec 5      | Cumulativity                                |
+| Mon Dec 12     | Cumulativity cont.                          |
+|----------------+---------------------------------------------|
+| *winter break* |                                             |
+|----------------+---------------------------------------------|
+| Mon Dec 19     | Homogeneity                                 |
+| Mon Jan 9      | Homogeneity cont.                           |
+| Mon Jan 16     | Student presentations                       |
+| Mon Jan 23     | Student presentations                       |
+| Mon Jan 30     | Student presentations                       |
 
 * Readings
 
-- [cite:@Winter2001]
-- [cite:@Hirsch2017a;@Hirsch2017;@Hirsch2016]
-- [cite:@Champollion2016]
-- [cite:@ParteeRooth1983]
-- [cite:@Partee1986]
+** Flexible coordination
+
+- Primary: Chapter 1 of [cite:@Winter2001]
+- Optional
+  * [cite:@ParteeRooth1983]
+  * [cite:@Partee1986]
+  
+** The type-theoretic approach to multiplicity
+
+- Primary: Chapter 2 of [cite:@Winter2001]
+  
+** Hydras and pair-quantification
+
+- Primary: [cite:@Champollion2016]
+- Optional:
+  * [cite:@Link1984]
+  * [cite:@FoxJohnson2016]
+    
+** Indefinites and numerals
+
+- Primary: Chapter 3 of [cite:@Winter2001]
+  
+** Predicate-quantifier flexibility
+
+- Primary: Chapter 4 of [cite:@Winter2001]
+- Optional:
+  * [cite:@Partee1986]
+  * [cite:@Winter2022]
+
+** Plural quantification and atom vs. set
+
+- Primary: Chapter 5 of [cite:@Winter2001]
+- Optional: 
+  * [cite:@Kuhn2020]
+  * [cite:@Winter1998]
+  * [cite:@deVries2015]
+    
+** Distributivity
+
+- Primary: Chapter 6 of [cite:@Winter2001]
+
+** Cumulativity
+
+- Primary: [cite:@Chatain2021]
+  
+** Homogeneity
+
+- [cite:@Kriz2017]
+- [cite:@Bar-Lev2018]
+- [cite:@KrižSpector2021]
