@@ -2,7 +2,10 @@
 #+subtitle: Compositional routes to multiplicity in natural language
 #+author: Patrick D. Elliott
 #+bibliography: ../bibliography/master.bib
-#+setupfile: ./latex-template.org
+#+LaTeX_CLASS: scrartcl
+#+LaTeX_CLASS_OPTIONS: [letterpaper,parskip=half]
+#+LaTeX_HEADER: \input{handouts/boilerplate}
+#+LaTeX_COMPILER: pdflatex
 #+OPTIONS: ':t
 #+cite_export: biblatex
 
@@ -10,12 +13,29 @@ Course homepage: [[https://github.com/patrl/hhu-multiplicity]]
 
 * Class description
 
+In this class we'll develop a compositional approach to
+plurality using concepts from Boolean algebra. We'll primarily be following Yoad Winter' 2001 book "Flexibility Principles in Boolean Semantics - the Interpretation of Coordination, Plurality, and Scope in Natural Language", chapter by chapter. We'll begin by asking: what is the role of natural language coordination ("and") in forming /pluralities/? Cross-linguistically, many languages use exactly the same coordinator to express both boolean conjunction, and an operation we might call /group-formation/. We'll investigate exactly why this might be. Later in the course, we'll discuss other semantic phenomena which require reference to pluralities, and ramifications for the compositional apparatus. 
+  
 * Prerequisites
 
 - At least one introductory class in compositional semantics, with
   similar coverage to /Semantics in Generative Grammar/
   [cite:@HeimKratzer1998].
-- At least one class covering basic formal methods, i.e., logic (up to first order), and set theory.
+- At least one class covering basic formal methods, i.e., logic (up to first order), and set theory. 
+
+* Contact information
+
+- Instructor: Patrick Elliott ([[https://patrickdelliott.com]])
+- Email: ~patrick.d.elliott@gmail.com~
+- Secretary: Tim Marton: ~tim.marton@phil.hhu.de~
+- For any questions, please use the rocket chat channel. You should have received an invitation.
+- For office hours, please don't hesitate to email me to schedule an ad-hoc meeting.
+
+* Online and offline info  
+
+- Meetings will take place in person, in ~23.21.U1.72~.
+- If circumstances (illness, Deutsche Bahn...) demand that the class go remote, I'll send out a zoom/webex link via rocket chat.
+- Mondays, 14:30-16:00.
 
 * Schedule
 
@@ -42,6 +62,31 @@ This seminar takes place on Mondays 14:30-16:00. Total of 15 sessions:
 | Mon Jan 16     | Student presentations                       |
 | Mon Jan 23     | Student presentations                       |
 | Mon Jan 30     | Student presentations                       |
+
+* Assessment
+
+** Beteiligungsnachweis
+
+- Regular active participation.
+- Do the readings.
+  
+** Requirements for Abschlussprüfung
+
+- One class presentation (this can be either a reading group style presentation of a paper, or a group discussion of your squib topic).
+- A squib (i.e., short research paper, max 12 pages, prefereably 5-10).
+  * At least one meeting with me to discuss your squib topic.
+  
+The etymology of "squib", according to Haj Ross:[fn:1] 
+
+#+begin_quote
+WRT the word: I no longer know – my memory is too foggy over the 48 ± years since I started collecting them. I got to MIT in January of 1964; George Lakoff was an assistant professor at Harvard; we both were research assistants in Susumu Kuno’s lab, and we squibbed well and truly on a daily basis. I have asked George whether he knows who came up with the term or not; he says he is positive: I was the one. Could be – I certainly can’t deny responsibility.
+
+At some point I went looking in the OED to see if it contained a meaning like “short note” or anything like that. My wretched memory tells me that yes, there was such a meaning among the many that the OED offered up, but when I went this morning to look again for it for you, not a bit of it. There is one basic meaning, which has to do with with some kind of firework. But one of the citations is
+
+1599 Master Broughtons Lett. 47 Your bookes [are] but squibs, compounds of gunpowder and pisse.
+
+Which I think would be an excellent sentence to have at the beginning of every squib section in each issue of LI.
+#+end_quote
 
 * Readings
 
@@ -95,3 +140,12 @@ This seminar takes place on Mondays 14:30-16:00. Total of 15 sessions:
 - [cite:@Kriz2017]
 - [cite:@Bar-Lev2018]
 - [cite:@KrižSpector2021]
+
+  
+* References
+
+#+print_bibliography:
+
+* Footnotes
+
+[fn:1] https://www.ucl.ac.uk/pals/linguistic-inquiry-squibs-discussion
