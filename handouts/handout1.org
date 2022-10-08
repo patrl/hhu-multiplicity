@@ -448,9 +448,6 @@ Informally, this can mean that, for every linguist \(x\), the group consisting o
 
 Next week we'll discuss an approach to conjunction with predicates such as /met/.
 
-
-* References
-
 #+print_bibliography:
 
 * Footnotes

@@ -142,8 +142,6 @@ Which I think would be an excellent sentence to have at the beginning of every s
 - [cite:@KrižSpector2021]
 
   
-* References
-
 #+print_bibliography:
 
 * Footnotes

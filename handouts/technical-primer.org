@@ -286,6 +286,4 @@ You'll often see semanticists write things like:
 
 Note that, by \(\eta\)-reduction, this is equivalent to just the typed constant \(\mathbf{happy}\). This is known as the *long form* of an expression of the STLC, and can sometimes be useful for making typing more obvious without explicit annotations.  
 
-* References
-
 #+print_bibliography:
