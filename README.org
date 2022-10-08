@@ -3,4 +3,6 @@
 
 Here you'll find the course material for the HHU WS 2022-2023 seminar "Going plural: compositional routes to multiplicity in natural language".
 
-You can find the syllabus: [[file:syllabus.pdf][here]]
+- You can find the syllabus [[file:syllabus.pdf][here]].
+- for the handouts, look in the [[file:handouts/][handouts directory]] (you want to ~.pdf~ files). 
+- A proper subset of the readings can be found in the [[file:readings/][readings directory]].
