@@ -39,7 +39,7 @@ plurality using concepts from Boolean algebra. We'll primarily be following Yoad
 
 * Schedule
 
-This seminar takes place on Mondays 14:30-16:00. Total of 15 sessions:
+Total of 15 sessions:
 
 
 | date           | topic (tentative)                           |
