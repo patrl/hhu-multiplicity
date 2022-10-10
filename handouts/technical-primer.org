@@ -1,4 +1,5 @@
 #+title: Technical primer 
+#+subtitle: Syntax, semantics, and proof theory of the Simply-Typed Lambda Calculus
 #+author: Patrick D. Elliott
 #+bibliography: ../../bibliography/master.bib
 #+setupfile: ./handout-template.org
@@ -15,6 +16,8 @@ I'll be teaching this class presupposing the following background:
   * Logic (propositional and first order).
     
 The main formal analytical tool we'll be making use of in this class is the /Simply-Typed Lambda Calculus/. Before we dive into linguistic issues, we'll spend some time going through the basics.
+
+Note that the specific choices we'll make in developing our calculus result in what is known as /higher-order logic/; the calculus itself can be used to model any (halting!) computations, such as arithmetical computations; we'll be using it specifically to compute /truth-conditions/.[fn:2] 
     
 * Syntax of the Simply-Typed Lambda Calculus (STLC)
 
@@ -41,21 +44,29 @@ We'll exploit a general recipe for talking about /function types/.
 *Function types*. If \(\sigma\) and \(\tau\) are *types*, then \(\sigma \to \tau \) is a *function type*.
 #+end_definition
 
-Note that we can use our function type recipe to generate an /infinite/ number of types! Unlike in many grammatical formalisms (with the notable exception of categorial grammars), we have, in essence, an infinite number of syntactic categor
+Note that we can use our function type recipe to generate an /infinite/ number of types! Unlike in many grammatical formalisms (with the notable exception of categorial grammars), we have, in essence, an infinite number of syntactic categories.[fn:1]
 
 We use function types to classify expressions which denote functions. For example, \(T \to T\) is the type of a function from truth-values to truth-values (this might be exploited for something like negation).
 
 N.b. that \(\to\) is /right-associative/, which means that, e.g., \(E \to E \to  T\) is parsed as \(E \to (E \to T)\) (not \((E \to  E) \to  T\)!).
 
+Some types that we'll frequently see:
+
+- \(E_1 \to \ldots E_n \to T\): the type of a verbal predicate that takes \(n\)-arguments.
+- \((E \to T) \to T\): the type of a quantificational expression.
+- \((E \to T) \to (E \to T) \to T\): the type of a determiner.
+- \(T \to T \to T\): the type of a logical connective
+ 
+
 ** Variables and constants
 
-Expressions of the STLC are built up out of variables and constants, which you can conveniently think of as the 'lexical items'.
+Expressions of the STLC are built up out of variables and constants, which you can conveniently think of as the "lexical items".
 
-Unlike in other logical languages you might be familiar with, here variables and constants are categorized by /type/.
+Variables and constants are categorized by /type/.
 
 Every type is associated with a (countably infinite!) set of variables.
 
-We'll typically use \(x,y,z,\ldots\) for variables of type \(E\), \(P,Q,R,\ldots\) for variables of type \(E \to T\), etc., but ultimately it doesn't matter much what we use as variable names. 
+You can use anything you like as a variable name. We'll typically use \(x,y,z,\ldots\) for variables of type \(E\), \(P,Q,R,\ldots\) for variables of type \(E \to T\), etc., but ultimately it doesn't matter much what we use as variable names. 
 
 Constants will typically be used to talk about 'lexical' concepts, i.e., \(\mathbf{Louise}\) is a constant of type \(E\), \(\mathbf{run}\) is a constant of type \(E \to T\), and \(\mathbf{not}\) is a constant of type \(T \to T\).
 
@@ -71,9 +82,9 @@ It's also common to use a colon when declaring the type of an expression:
 
 ** functional applications
 
-This is where the magic starts to happen - we're going to define some recursive syntactic rules for constructing expressions from expressions.
+The types of expressions delimits the role they can play in building complex expressions (again, this should be familiar from natural language syntax).
 
-The most fundamental such complex expression is a *functional application*.
+The most fundamental such complex expression is a *functional application*; you can think of this is the STLC counterpart of /merge/; when we translate binary branching trees into expressions of the STLC, each non-terminal node will typically correspond to a functional application.
 
 #+begin_definition
 *functional application*: If \(\alpha \) is an expression of type \(\sigma \to  \tau\), and, \(\beta\) is an expression of type \(\tau \), then \(\alpha (\beta)\) is a /functional application/ of type \(\tau \).
@@ -83,16 +94,17 @@ Crucially, the type system restricts what counts as a well-formed application (j
 
 For example, \(\mathbf{not}(\mathbf{Josie})\) is an ill-formed application, assuming that \(\mathbf{not}: T \to T\), and \(\mathbf{Josie}: E\).
 
-Are the following valid functional applications? Make explicit what you're assuming about types:
+Are the following well-formed expressions of the lambda calculus? What is their type?
 
 #+name: fa
 #+begin_exe
-\ex \(\mathbf{hugs}(\mathbf{Louise})\)
-\ex \(\mathbf{Josie}(\mathbf{left})\)
-\ex \(\mathbf{not}(\mathbf{sad}(\mathbf{Sarah}))\)
+\ex \(\mathbf{hugs}_{E \to E \to T}(\mathbf{Louise}_{E})\)
+\ex \(\mathbf{Josie}_E(\mathbf{left}_{E \to T})\)
+\ex \(\mathbf{not}_{T \to T}(\mathbf{sad}_{E \to T}(\mathbf{Sarah}_E))\)
+\ex \(\mathbf{and}_{T \to T \to T}(\mathbf{run}_{E \to T}(\mathbf{Louise}_E))\)
 #+end_exe
 
-Unlike in predicate logic, we have no way of talking about \(n\)-ary predicates in the \(STLC\), rather an \(n\)-ary predicate is always encoded as a /curried/ function; complex expressions are then built up by successive applications.
+Unlike in predicate logic, we have no way of talking about \(n\)-ary predicates in the \(STLC\), rather an \(n\)-ary predicate is always encoded as a /curried/ function; complex expressions are then built up by successive applications. In other words, when we consider the syntax of the STLC, binary branching is forced.
 
 #+name: 
 #+begin_exe
@@ -107,9 +119,9 @@ One way of visualizing the structure of a complex expression is as a tree diagra
 \begin{exe}
 \ex
   \begin{forest}
-    [{\((((\mathbf{show}(\mathbf{thePendant}))(\mathbf{Chrono}))(\mathbf{Marle}): T\)}
-      [{\((\mathbf{show}(\mathbf{thePendant}))(\mathbf{Chrono}): E \to T\)}
-        [{\(\mathbf{show}(\mathbf{thePendant}) : E \to E \to T\)}
+    [{\((((\mathbf{show}(\mathbf{thePendant}))(\mathbf{Chrono}))(\mathbf{Marle}): T\)\\functional application}
+      [{\((\mathbf{show}(\mathbf{thePendant}))(\mathbf{Chrono}): E \to T\)\\functional application}
+        [{\(\mathbf{show}(\mathbf{thePendant}) : E \to E \to T\)\\functional application}
           [{\(\mathbf{show}: E \to E \to E \to T\)}]
           [{\(\mathbf{ThePendant} : E\)}]
     ]
@@ -146,6 +158,50 @@ Compare and contrast the flat structure of a first-order logic expression such a
 \end{exe}
 #+end_export
 
+In the STLC, the functional expression is always to the left, and the argumental expression to its right. In natural language, this is (arguably) flexible, which we exploit in translating natural language to the STLC:
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \(\begin{array}{c}\begin{forest}
+    [{\ldots}
+      [{\(a\)}]
+      [{\(b\)}]
+    ]
+    \end{forest}
+    \end{array}
+    \rightsquigarrow \mathbf{a}(\mathbf{b})\text{ or
+    }\mathbf{b}(\mathbf{a})\text{ (whichever is a wff)}\)
+\end{exe}
+#+end_export
+
+Now translate the following into expression the STLC:
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{TP}
+    [{VP}
+      [{Josie}]
+      [{left}]
+    ]
+      [{and'}
+        [{and}]
+        [{TP}
+          [{Sarah}]
+          [{VP}
+            [{hugged}]
+            [{Jameson}]
+          ]
+        ]
+      ]
+    ]
+    \end{forest}
+\end{exe}
+#+end_export
+
+
 ** Functional abstraction
 
 The trademark feature of the lambda calculus (and when its name), is the complex expression known as a /functional abstraction/.
@@ -154,7 +210,7 @@ The trademark feature of the lambda calculus (and when its name), is the complex
 *Functional abstraction*: If \(x\) is a variable of type \(\sigma\), and \(\alpha \) is an expression of type \(\tau \), then \(\lambda x\,.\,\alpha \) is a functional abstraction of type \(\sigma \to \tau\).
 #+end_definition
 
-Abstraction always produces a function type.
+Abstraction always produces a functional type.
 
 Once we come round to the semantics of the STLC, we'll see that there's a special rule for interpreting variables that occur within the body of a functional abstraction.
 
@@ -167,6 +223,33 @@ Are the following all well-formed functional abstractions? Comment on any assump
 \ex \(\lambda x\,.\,\mathbf{Josie}\)
 \ex \((\lambda x\,.\,x)(\mathbf{Nathan})\)
 #+end_exe
+
+We'll exploit functional abstraction to translate, e.g., sentences involving movement dependencies. Following e.g., [cite:@HeimKratzer1998], we'll translate traces as variables, and insert an abstraction with the same variable name just below the "moved" abstraction.
+
+#+name: mvt
+#+begin_exe
+\ex Jameson\(_x\), Josie likes \(t_x\)
+#+end_exe
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\((\lambda x\,.\,\mathbf{likes}(x)(\mathbf{Josie}))(\mathbf{Jameson}): T\)\\functional application}
+      [{\(\mathbf{Jameson}: E\)}]
+      [{\(\lambda x\,.\,\mathbf{likes}(x)(\mathbf{Josie}): E \to T\)\\functional abstraction}
+      [{\(\mathbf{likes}(x)(\mathbf{Josie}): T\)\\functional application}
+        [{\(\mathbf{Josie}: E\)}]
+        [{\(\mathbf{likes}(x): E \to T\)\\functional application}
+          [{\(\mathbf{likes}:E \to E \to T\)}]
+          [{\(x: E\)}]
+        ]
+      ]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
 
 * Semantics of the STLC
 
@@ -212,19 +295,47 @@ The denotation of a functional abstraction is a little more involved. It always 
 
 - \(\eval*[g]{\lambda x\,.\,\alpha } = f\text{ s.t. }f(a) = \eval*[g[x \to a]]{\alpha }\)
   
-\(g[x \to a]\) is the assignment function that is exactly like \(g\), except the variable \(x\) is mapped to \(a\) (assuming that \(x: \sigma \), and \(a \in \mathbf{Dom}_{\sigma }\)).
+\(g[x \to a]\) is the assignment function that is exactly like \(g\), except the variable \(x\) is mapped to \(a\). This also has to be type-respecting, so if \(x: \sigma \), then \(a \in \mathbf{Dom}_{\sigma }\).
+
+Compute the following:
+
+#+name: jam
+#+begin_exe
+\ex \((\lambda x\,.\,\mathbf{likes}(x)(\mathbf{Josie}))(\mathbf{Jameson})\)
+#+end_exe
 
 * Proof theory for the STLC
 
 One of the beautiful features of using the STLC for compositional semantics is that it has a simple and elegant proof theory, stated in terms of a notion of simplification called /reduction/, written as \(\Rightarrow\).
 
-We can /simplify/ complex expressions using syntactic simplification rules, without having to compute the semantic value of a given expression at every step - thanks to the /soundness/ of the STLC, we can be sure that - if we don't make any mistakes in our proof - the resulting expression can be interpreted without having to interpret every intermediate step.
+This means that we can translate natural language syntax structres into complex expressions of the STLC, then /simplify/ complex expressions using our proof theory, without having to compute the semantic value of a given expression at every step.
+
+Thanks to the /soundness/ of the STLC, we can be sure that - if we don't make any mistakes in our proof - the resulting expression can be interpreted without having to interpret every intermediate step.
 
 The standard axioms for the STLC are as follows:
 
+** \(\beta \)-reduction
+
+Beta-reduction is a straightforward simplification scheme for applications; when we beta-reduce, we remove the \(\lambda x.\) from the functional expression, and subsistute all occurrences of \(x\) in the function body with the argument expression. 
+
+#+name: beta-red
+#+begin_exe
+\ex \(\vdash (\lambda x_\sigma \,.\,\alpha)(\beta_\sigma) \Rightarrow \alpha[x \mapsto \beta]\)
+#+end_exe
+
+Example:
+
+#+name: beta
+#+begin_exe
+\ex \(\vdash (\lambda x\,.\,\mathbf{likes}(x)(\mathbf{Josie}))(\mathbf{Jameson}) \Rightarrow \mathbf{likes}(\mathbf{Jameson})(\mathbf{Josie})\)
+#+end_exe
+
+We can exploit this axiom to simplify complex expressions like ([[beta]]) before interpretation!
+
+
 ** \(\alpha \)-reduction 
 
-The intuition behind alpha reduction is that we can freely rename bound variables, e.g.:
+The intuition behind alpha reduction is that we can freely rename bound variables, as long as the result is meaning-preserving, e.g.:
 
 #+name: bund
 #+begin_exe
@@ -235,7 +346,7 @@ Th definition of alpha reduction is a little complex, since we don't want to acc
 
 #+name: alpha-red
 #+begin_exe
-\ex \(\vdash \lambda x\,.\,\alpha \Rightarrow\lambda y\,.,(\alpha[x \rightarrow y])\), where \(y\) isn't a free variable in \(\alpha \), and \(y\) is free for \(x\) in \(\alpha \).
+\ex \(\vdash \lambda x\,.\,\alpha \Rightarrow\lambda y\,.\,(\alpha[x \mapsto y])\), where \(y\) isn't a free variable in \(\alpha \), and \(y\) is free for \(x\) in \(\alpha \).
 #+end_exe
 
 The first application condition ensures that we don't accidentally bind free variables using alpha reduction, i.e.:
@@ -245,27 +356,11 @@ The first application condition ensures that we don't accidentally bind free var
 \ex \(\nvdash \lambda x\,.\,\mathbf{likes}(x)(y) \Rightarrow \lambda y\,.,\mathbf{likes}(y)(y)\)
 #+end_exe
 
-The second application condition ensures that, e.g., the \(y\) substituted for \(x\) is not bound in \(\alpha [x \to y]\), since:
+The second application condition ensures that, e.g., the \(y\) substituted for \(x\) is not bound in \(\alpha [x \mapsto y]\), since: 
 
 #+name: bund2
 #+begin_exe
 \ex \(\nvdash \lambda x\,.\,\lambda y\,.\,\mathbf{likes}(x)(y) \Rightarrow \lambda y\,.\,\lambda y\,.\,\mathbf{likes}(y)(y)\)
-#+end_exe
-
-** \(\beta \)-reduction
-
-Beta-reduction is a straightforward simplification scheme for applications; when we beta-reduce, we remove the \(\lambda x.\) from the functional expression, and subsistute all occurrences of \(x\) in the function body with the argument expression. 
-
-#+name: beta-red
-#+begin_exe
-\ex \(\vdash (\lambda x\,.\,\alpha)(\beta) \Rightarrow \alpha [x \to \beta]\)
-#+end_exe
-
-Example:
-
-#+name: beta
-#+begin_exe
-\ex \(\vdash (\lambda x\,.\,\mathbf{likes}(x)(x))(\mathbf{Louise}) \Rightarrow \mathbf{likes}(\mathbf{Louise})(\mathbf{Louise})\)
 #+end_exe
 
 ** \(\eta\)-reduction
@@ -284,6 +379,72 @@ You'll often see semanticists write things like:
 \ex \(\lambda x\,.\,\mathbf{happy}_{E \to T}(x)\)
 #+end_exe
 
-Note that, by \(\eta\)-reduction, this is equivalent to just the typed constant \(\mathbf{happy}\). This is known as the *long form* of an expression of the STLC, and can sometimes be useful for making typing more obvious without explicit annotations.  
+Note that, by \(\eta\)-reduction, this is equivalent to just the constant \(\mathbf{happy}_{E \to T}\).
 
+([[eta-normal]]) is known as the *long form* of an expression of the STLC, and can sometimes be useful for making typing more obvious without explicit annotations.  
+
+** Applications
+
+Our analysis of natural language sentences will typically consist of a couple of steps:
+
+- Starting from a syntactic analysis, translate into a complex expression of the STLC, where each non-terminal node corresponds to a functional application, and movement/binding corresponds to a functional abstraction.
+- Simplify the result as much as possible using the proof theory of the STLC.
+- Interpret the result in order to provide the truth conditions of the sentence.
+  
+Let's go through a relatively complex example to see how this all works.
+
+#+name: ev-wind
+#+begin_exe
+\ex Every window isn't closed.
+#+end_exe
+ 
+The example in ([[ev-wind]]) has a salient reading according to which negation takes scope over the universal quantifier. In order to capture this, we'll exploit a syntactic analysis where "every window" moves across negation. We'll assume that movement can be translated as functional abstraction of /any/ type; here, the trace will be translated as a variable of type \(E \to E \to T\).
+
+I'll start by providing you with a syntactic structure and the type of each corresponding STLC expression.
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{functional application}
+    [{functional application}
+      [{\(\mathbf{every}: ET \to ET \to T\)}]
+      [{\(\mathbf{window}: E \to T\)}]
+    ]
+    [{\(\lambda Q\,.\,\ldots\)\\functional abstraction}
+    [{functional application}
+      [{\(\mathbf{not}: T \to T\)}]
+      [{functional application}
+        [{\(Q: ET \to T\)}]
+        [{\(\mathbf{closed}: E \to T\)}]
+      ]
+    ]
+    ]
+    ]
+    \end{forest}
+\end{exe}
+#+end_export
+
+\(\mathbf{every}\) is interpreted as the following function:
+
+#+name: ev-func
+#+begin_exe
+\ex \(\eval*{\mathbf{every}}(f)(g) = \set{x | f(x) = \mathbf{true}} \subseteq \set{x' | g(x') = \mathbf{true} }\)
+#+end_exe
+
+Go through the following steps:
+
+- Translate into a complex expression of the STLC, going through each intermediate step.
+- Simplify the result using the proof theory of the STLC.
+- Interpret the simplified result. What are the resulting truth-conditions?
+  
+You should be able to appreciate how the proof theory side-steps many of the complications of directly interpreting complex expressions.
+  
 #+print_bibliography:
+
+* Footnotes
+[fn:2] Unlike the untyped/monotyped lambda calculus, the simply-typed lambda calculus is /strongly normalizing/ (every expression can be simplified to a maximally simple form) and therefore not Turing complete. Non-terminating computations can't be represented - thankfully, this is quite irrelevant to natural language.
+
+[fn:1] Note: you might be more familiar with the notation from [cite:@HeimKratzer1998], who use \(\langle\sigma,\tau \rangle\) as the constructor for function types - arrow notation is standard in the mathematical literature. It's easy to translate between the two:
+
+\[\langle\sigma ,\tau \rangle := \sigma \to \tau \]
