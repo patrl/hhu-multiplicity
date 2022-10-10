@@ -91,7 +91,7 @@ The types of expressions delimits the role they can play in building complex exp
 The most fundamental such complex expression is a *functional application*; you can think of this is the STLC counterpart of /merge/; when we translate binary branching trees into expressions of the STLC, each non-terminal node will typically correspond to a functional application.
 
 #+begin_definition
-*functional application*: If \(\alpha \) is an expression of type \(\sigma \to  \tau\), and, \(\beta\) is an expression of type \(\tau \), then \(\alpha (\beta)\) is a /functional application/ of type \(\tau \).
+*functional application*: If \(\alpha \) is an expression of type \(\sigma \to  \tau\), and, \(\beta\) is an expression of type \(\sigma\), then \(\alpha (\beta)\) is a /functional application/ of type \(\tau \).
 #+end_definition
 
 Crucially, the type system restricts what counts as a well-formed application (just like syntactic categories restrict what can merge with what).
@@ -185,8 +185,8 @@ Now translate the following into expression the STLC:
 \begin{exe}
   \ex
   \begin{forest}
+    [{andP}
     [{TP}
-    [{VP}
       [{Josie}]
       [{left}]
     ]
