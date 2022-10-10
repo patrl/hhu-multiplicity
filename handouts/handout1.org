@@ -8,8 +8,8 @@
 
 * Reading
 
-- Chapter 1 of [cite:@Winter2001].
-- Additional background: [cite:@ParteeRooth1983]
+- Chapter 1 of [cite:@Winter2001] (read this before next week's class).
+- Additional background: [cite:@ParteeRooth1983][fn:4] 
 
 *  The flexibility of coordination
 
@@ -111,7 +111,7 @@ In order to maintain a simple syntax-semantics interface, however, we're not goi
 
 This delimits the combinatorial properties of /and/ such that it has to combine with each conjunct successively.
 
-N.b., however we'll sometimes use infix notation:
+N.b., however we'll sometimes use infix notation as a notational convenience:
 
 #+name: infix
 #+begin_exe
@@ -143,14 +143,14 @@ This accounts neatly for sentential conjunction:
   \begin{forest}
     [{\(\mathbf{and}(\mathbf{laugh}(\mathbf{Josie}))(\mathbf{sneeze}(\mathbf{Louise})):T\)}
     [{\(T\)}
-      [{\(\mathbf{laugh}:E \to T\)}]
       [{\(\mathbf{Josie}:E\)}]
+      [{\(\mathbf{laugh}:E \to T\)}]
     ]
       [{\(T \to T\)}
         [{\(\mathbf{and}:T \to T \to T\)}]
         [{\(T\)}
-          [{\(\mathbf{sneezed}: E \to T\)}]
           [{\(\mathbf{Louise}: E\)}]
+          [{\(\mathbf{sneeze}: E \to T\)}]
         ]
       ]
     ]\end{forest}
@@ -181,7 +181,7 @@ For example, for ([[vp-conj]]) all we need is ATB movement from SpecVP/vP:
 
 We're going to put this possibility to one side for the time being, and see how far we can get by developing a flexible compositional apparatus.
 
-Later in the semester, we'll begin to explicitly compare flexible composition with syntactic approaches.
+If there's interest, we might spend one class explicitly comparing flexible composition with syntactic approaches.
 
 ** Flexible boolean coordination
 
@@ -222,7 +222,7 @@ First, we'll state a formal algorithm for determining the types of expressions w
 - Nothing else is a boolean type.
 #+end_definition
 
-- As an exercise, show whether or not \(E \to (E \to E) \to T\) is a boolean type. Go step by step.
+As an exercise, show whether or not \(E \to (E \to E) \to T\) is a boolean type. Go step by step.
 
 *** Generalized conjunction: \(\sqcap\)  
 
@@ -261,17 +261,17 @@ Let's assume the following Logical Form:
   \ex
   \begin{forest}
     [{\(T\)}
-    [{\(ET\)}
-    [{\(ET \to ET\)}
+      [{\textbf{Josie}\(: E\)}]
+    [{\(ET\)} 
+      [{\textbf{skipped}\(: ET\)}]
+[{\(ET \to ET\)}
+      [{\textbf{happily}\(: ET \to ET\)}]
     [{...}
       [{\(\sqcap:\tau \to \tau \to \tau \)}]
       [{\textbf{carelessly}\(: ET \to ET\)}]
     ]
-      [{\textbf{happily}\(: ET \to ET\)}]
     ]
-      [{\textbf{skipped}\(: ET\)}]
     ]
-      [{\textbf{Josie}\(: E\)}]
     ]
   \end{forest}
 \end{exe}
@@ -285,8 +285,6 @@ Let's assume the following Logical Form:
 - What's the type of \(\sqcap\) here? Resolve the definition.
 - Reduce ([[lf]]) (remember application associates to the left).
   
-* TODO Boolean algebras  
-
 * Generalized conjunction and DP coordination
 
 ** QP coordination
@@ -451,8 +449,9 @@ Next week we'll discuss an approach to conjunction with predicates such as /met/
 #+print_bibliography:
 
 * Footnotes
+[fn:4] This paper will probably be extremely hard to understand, since many of the notational conventions in compositional semantics have changed dramatically since the early 1980s. I've included it here in case you're interested in the history behind flexible coordination. 
 
-[fn:3] This is because the STLC doesn't allow quantification over types; an extension of the STLC which allows (universal) quantification over types is called SystemF. 
+[fn:3] This is because the STLC doesn't allow quantification over types; an extension of the STLC which allows (universal) quantification over types is called ~SystemF~. 
 [fn:2] [cite:@ParteeRooth1983] call these /conjoinable types/; it's exactly the same notion. 
 
 [fn:1] I'm taking a shortcut here by treating some complex expressions as constants. "Every linguist" should of course be decomposed as \(\mathbf{every}(\mathbf{linguist})\), but its internal structure isn't relevant for the discussion here. One of the virtues of explicitly using an analytical tool such as the STLC is that these idealizations become transparent. 
