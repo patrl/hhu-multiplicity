@@ -1,15 +1,20 @@
-#+title: Going plural
-#+subtitle: Compositional routes to multiplicity in natural language
+#+title: Going plural:  compositional routes to multiplicity in natural language
+#+subtitle: Syllabus - HHU Seminar, WS 2022-23 
 #+author: Patrick D. Elliott
 #+bibliography: ../bibliography/master.bib
 #+LaTeX_CLASS: scrartcl
 #+LaTeX_CLASS_OPTIONS: [letterpaper,parskip=half]
 #+LaTeX_HEADER: \input{handouts/boilerplate}
 #+LaTeX_COMPILER: pdflatex
-#+OPTIONS: ':t
+#+OPTIONS: ':t toc:nil
 #+cite_export: biblatex
 
-Course homepage: [[https://github.com/patrl/hhu-multiplicity]]
+
+* Materials
+
+You can find the syllabus, handouts and and a subset of the readings at the following github repository. This will be updated on a regular basis.
+
+- [[https://github.com/patrl/hhu-multiplicity]]
 
 * Class description
 
@@ -28,40 +33,40 @@ plurality using concepts from Boolean algebra. We'll primarily be following Yoad
 - Instructor: Patrick Elliott ([[https://patrickdelliott.com]])
 - Email: ~patrick.d.elliott@gmail.com~
 - Secretary: Tim Marton: ~tim.marton@phil.hhu.de~
-- For any questions, please use the rocket chat channel. You should have received an invitation.
-- For office hours, please don't hesitate to email me to schedule an ad-hoc meeting.
+- For any content questions, please use the rocket chat channel. You should have received an invitation, but email me for one if not.
+- For office hours, please don't hesitate to email me using the above address to schedule an ad-hoc meeting.
 
 * Online and offline info  
 
 - Meetings will take place in person, in ~23.21.U1.72~.
-- If circumstances (illness, Deutsche Bahn...) demand that the class go remote, I'll send out a zoom/webex link via rocket chat.
+- If circumstances demand that the class temporarily go remote (illness, Deutsche Bahn...), I'll send out a zoom/webex link via rocket chat.
 - Mondays, 14:30-16:00.
 
 * Schedule
 
-Total of 15 sessions:
+Total of 15 sessions; 9 topic blocks:
 
 
-| date           | topic (tentative)                           |
-|----------------+---------------------------------------------|
-| Mon Oct 10     | Preliminaries + flexible coordination       |
-| Mon Oct 17     | Flexible coordination cont.                 |
-| Mon Oct 24     | The type-theoretic approach to multiplicity |
-| Mon Oct 31     | Hydras and pair-quantification              |
-| Mon Nov 7      | Indefinites and numerals                    |
-| Mon Nov 14     | Predicate-quantifier flexibility            |
-| Mon Nov 21     | Plural quantification and atom vs. set      |
-| Mon Nov 28     | Distributivity                              |
-| Mon Dec 5      | Cumulativity                                |
-| Mon Dec 12     | Cumulativity cont.                          |
-|----------------+---------------------------------------------|
-| *winter break* |                                             |
-|----------------+---------------------------------------------|
-| Mon Dec 19     | Homogeneity                                 |
-| Mon Jan 9      | Homogeneity cont.                           |
-| Mon Jan 16     | Student presentations                       |
-| Mon Jan 23     | Student presentations                       |
-| Mon Jan 30     | Student presentations                       |
+| date           | topic (tentative)                                |
+|----------------+--------------------------------------------------|
+| Mon Oct 10     | Preliminaries + flexible coordination [[flex]]       |
+| Mon Oct 17     | Flexible coordination cont. [[flex]]                 |
+| Mon Oct 24     | The type-theoretic approach to multiplicity [[mult]] |
+| Mon Oct 31     | Hydras and pair-quantification [[pair]]              |
+| Mon Nov 7      | Indefinites and numerals [[num]]                     |
+| Mon Nov 14     | Predicate-quantifier flexibility [[quant]]           |
+| Mon Nov 21     | Plural quantification and atom vs. set [[atom]]      |
+| Mon Nov 28     | Distributivity [[dist]]                          |
+| Mon Dec 5      | Cumulativity [[cum]]                             |
+| Mon Dec 12     | Cumulativity cont. [[cum]]                       |
+|----------------+--------------------------------------------------|
+| *winter break* |                                                  |
+|----------------+--------------------------------------------------|
+| Mon Dec 19     | Homogeneity [[homog]]                            |
+| Mon Jan 9      | Homogeneity cont. [[homog]]                      |
+| Mon Jan 16     | Student presentations                            |
+| Mon Jan 23     | Student presentations                            |
+| Mon Jan 30     | Student presentations                            |
 
 * Assessment
 
@@ -70,56 +75,56 @@ Total of 15 sessions:
 - Regular active participation.
 - Do the readings.
   
-** Requirements for Abschlussprüfung
+** Abschlussprüfung
 
 - One class presentation (this can be either a reading group style presentation of a paper, or a group discussion of your squib topic).
-- A squib (i.e., short research paper, max 12 pages, prefereably 5-10).
+- A squib (i.e., short research note, preferably around 10 pages, max 12).
   * At least one meeting with me to discuss your squib topic.
   
 The etymology of "squib", according to Haj Ross:[fn:1] 
 
 #+begin_quote
-WRT the word: I no longer know – my memory is too foggy over the 48 ± years since I started collecting them. I got to MIT in January of 1964; George Lakoff was an assistant professor at Harvard; we both were research assistants in Susumu Kuno’s lab, and we squibbed well and truly on a daily basis. I have asked George whether he knows who came up with the term or not; he says he is positive: I was the one. Could be – I certainly can’t deny responsibility.
+"WRT the word: I no longer know – my memory is too foggy over the 48 ± years since I started collecting them. I got to MIT in January of 1964; George Lakoff was an assistant professor at Harvard; we both were research assistants in Susumu Kuno’s lab, and we squibbed well and truly on a daily basis. I have asked George whether he knows who came up with the term or not; he says he is positive: I was the one. Could be – I certainly can’t deny responsibility."
 
-At some point I went looking in the OED to see if it contained a meaning like “short note” or anything like that. My wretched memory tells me that yes, there was such a meaning among the many that the OED offered up, but when I went this morning to look again for it for you, not a bit of it. There is one basic meaning, which has to do with with some kind of firework. But one of the citations is
+"At some point I went looking in the OED to see if it contained a meaning like “short note” or anything like that. My wretched memory tells me that yes, there was such a meaning among the many that the OED offered up, but when I went this morning to look again for it for you, not a bit of it. There is one basic meaning, which has to do with with some kind of firework. But one of the citations is"
 
-1599 Master Broughtons Lett. 47 Your bookes [are] but squibs, compounds of gunpowder and pisse.
+"1599 Master Broughtons Lett. 47 Your bookes [are] but squibs, compounds of gunpowder and pisse."
 
-Which I think would be an excellent sentence to have at the beginning of every squib section in each issue of LI.
+"Which I think would be an excellent sentence to have at the beginning of every squib section in each issue of LI."
 #+end_quote
 
 * Readings
 
-** Flexible coordination
+** Flexible coordination<<flex>>
 
 - Primary: Chapter 1 of [cite:@Winter2001]
 - Optional
   * [cite:@ParteeRooth1983]
   * [cite:@Partee1986]
   
-** The type-theoretic approach to multiplicity
+** The type-theoretic approach to multiplicity<<mult>>
 
 - Primary: Chapter 2 of [cite:@Winter2001]
   
-** Hydras and pair-quantification
+** Hydras and pair-quantification<<pair>>
 
 - Primary: [cite:@Champollion2016]
 - Optional:
   * [cite:@Link1984]
   * [cite:@FoxJohnson2016]
     
-** Indefinites and numerals
+** Indefinites and numerals<<num>>
 
 - Primary: Chapter 3 of [cite:@Winter2001]
   
-** Predicate-quantifier flexibility
+** Predicate-quantifier flexibility<<quant>>
 
 - Primary: Chapter 4 of [cite:@Winter2001]
 - Optional:
   * [cite:@Partee1986]
   * [cite:@Winter2022]
 
-** Plural quantification and atom vs. set
+** Plural quantification and atom vs. set<<atom>>
 
 - Primary: Chapter 5 of [cite:@Winter2001]
 - Optional: 
@@ -127,15 +132,15 @@ Which I think would be an excellent sentence to have at the beginning of every s
   * [cite:@Winter1998]
   * [cite:@deVries2015]
     
-** Distributivity
+** Distributivity<<dist>>
 
 - Primary: Chapter 6 of [cite:@Winter2001]
 
-** Cumulativity
+** Cumulativity<<cum>>
 
 - Primary: [cite:@Chatain2021]
   
-** Homogeneity
+** Homogeneity<<homog>>
 
 - [cite:@Kriz2017]
 - [cite:@Bar-Lev2018]
