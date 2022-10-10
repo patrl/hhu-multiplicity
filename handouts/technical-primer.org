@@ -6,19 +6,23 @@
 #+OPTIONS: ':t
 #+cite_export: biblatex
 
+* Reading
+
+- Chaper 4 of Liz Coppock and Lucas Champollion's /Invitation to Formal Semantics/: [[https://eecoppock.info/bootcamp/semantics-boot-camp.pdf]]
+
 * Prerequisites
 
 I'll be teaching this class presupposing the following background:
 
-- At least one introductory course on compositional semantics, with similar coverage to, e.g., /Semantics in Generative Grammar/ [cite:@HeimKratzer1998] or /Invitation to Formal Semantics/ ([[https://eecoppock.info/bootcamp/semantics-boot-camp.pdf]]).
+- At least one introductory course on compositional semantics, with similar coverage to, e.g., /Semantics in Generative Grammar/ [cite:@HeimKratzer1998] or Coppock and Champollion's /Invitation to Formal Semantics/.
 - Basic knowledge of:
   * Set theory.
   * Logic (propositional and first order).
     
-The main formal analytical tool we'll be making use of in this class is the /Simply-Typed Lambda Calculus/. Before we dive into linguistic issues, we'll spend some time going through the basics.
+The main formal analytical tool we'll be making use of in this class is the /Simply-Typed Lambda Calculus/, which you should already have some familiarity with. Before we dive into linguistic issues, we'll spend some time going through the basics.
 
 Note that the specific choices we'll make in developing our calculus result in what is known as /higher-order logic/; the calculus itself can be used to model any (halting!) computations, such as arithmetical computations; we'll be using it specifically to compute /truth-conditions/.[fn:2] 
-    
+
 * Syntax of the Simply-Typed Lambda Calculus (STLC)
 
 The lambda calculus was invented by Alonso Church in the early 20th century as a formal language for talking about functions.
