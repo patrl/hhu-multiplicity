@@ -1,0 +1,39 @@
+#+title: Exercises 1
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+- Adapted from /Invitation to Formal Semantics/.
+  
+* Part 1
+
+For each of the following:
+
+- Is it a well-formed expression of the simply-typed lambda calculus? If so, what is its type?
+- If the formula is well-formed, simplify it as much as possible using beta reduction.
+  
+N.b., assume the following:
+
+- \(x,y: E\) 
+- \(P,Q,X: E \to T\)
+- \(R: E \to E \to T\)
+- \(a,b : E\)
+  
+#+name: exp
+#+begin_exe
+\ex \((\lambda x\,.\,P(x))(a)\)
+\ex \((\lambda x_{}\,.\,P(x)(a)\)
+\ex \(\lambda x_{}\,.\,R(y)(a)\)
+\ex \((\lambda x_{}\,.\,R(y)(a))(b)\)
+\ex \((\lambda x_{}\,.\,R(x)(a))(b)\)
+\ex \((\lambda x_{}\,.\,\lambda y_{}\,.\,R(x)(y))(b)\)
+\ex \((\lambda x_{}\,.\,\lambda y_{}\,.\,R(x)(y))(b)(a)\)
+\ex \((\lambda x_{}\,.\,(\lambda y_{}\,.\,R(x)(y))(b))(a)\)
+\ex \((\lambda X_{}\,.\,\mathbf{some}(\lambda P _{}\,.\,\mathbf{and}(X(x))(P(x))))(\lambda y_{}\,.\,R(a)(y))\)
+\ex \((\lambda X_{}\,.\,\mathbf{some}(\lambda P _{}\,.\,\mathbf{and}(X(x))(P(x))))(\lambda y_{}\,.\,R(a)(y))\)
+\ex \((\lambda X_{}\,.\,\mathbf{some}(\lambda P _{}\,.\,\mathbf{and}(X(x))(P(x))))(\lambda y_{}\,.\,R(y)(y))\)
+#+end_exe
+
+
