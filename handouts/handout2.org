@@ -1,0 +1,139 @@
+#+title: Plurality and collective predicate
+#+subtitle: Handout 2
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Reading
+
+- Chapter 2 of [cite:@Winter2001] (read this before next week's class).
+  
+* The problem of collective predication
+
+Generalized boolean conjunction accounts for the following kinds of equivalences - this is called /distributive predication/.
+
+#+name: mj1
+#+begin_exe
+\ex Mary and John slept.\\
+\(\iff \) Mary slept and John slept.
+#+end_exe
+
+#+name: mj2
+#+begin_exe
+\ex Most women or most men are tall.\\
+\(\iff \) Most women are tall or most men are tall.
+#+end_exe
+
+#+name: mj3 
+#+begin_exe
+\ex Neither the milkman nor the postman arrived.\\
+\(\iff\) Neither did the milkman arrive, nor did the postman.
+#+end_exe
+
+This is because generalized boolean conjunction, at its base, is defined in terms of boolean conjunction: \(\mathbf{and}: T \to T \to T_{}\).
+
+Remember, we invoked /Montague lift/ to convert expressions such as *Mary* and *John* into expressions with a boolean type.
+
+#+name: ml1
+#+begin_exe
+\ex \(\mathbf{Mary}^\uparrow \sqcap \mathbf{John}^\uparrow(\mathbf{sleep})\)
+\ex \(((\lambda P\,.\,P(\mathbf{Mary})) \sqcap (\lambda P\,.\,P(\mathbf{John})))(\mathbf{sleep})\)
+\ex \((\lambda P\,.\,P(\mathbf{Mary}) \wedge P(\mathbf{John}))(\mathbf{sleep})\)
+\ex \(\mathbf{sleep}(\mathbf{Mary}) \wedge \mathbf{sleep}(\mathbf{John})\)
+#+end_exe
+
+Generalized boolean conjunction predicts these kinds of equivalences for /all/ NPs, and for /all/ kinds of coordination.
+
+Note that this general strategy doesn't just apply to binary logical operators, such as *and*, and *or*, but can be applied to unary logical operators, such as *not*.
+
+Sometimes, we can analyze negation as a sentential operator of type \(T \to T\):
+
+#+name: sleep1
+#+begin_exe
+\ex It's not the case that John slept.
+\ex \(\mathbf{not}(\mathbf{sleep}(\mathbf{John})))\)
+#+end_exe
+
+But what about cases like the following?
+
+#+name: sleep2
+#+begin_exe
+\ex John doesn't sleep.\\
+\(\mathbf{not}_?(\mathbf{sleep})(\mathbf{John})\)
+#+end_exe
+
+#+name: sleep3
+#+begin_exe
+\ex John isn't tall.\\
+\(\mathbf{not}_?(\mathbf{tall})(\mathbf{John})\)
+#+end_exe
+
+There are various syntactic moves we could make to try to analyze all of the above cases in terms of sentential negation. But, what about the following kind of case
+
+#+name: not-mary
+#+begin_exe
+\ex John and not Mary slept.
+#+end_exe
+
+#+begin_tcolorbox
+*Exercise:* give a recursive definition for /generalized boolean negation/. Use boolean negation \(\mathbf{not}:T \to T\) as the base of the recursion. Show how it accounts for [[sleep1]], [[sleep2]], [[sleep3]].
+
+Finally, propose a Logical Form and analysis for [[not-mary]]. You'll need to use Montague lift!
+#+end_tcolorbox
+
+There are however many simple and complex predicates that do not give rise to /distributive predication/.
+
+#+name: coll
+#+begin_exe
+\ex Mary and John weigh exactly 140kg.\\
+\(\not\iff\) Mary weights exactly 140 kg, and John weighs exactly 140kg.
+#+end_exe
+
+Note that some theories assume that ([[coll]]) is /ambiguous/ between a "distributive reading", on which distributive predication is valid, and a "collctive reading", on which it is not.
+
+#+name: coll2
+#+begin_exe
+\ex Mary and John met.\\
+\(\not\iff\) *Mary met and John met.
+#+end_exe
+
+More complicated examples muddy the water, since certain distributive inferences are valid:
+
+#+name: coll3
+#+begin_exe
+\ex Mary and the postman or the milkman met.\\
+\(\iff \) Mary and the postman met, or Mary and the milkman met.
+#+end_exe
+
+Other problematic examples:
+
+#+name: coll4
+#+begin_exe
+\ex An american and a Russian played a duo together.
+\ex Every American and every Russian spoke English to each other.
+\ex The Americans and the Russians fought each other.
+\ex Two Americans and three Russians made an excellent basketball team.
+#+end_exe
+
+Note that here, the presence of /and/ is crucial for obtaining collecitve effects.
+
+#+name: coll5
+#+begin_exe
+\ex The Americans or the Russians fought each other.\\
+\(\iff \) The Americans fought each other, or the Russians fought each other
+\ex Neither the Americans nor the Russians fought each other.\\
+\(\iff \) Neither did the Americans fight each other, nor did the Russians.
+\ex The Americans and the Russians fought each other.\\
+\(\not\iff\) The Americans fought each other, and the Russians fought each other.
+#+end_exe
+
+Questions at this point:
+
+1. What are the sources of the distributive/collective distinction?
+2. Is the boolean assumption inadequate for conjunctive coordination?
+  
+#+print_bibliography:
+
+
