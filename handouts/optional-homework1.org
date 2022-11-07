@@ -1,0 +1,36 @@
+#+title: Optional homework
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Set intersection and generalized conjunction
+
+The set characterized by a function \(f:\mathbf{Dom}_\sigma \mapsto \mathbf{Dom}_E\) is defined as follows:
+
+\[Set(f) = \set{x \in \mathbf{Dom}_\sigma | f(x) = \mathbf{true}}\]
+
+Generalized conjunction for predicates \(\sqcap_{ET}\) encodes set intersection.
+
+Use the definition of generalized conjunction from the first handout to demonstrate that the following are equivalent:
+
+- \(Set\eval*{\mathbf{sleep}_{ET}} \cap Set\eval*{\mathbf{laugh}_{ET}}\)
+- \(Set\eval*{\mathbf{sleep}_{ET} \sqcap_{ET} \mathbf{laugh}_{ET}}\)
+  
+* Generalized negation
+
+Use the definition of generalized conjunction in handout 1 as a basis for definining /generalized negation/. Use boolean negation as a base:
+
+- \(\mathbf{not}: T \to T\)
+  
+Show how this accounts for predicate negation:
+
+- "John is not tall"
+  
+Assume the translation: \(\mathbf{not}(\mathbf{tall})(\mathbf{John})\)
+
+
+#+print_bibliography:
+
+
