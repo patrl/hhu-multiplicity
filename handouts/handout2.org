@@ -133,7 +133,185 @@ Questions at this point:
 
 1. What are the sources of the distributive/collective distinction?
 2. Is the boolean assumption inadequate for conjunctive coordination?
+   
+* A type-theoretic approach to plural individuals
+
+** Collective predicates
+
+Verbs:
+
+#+name: verbs
+#+begin_exe
+\ex Lexically collective: /gather/, /disperse/, /meet/ (when used intransitively), /outnumber/ (both arguments).
+\ex Lexically "mixed" collective/distributive: the subject argument of /write/, /lift/, /eat/, and /carry/.
+\ex /together/ modification: /sing together/, /live together/, /write NP together/.
+\ex /between them/ modification: /grade over 200 papers between them/, /ate 15 pizzas between them/.
+\ex Reciprocal modification: /like each other/, /look at one another/.
+#+end_exe
+
+Adjectives:
+
+#+name: adjectives
+#+begin_exe
+\ex Lexically collective: /numerous/, /similar/, /alike/, /parallel/, /antagonistic/, /equivalent/, /neighboring/.
+\ex /together/ modification: /happy together/, /irritating together/.
+\ex Reciprocal modification: /nice to each other/, /fond of one another/.
+#+end_exe
+
+Predicative constructions with nominals:
+
+#+name: nom
+#+begin_exe
+\ex Group denoting nominals: /seem a big group/, /be the organizing committee/, /be a nice couple/.
+\ex Relational nominals: /be brothers/, /sisters/, /friends/.
+\ex Nominals modified by collective adjectives: /be numerous people/, /similar students/, /parallel lines/.
+\ex Reciprocal possessives: /be teachers of each other/, /be admirers of one another/.
+#+end_exe
+
+A broader notion of distributivity with plural NPs:
+
+#+name: dist1
+#+begin_exe
+\ex The old members of this institution retired last year.
+\ex Every old member of this institution retired last year.
+#+end_exe
+
+#+name: dist2
+#+begin_exe
+\ex The old members of this institution constitute the managing board.
+\ex Every old member of this institution constitutes the managing board.
+#+end_exe
+
+** Plural individuals
+
+Fundamental hypothesis: a plural individual is a /set of individuals/.
+
+#+name: jms
+#+begin_exe
+\ex John, Mary and Sue = \(\set{\mathbf{J}, \mathbf{M}, \mathbf{S}}\)
+\ex The boys = \(\set{\mathbf{J},\mathbf{B},\mathbf{H}}\)
+#+end_exe
+
+How do we model sets of individuals in the Simply-Typed \(\lambda\)-calculus? Recall, the denotation of an expression of type \(E \to T\) is a function \(f:\mathbf{Dom}_E \mapsto \mathbf{Dom}_E\).
+
+A /set/ of individuals can be modelled as a function from individuals to truth-values, where members of the set are mapped to *true*, and non-members are mapped to *false*. This is called the *characteristic function* of the set.
+
+Here's the characteristic function of the set of /John/, /Mary/, and /Sue/:
+
+\[\left[\begin{aligned}[c]
+&\mathbf{J} &\mapsto \mathbf{true}\\
+&\mathbf{M} &\mapsto \mathbf{true}\\
+&\mathbf{S} &\mapsto \mathbf{true}\\
+&\mathbf{B} &\mapsto \mathbf{false}\\
+&\mathbf{H} &\mapsto \mathbf{false}\\
+&\ldots
+\end{aligned}\right]\]
+
+Here's the characteristic function of the set of /John/, /Bill/, and /Harry/ (i.e., /the boys/):
+
+\[\left[\begin{aligned}[c]
+&\mathbf{J} &\mapsto \mathbf{true}\\
+&\mathbf{M} &\mapsto \mathbf{false}\\
+&\mathbf{S} &\mapsto \mathbf{false}\\
+&\mathbf{B} &\mapsto \mathbf{true}\\
+&\mathbf{H} &\mapsto \mathbf{true}\\
+&\ldots
+\end{aligned}\right]\]
   
+Our hypothesis will be that a /group-denoting NP/ is translated to an /expression of type \(E \to T\)/
+
+Since /characteristic functions/ are ways of encoding sets, we can also translate familiar set-theoretic notions of /intersection/ and /union/ into operations on functions. Look familiar?  
+
+#+name: op1
+#+begin_exe
+\ex \(P_{ET} \sqcap Q_{ET}= \lambda x\,.\,P(x) \wedge Q(x)\)
+\ex \(P_{ET} \sqcup Q_{ET}= \lambda x\,.\,P(x) \vee Q(x)\)
+#+end_exe
+
+#+begin_tcolorbox
+*Exercise:* Give an informal proof that \(\sqcap\) and \(\sqcup\) deliver the same results as intersection and union.
+#+end_tcolorbox
+
+If group-denoting NPs are of type \(E \to T\), there's an obvious way to encode the selectional requirements of strictly collective predicates - we can translate them as expressions of type \((E \to T) \to T\).
+
+|            | Singular/Distributive | Plural/Collective     |
+|------------+-----------------------+-----------------------|
+| Individual | \(E\)                 | \(E \to T\)             |
+| Predicate  | \(E \to T\)             | \((E \to T) \to T\)       |
+| Quantifier | \((E \to T) \to T\)       | \(((E \to T) \to T) \to T\) |
+
+** Collective predication in practice
+
+Collective predicates denote /higher-order functions/ from functions \(f: \mathbf{Dom}_E \to \mathbf{Dom}_T\) to \(\mathbf{Dom}_T\).
+
+What does this mean? /met/ takes a function \(P_{ET}\), and maps it to true, just in case the individuals that \(P\) maps to true met each other.
+
+Imagine that the set of individuals is \(\set{a,b,c}\), and the only meetings that happened were between \(a,b\) and \(a,c\). The denotation of \(\mathbf{met}_{ET \to T}\) would be as follows:
+
+\[\left[\begin{aligned}[c]
+\left[\begin{aligned}[c]
+&a \to \mathbf{t}\\
+&b \to \mathbf{t}\\
+&c \to \mathbf{t}
+\end{aligned}\right] \to \mathbf{f}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{t}\\
+&b \to \mathbf{t}\\
+&c \to \mathbf{f}
+\end{aligned}\right] \to \mathbf{t}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{t}\\
+&b \to \mathbf{f}\\
+&c \to \mathbf{t}
+\end{aligned}\right] \to \mathbf{t}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{f}\\
+&b \to \mathbf{t}\\
+&c \to \mathbf{t}
+\end{aligned}\right] \to \mathbf{f}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{t}\\
+&b \to \mathbf{f}\\
+&c \to \mathbf{f}
+\end{aligned}\right] \to \mathbf{f}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{f}\\
+&b \to \mathbf{t}\\
+&c \to \mathbf{f}
+\end{aligned}\right] \to \mathbf{f}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{f}\\
+&b \to \mathbf{f}\\
+&c \to \mathbf{t}
+\end{aligned}\right] \to \mathbf{f}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{f}\\
+&b \to \mathbf{f}\\
+&c \to \mathbf{f}
+\end{aligned}\right] \to \mathbf{f}\\
+\end{aligned}\right]\]
+
+Due to the equivalence between characteristic functions and sets, we can also write the denotation of a collective predicate as a /set of sets/. This will often be much more convenient. I.e., the following set of sets encodes the same information.
+
+\[\set{\set{a,b},\set{a,c}}\]
+
+As a starting point, we'll assume that plural definites such as "the boys", and conjunctions of singular definites such as "John, Mary, and Sue", are translated as expressions of type \(E \to T\), and therefore denote sets of individuals.
+
+#+name: exps
+#+begin_exe
+\ex \(\mathbf{theBoys}_{ET}\)
+\ex \(\mathbf{JohnMaryAndSue}_{ET}\)
+#+end_exe
+
+The question (reflected in the title of this seminar), is how to derive this result compositionally.
+
+If singular definites are of type \(E\), then this explains the incompatibility of collective predicates with singular definites - the result will never be well-typed.
+
+We'll continue to assume that predicates which give rise to /distributive inferences/ are of type \(E \to T\).
+
+A question which we won't yet be able to answer is how distributive predicates compose with /group-denoting NPs/, giving rise to distributive inferences.
+
+
 #+print_bibliography:
 
 
