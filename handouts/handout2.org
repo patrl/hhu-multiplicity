@@ -1,5 +1,5 @@
-#+title: Plurality and collective predicate
-#+subtitle: Handout 2
+#+title: Plurality and collective predication cont.
+#+subtitle: Handout 3
 #+author: Patrick D. Elliott
 #+bibliography: ../../bibliography/master.bib
 #+setupfile: ./handout-template.org
@@ -8,33 +8,41 @@
 
 * Reading
 
-- Chapter 2 of [cite:@Winter2001] (read this before next week's class).
+- [cite:@Champollion2016]
   
-* The problem of collective predication
+* Recap: distributive and collective predication
 
-Generalized boolean conjunction accounts for the following kinds of equivalences - this is called /distributive predication/.
+** Distributive and collective predication
+
+Generalized conjunction (\(\sqcap\)) and generalized disjunction (\(\sqcup\)), which are recursive generalizations of boolean conjunction/disjunction respectively, predict \textit{distributive inferences} across a broad variety of example sentences.
+
+#+name: gen-conj
+#+begin_exe
+\ex *Generalized conjunction:*\\
+ \(P_\tau \sqcap Q_\tau = \begin{cases}
+P \wedge Q&\text{if }\tau = T\\
+\lambda x\,.\,P(x) \sqcap_\rho Q(x)&\text{if }\tau = \sigma \rightarrow \rho  
+\end{cases}\)
+#+end_exe
 
 #+name: mj1
 #+begin_exe
 \ex Mary and John slept.\\
 \(\iff \) Mary slept and John slept.
-#+end_exe
-
-#+name: mj2
-#+begin_exe
 \ex Most women or most men are tall.\\
 \(\iff \) Most women are tall or most men are tall.
-#+end_exe
-
-#+name: mj3 
-#+begin_exe
 \ex Neither the milkman nor the postman arrived.\\
 \(\iff\) Neither did the milkman arrive, nor did the postman.
 #+end_exe
 
-This is because generalized boolean conjunction, at its base, is defined in terms of boolean conjunction: \(\mathbf{and}: T \to T \to T_{}\).
+** Montague Lift
 
-Remember, we invoked /Montague lift/ to convert expressions such as *Mary* and *John* into expressions with a boolean type.
+/Montague lift/ converts expressions such as *Mary* and *John* into expressions with a boolean type, allowing them to be subject to generalized conjunction.
+
+#+name: lift
+#+begin_exe
+\ex \(\mathbf{Mary}^\uparrow := \lambda P_{_{ET}}\,.\,P(\mathbf{Mary})\)
+#+end_exe
 
 #+name: ml1
 #+begin_exe
@@ -44,99 +52,7 @@ Remember, we invoked /Montague lift/ to convert expressions such as *Mary* and *
 \ex \(\mathbf{sleep}(\mathbf{Mary}) \wedge \mathbf{sleep}(\mathbf{John})\)
 #+end_exe
 
-Generalized boolean conjunction predicts these kinds of equivalences for /all/ NPs, and for /all/ kinds of coordination.
-
-Note that this general strategy doesn't just apply to binary logical operators, such as *and*, and *or*, but can be applied to unary logical operators, such as *not*.
-
-Sometimes, we can analyze negation as a sentential operator of type \(T \to T\):
-
-#+name: sleep1
-#+begin_exe
-\ex It's not the case that John slept.
-\ex \(\mathbf{not}(\mathbf{sleep}(\mathbf{John})))\)
-#+end_exe
-
-But what about cases like the following?
-
-#+name: sleep2
-#+begin_exe
-\ex John doesn't sleep.\\
-\(\mathbf{not}_?(\mathbf{sleep})(\mathbf{John})\)
-#+end_exe
-
-#+name: sleep3
-#+begin_exe
-\ex John isn't tall.\\
-\(\mathbf{not}_?(\mathbf{tall})(\mathbf{John})\)
-#+end_exe
-
-There are various syntactic moves we could make to try to analyze all of the above cases in terms of sentential negation. But, what about the following kind of case
-
-#+name: not-mary
-#+begin_exe
-\ex John and not Mary slept.
-#+end_exe
-
-#+begin_tcolorbox
-*Exercise:* give a recursive definition for /generalized boolean negation/. Use boolean negation \(\mathbf{not}:T \to T\) as the base of the recursion. Show how it accounts for [[sleep1]], [[sleep2]], [[sleep3]].
-
-Finally, propose a Logical Form and analysis for [[not-mary]]. You'll need to use Montague lift!
-#+end_tcolorbox
-
-There are however many simple and complex predicates that do not give rise to /distributive predication/.
-
-#+name: coll
-#+begin_exe
-\ex Mary and John weigh exactly 140kg.\\
-\(\not\iff\) Mary weights exactly 140 kg, and John weighs exactly 140kg.
-#+end_exe
-
-Note that some theories assume that ([[coll]]) is /ambiguous/ between a "distributive reading", on which distributive predication is valid, and a "collctive reading", on which it is not.
-
-#+name: coll2
-#+begin_exe
-\ex Mary and John met.\\
-\(\not\iff\) *Mary met and John met.
-#+end_exe
-
-More complicated examples muddy the water, since certain distributive inferences are valid:
-
-#+name: coll3
-#+begin_exe
-\ex Mary and the postman or the milkman met.\\
-\(\iff \) Mary and the postman met, or Mary and the milkman met.
-#+end_exe
-
-Other problematic examples:
-
-#+name: coll4
-#+begin_exe
-\ex An american and a Russian played a duo together.
-\ex Every American and every Russian spoke English to each other.
-\ex The Americans and the Russians fought each other.
-\ex Two Americans and three Russians made an excellent basketball team.
-#+end_exe
-
-Note that here, the presence of /and/ is crucial for obtaining collecitve effects.
-
-#+name: coll5
-#+begin_exe
-\ex The Americans or the Russians fought each other.\\
-\(\iff \) The Americans fought each other, or the Russians fought each other
-\ex Neither the Americans nor the Russians fought each other.\\
-\(\iff \) Neither did the Americans fight each other, nor did the Russians.
-\ex The Americans and the Russians fought each other.\\
-\(\not\iff\) The Americans fought each other, and the Russians fought each other.
-#+end_exe
-
-Questions at this point:
-
-1. What are the sources of the distributive/collective distinction?
-2. Is the boolean assumption inadequate for conjunctive coordination?
-   
-* A type-theoretic approach to plural individuals
-
-** Collective predicates
+** Collective predication
 
 Verbs:
 
@@ -168,19 +84,7 @@ Predicative constructions with nominals:
 \ex Reciprocal possessives: /be teachers of each other/, /be admirers of one another/.
 #+end_exe
 
-A broader notion of distributivity with plural NPs:
-
-#+name: dist1
-#+begin_exe
-\ex The old members of this institution retired last year.
-\ex Every old member of this institution retired last year.
-#+end_exe
-
-#+name: dist2
-#+begin_exe
-\ex The old members of this institution constitute the managing board.
-\ex Every old member of this institution constitutes the managing board.
-#+end_exe
+* A type-theoretic approach to plural individuals
 
 ** Plural individuals
 
@@ -228,10 +132,6 @@ Since /characteristic functions/ are ways of encoding sets, we can also translat
 \ex \(P_{ET} \sqcup Q_{ET}= \lambda x\,.\,P(x) \vee Q(x)\)
 #+end_exe
 
-#+begin_tcolorbox
-*Exercise:* Give an informal proof that \(\sqcap\) and \(\sqcup\) deliver the same results as intersection and union.
-#+end_tcolorbox
-
 If group-denoting NPs are of type \(E \to T\), there's an obvious way to encode the selectional requirements of strictly collective predicates - we can translate them as expressions of type \((E \to T) \to T\).
 
 |            | Singular/Distributive | Plural/Collective     |
@@ -253,12 +153,12 @@ Imagine that the set of individuals is \(\set{a,b,c}\), and the only meetings th
 &a \to \mathbf{t}\\
 &b \to \mathbf{t}\\
 &c \to \mathbf{t}
-\end{aligned}\right] \to \mathbf{f}\\
+\end{aligned}\right] \to \mathbf{f}
 \left[\begin{aligned}[c]
 &a \to \mathbf{t}\\
 &b \to \mathbf{t}\\
 &c \to \mathbf{f}
-\end{aligned}\right] \to \mathbf{t}\\
+\end{aligned}\right] \to \mathbf{t}
 \left[\begin{aligned}[c]
 &a \to \mathbf{t}\\
 &b \to \mathbf{f}\\
@@ -268,12 +168,12 @@ Imagine that the set of individuals is \(\set{a,b,c}\), and the only meetings th
 &a \to \mathbf{f}\\
 &b \to \mathbf{t}\\
 &c \to \mathbf{t}
-\end{aligned}\right] \to \mathbf{f}\\
+\end{aligned}\right] \to \mathbf{f}
 \left[\begin{aligned}[c]
 &a \to \mathbf{t}\\
 &b \to \mathbf{f}\\
 &c \to \mathbf{f}
-\end{aligned}\right] \to \mathbf{f}\\
+\end{aligned}\right] \to \mathbf{f}
 \left[\begin{aligned}[c]
 &a \to \mathbf{f}\\
 &b \to \mathbf{t}\\
@@ -283,12 +183,12 @@ Imagine that the set of individuals is \(\set{a,b,c}\), and the only meetings th
 &a \to \mathbf{f}\\
 &b \to \mathbf{f}\\
 &c \to \mathbf{t}
-\end{aligned}\right] \to \mathbf{f}\\
+\end{aligned}\right] \to \mathbf{f}
 \left[\begin{aligned}[c]
 &a \to \mathbf{f}\\
 &b \to \mathbf{f}\\
 &c \to \mathbf{f}
-\end{aligned}\right] \to \mathbf{f}\\
+\end{aligned}\right] \to \mathbf{f}
 \end{aligned}\right]\]
 
 Due to the equivalence between characteristic functions and sets, we can also write the denotation of a collective predicate as a /set of sets/. This will often be much more convenient. I.e., the following set of sets encodes the same information.
@@ -303,13 +203,128 @@ As a starting point, we'll assume that plural definites such as "the boys", and 
 \ex \(\mathbf{JohnMaryAndSue}_{ET}\)
 #+end_exe
 
-The question (reflected in the title of this seminar), is how to derive this result compositionally.
+* The quantifier-collectivity connection and NP conjunction
 
-If singular definites are of type \(E\), then this explains the incompatibility of collective predicates with singular definites - the result will never be well-typed.
+** Generalized quantifiers and collective predicates
 
-We'll continue to assume that predicates which give rise to /distributive inferences/ are of type \(E \to T\).
+On the approach to collective predicates outlined here, not that a collective predicate and a generalized quantifier are of the same type.
 
-A question which we won't yet be able to answer is how distributive predicates compose with /group-denoting NPs/, giving rise to distributive inferences.
+#+name: qu
+#+begin_exe
+\ex \(\mathbf{meet}_{ET \to T} := \lambda X\,.\,\mathbf{meet}(X)\)
+\ex \(\mathbf{noBoy}_{ET \to T} := \lambda X\,.\,\neg\exists x[\mathbf{boy}(x) \wedge X(x)]\)
+#+end_exe
+
+In set-talk:
+
+#+name: set
+#+begin_exe
+\ex \(Set(\eval*{\mathbf{meet}}) = \set{X | \text{individuals in } X\text{ met}}\)
+\ex \(Set(\eval*{\mathbf{noBoy}}) = \set{X | \text{there are no boys in }X }\)
+#+end_exe
+
+For this reason, we (correctly in this case) predict that a quantificational NP and a collective predicate can't compose.
+
+#+name: noBoy
+#+begin_exe
+\ex *No boy met.
+#+end_exe
+
+** The problem of NP conjunction
+
+Now we're in a position to start thinking about how to account for the fact that conjoined NPs are compatible with collective predicates.
+
+#+name: ms
+#+begin_exe
+\ex Mary and Sue met.
+#+end_exe
+
+Recall that conjunction can't even compose with *Mary* and *Sue* unless they undergo Montague lift.
+
+Once we lift the NPs, doing generalized conjunction gives us back a generalized quantifier.
+
+#+name: g
+#+begin_exe
+\ex \(\mathbf{Mary}^\uparrow \sqcap \mathbf{Sue}^\uparrow = \lambda P_{ET}\,.\,P(\mathbf{Mary}) \wedge P(\mathbf{Sue})\)
+#+end_exe
+
+In set-talk:
+
+#+name: set
+#+begin_exe
+\ex \(\set{P |\mathbf{Mary} \in P \text{ and }\mathbf{Sue} \in P}\)
+#+end_exe
+
+Note that aside from the typing problem, these aren't the right kind of sets to feed in as the argument of *meet* - they contain too many other individuals!
+
+What we want is a type shifting function which takes the type \(ET \to T\) expression in ([[g]]), and gives back a /generalized quantifier over collections/ of type \((ET \to T) \to T\).
+
+Winter posits two type-shifters to derive this (which we'll discuss in more detail next week).
+
+- Minimum sort.
+- Existential raising.
+  
+** Minimum sort
+
+*Min* is an operator that takes a generalized quantifier \(Q\) of type \(ET \to T\), and gives back the /minimal members/ of \(Q\). This is defined formally as in ([[min]]) (note that Winter gives a generalized version of ([[mmm[[min]]), but we'll only need the formulation for quantifiers over individuals).
+
+#+name: min
+#+begin_exe
+\ex \(\mathbf{Min}_{ETT \rightarrow ETT} := \lambda Q_{ETT}_{}\lambda A_{ET}\,.\, Q(A) \wedge \forall B \in Q[B \subseteq A \rightarrow B = A]\)
+#+end_exe
+
+- What is the result of applying *Min* to /a boy/?
+- What is the result of applying *Min* to /every boy/?
+- What is the result of applying *Min* to lifted *Mary*?
+- What is the result of applying *Min* to 'Mary and Sue'?
+  
+#+name: min2
+#+begin_exe
+\ex \(\mathbf{Min}(\lambda P\,.\,P(\mathbf{Mary}) \wedge P(\mathbf{Sue})) = \set{\set{\mathbf{Mary},\mathbf{Sue}}}\)
+#+end_exe
+
+This still isn't of the right type to combine with a collective predicate, but we're getting closer.
+
+** Existential raising
+
+#+name: ex
+#+begin_exe
+\ex \(\mathbf{E}_{ETT \rightarrow ETT \to T} := \lambda A\,.\,\lambda P\,.\,\exists X[A(X) \wedge P(X)]\)
+#+end_exe
+
+** NP conjunction with collective predicates
+
+#+name: coll
+#+begin_exe
+\ex \(\mathbf{E}(\mathbf{Min}(\mathbf{Mary}^\uparrow \sqcap \mathbf{Sue}^\uparrow))(\mathbf{met})\)
+#+end_exe
+
+** Collectivity in Boolean domains
+
+Why do we need to do minimum sort, and /then/ existentially raise? Since the minimum sort of a generalized conjunction of lifted individuals is a singleton set, why don't we define an operator which returns the unique minimal set of a quantifier.
+
+Winter shows that this doesn't generalize to more complex examples involving conjunction /and/ disjunction.
+
+#+name: mjs
+#+begin_exe
+\ex Mary and either Sue or John met.
+#+end_exe
+
+Verify that the minimum sort has more than one member:
+
+#+name: lf
+#+begin_exe
+\ex \(\mathbf{Min}(\mathbf{Mary} \sqcap (\mathbf{Sue} \sqcup \mathbf{John}))\)
+#+end_exe
+
+** Super-generalized disjunction
+
+#+name: ei
+#+begin_exe
+\ex Either Mary and Sue, or Sue and Bill met.
+#+end_exe
+  
+
 
 
 #+print_bibliography:
