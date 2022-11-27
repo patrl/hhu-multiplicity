@@ -1,0 +1,506 @@
+% Created 2022-10-10 Mon 15:49
+% Intended LaTeX compiler: pdflatex
+\documentclass[letterpaper,parskip=half]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{braket}
+\input{boilerplate}
+\author{Patrick D. Elliott}
+\date{\today}
+\title{Technical primer\\\medskip
+\large Syntax, semantics, and proof theory of the Simply-Typed Lambda Calculus}
+\hypersetup{
+ pdfauthor={Patrick D. Elliott},
+ pdftitle={Technical primer},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.5.5)}, 
+ pdflang={English}}
+\usepackage{biblatex}
+\addbibresource{/home/patrl/repos/bibliography/master.bib}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Reading}
+\label{sec:org9726fc1}
+
+\begin{itemize}
+\item Chaper 4 of Liz Coppock and Lucas Champollion's \emph{Invitation to Formal Semantics}: \url{https://eecoppock.info/bootcamp/semantics-boot-camp.pdf}
+\end{itemize}
+
+\section{Prerequisites}
+\label{sec:org46e1b89}
+
+I'll be teaching this class presupposing the following background:
+
+\begin{itemize}
+\item At least one introductory course on compositional semantics, with similar coverage to, e.g., \emph{Semantics in Generative Grammar} \autocite{HeimKratzer1998} or Coppock and Champollion's \emph{Invitation to Formal Semantics}.
+\item Basic knowledge of:
+\begin{itemize}
+\item Set theory.
+\item Logic (propositional and first order).
+\end{itemize}
+\end{itemize}
+
+The main formal analytical tool we'll be making use of in this class is the \emph{Simply-Typed Lambda Calculus}, which you should already have some familiarity with. Before we dive into linguistic issues, we'll spend some time going through the basics.
+
+Note that the specific choices we'll make in developing our calculus result in what is known as \emph{higher-order logic}; the calculus itself can be used to model any (halting!) computations, such as arithmetical computations; we'll be using it specifically to compute \emph{truth-conditions}.\footnote{Unlike the untyped/monotyped lambda calculus, the simply-typed lambda calculus is \emph{strongly normalizing} (every expression can be simplified to a maximally simple form) and therefore not Turing complete. Non-terminating computations can't be represented - thankfully, this is quite irrelevant to natural language.} 
+
+\section{Syntax of the Simply-Typed Lambda Calculus (STLC)}
+\label{sec:org06b850b}
+
+The lambda calculus was invented by Alonso Church in the early 20th century as a formal language for talking about functions.
+
+The simply-typed variant has been overwhelmingly adopted in formal semantics as a kind of \emph{lingua france} for reasoning about how complex meanings are composed from simpler meanings.
+
+Note that the discussion here is primarily based on Chapters 2 and 3 of \autocite{Carpenter1998}.
+
+\subsection{Types}
+\label{sec:org87c3703}
+
+You can think of types as the \emph{syntactic categories} of the STLC - they provide formal constraints on what kind of things can combine.
+
+There are just two kinds of types we'll see in this course:
+
+\begin{itemize}
+\item Basic types: \(E, T\)
+\item Function types.
+\end{itemize}
+
+The basic types are just that - primitives. \(E\) is used to classify expressions of the STLC which denote \emph{individuals}, and \(T\) is is used to classify expressions which denote \emph{truth-values}.
+
+We'll exploit a general recipe for talking about \emph{function types}.
+
+\begin{definition}
+\textbf{Function types}. If \(\sigma\) and \(\tau\) are \textbf{types}, then \(\sigma \to \tau\) is a \textbf{function type}.
+\end{definition}
+
+Note that we can use our function type recipe to generate an \emph{infinite} number of types! Unlike in many grammatical formalisms (with the notable exception of categorial grammars), we have, in essence, an infinite number of syntactic categories.\footnote{Note: you might be more familiar with the notation from \autocite{HeimKratzer1998}, who use \(\langle\sigma,\tau \rangle\) as the constructor for function types - arrow notation is standard in the mathematical literature. It's easy to translate between the two:
+
+\[\langle\sigma ,\tau \rangle := \sigma \to \tau \]}
+
+We use function types to classify expressions which denote functions. For example, \(T \to T\) is the type of a function from truth-values to truth-values (this might be exploited for something like negation).
+
+N.b. that \(\to\) is \emph{right-associative}, which means that, e.g., \(E \to E \to  T\) is parsed as \(E \to (E \to T)\) (not \((E \to  E) \to  T\)!).
+
+Some types that we'll frequently see:
+
+\begin{itemize}
+\item \(E_1 \to \ldots E_n \to T\): the type of a verbal predicate that takes \(n\)-arguments.
+\item \((E \to T) \to T\): the type of a quantificational expression.
+\item \((E \to T) \to (E \to T) \to T\): the type of a determiner.
+\item \(T \to T \to T\): the type of a logical connective
+\end{itemize}
+
+
+\subsection{Variables and constants}
+\label{sec:org022ee7f}
+
+Expressions of the STLC are built up out of variables and constants, which you can conveniently think of as the ``lexical items''.
+
+Variables and constants are categorized by \emph{type}.
+
+Every type is associated with a (countably infinite!) set of variables.
+
+You can use anything you like as a variable name. We'll typically use \(x,y,z,\ldots\) for variables of type \(E\), \(P,Q,R,\ldots\) for variables of type \(E \to T\), etc., but ultimately it doesn't matter much what we use as variable names. 
+
+Constants will typically be used to talk about 'lexical' concepts, i.e., \(\mathbf{Louise}\) is a constant of type \(E\), \(\mathbf{run}\) is a constant of type \(E \to T\), and \(\mathbf{not}\) is a constant of type \(T \to T\).
+
+You can be explicit about the types of constants and variables using type annotations, but these can be omitted when the type is obvious:
+
+
+\begin{itemize}
+\item \(\mathbf{Louise}_E\), \(\mathbf{run}_{E \to T}\)
+\item \(x_E\), \(R_{E \to E \to T}\)
+\end{itemize}
+
+It's also common to use a colon when declaring the type of an expression:
+
+\begin{itemize}
+\item \(\mathbf{Louise} : E\)
+\end{itemize}
+
+\subsection{functional applications}
+\label{sec:orgc4f0021}
+
+The types of expressions delimits the role they can play in building complex expressions (again, this should be familiar from natural language syntax).
+
+The most fundamental such complex expression is a \textbf{functional application}; you can think of this is the STLC counterpart of \emph{merge}; when we translate binary branching trees into expressions of the STLC, each non-terminal node will typically correspond to a functional application.
+
+\begin{definition}
+\textbf{functional application}: If \(\alpha\) is an expression of type \(\sigma \to  \tau\), and, \(\beta\) is an expression of type \(\sigma\), then \(\alpha (\beta)\) is a \emph{functional application} of type \(\tau\).
+\end{definition}
+
+Crucially, the type system restricts what counts as a well-formed application (just like syntactic categories restrict what can merge with what).
+
+For example, \(\mathbf{not}(\mathbf{Josie})\) is an ill-formed application, assuming that \(\mathbf{not}: T \to T\), and \(\mathbf{Josie}: E\).
+
+Are the following well-formed expressions of the lambda calculus? What is their type?
+
+\begin{exe}
+\ex \(\mathbf{hugs}_{E \to E \to T}(\mathbf{Louise}_{E})\)
+\ex \(\mathbf{Josie}_E(\mathbf{left}_{E \to T})\)
+\ex \(\mathbf{not}_{T \to T}(\mathbf{sad}_{E \to T}(\mathbf{Sarah}_E))\)
+\ex \(\mathbf{and}_{T \to T \to T}(\mathbf{run}_{E \to T}(\mathbf{Louise}_E))\)
+\label{orgb078144}
+\end{exe}
+
+Unlike in predicate logic, we have no way of talking about \(n\)-ary predicates in the \(STLC\), rather an \(n\)-ary predicate is always encoded as a \emph{curried} function; complex expressions are then built up by successive applications. In other words, when we consider the syntax of the STLC, binary branching is forced.
+
+\begin{exe}
+\ex \(\mathbf{give}: E \to E \to E \to T\)
+\ex \(\mathbf{kiss}: E \to  E \to T\)
+\ex \(\mathbf{and}: T \to T \to T\)
+\label{org8ca0740}
+\end{exe}
+
+One way of visualizing the structure of a complex expression is as a tree diagram, where each non-terminal node represents a functional application.
+
+\begin{exe}
+\ex
+  \begin{forest}
+    [{\((((\mathbf{show}(\mathbf{thePendant}))(\mathbf{Chrono}))(\mathbf{Marle}): T\)\\functional application}
+      [{\((\mathbf{show}(\mathbf{thePendant}))(\mathbf{Chrono}): E \to T\)\\functional application}
+        [{\(\mathbf{show}(\mathbf{thePendant}) : E \to E \to T\)\\functional application}
+          [{\(\mathbf{show}: E \to E \to E \to T\)}]
+          [{\(\mathbf{ThePendant} : E\)}]
+    ]
+        [{\(\mathbf{Chrono} : E\)}]
+    ]
+      [{\(\mathbf{Marle} :E\)}]
+    ]
+  \end{forest}
+  \end{exe}
+
+That's a lot of parentheses! We'll typically assume that functional application associates to the left, so we can rewrite the above as:
+
+\begin{exe}
+\ex \(\mathbf{show}(\mathbf{thePendant})(\mathbf{Chrono})(\mathbf{Marle})\)
+\label{org32b0faa}
+\end{exe}
+
+This brings out what's so compelling about the STLC as a tool for analyzing natural languages - there's a parallelism between the structures implicit in natural language syntax, and the structure of the logical language. This makes it especially easy to translate expressions of natural language into expressions of the STLC.
+
+Compare and contrast the flat structure of a first-order logic expression such as \(S(m,c,p)\)
+
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\ldots}
+    [{\(S\)}]
+    [{\(m\)}]
+    [{\(c\)}]
+    [{\(p\)}]
+    ]
+  \end{forest}
+\end{exe}
+
+In the STLC, the functional expression is always to the left, and the argumental expression to its right. In natural language, this is (arguably) flexible, which we exploit in translating natural language to the STLC:
+
+\begin{exe}
+  \ex
+  \(\begin{array}{c}\begin{forest}
+    [{\ldots}
+      [{\(a\)}]
+      [{\(b\)}]
+    ]
+    \end{forest}
+    \end{array}
+    \rightsquigarrow \mathbf{a}(\mathbf{b})\text{ or
+    }\mathbf{b}(\mathbf{a})\text{ (whichever is a wff)}\)
+\end{exe}
+
+Now translate the following into expression the STLC:
+
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{andP}
+    [{TP}
+      [{Josie}]
+      [{left}]
+    ]
+      [{and'}
+        [{and}]
+        [{TP}
+          [{Sarah}]
+          [{VP}
+            [{hugged}]
+            [{Jameson}]
+          ]
+        ]
+      ]
+    ]
+    \end{forest}
+\end{exe}
+
+
+\subsection{Functional abstraction}
+\label{sec:org3aeadd3}
+
+The trademark feature of the lambda calculus (and when its name), is the complex expression known as a \emph{functional abstraction}.
+
+\begin{definition}
+\textbf{Functional abstraction}: If \(x\) is a variable of type \(\sigma\), and \(\alpha\) is an expression of type \(\tau\), then \(\lambda x\,.\,\alpha\) is a functional abstraction of type \(\sigma \to \tau\).
+\end{definition}
+
+Abstraction always produces a functional type.
+
+Once we come round to the semantics of the STLC, we'll see that there's a special rule for interpreting variables that occur within the body of a functional abstraction.
+
+Are the following all well-formed functional abstractions? Comment on any assumptions we need to make about types.
+
+\begin{exe}
+\ex \(\lambda x\,.\,\mathbf{likes}_{E \to E \to T}(x)(x)\)
+\ex \(\lambda y\,.\,\mathbf{hug}_{E \to E \to T}(\mathbf{Louise})(x)\)
+\ex \(\lambda x\,.\,\mathbf{Josie}\)
+\ex \((\lambda x\,.\,x)(\mathbf{Nathan})\)
+\label{org5d90f5e}
+\end{exe}
+
+We'll exploit functional abstraction to translate, e.g., sentences involving movement dependencies. Following e.g., \autocite{HeimKratzer1998}, we'll translate traces as variables, and insert an abstraction with the same variable name just below the ``moved'' abstraction.
+
+\begin{exe}
+\ex Jameson\(_x\), Josie likes \(t_x\)
+\label{orgdebca22}
+\end{exe}
+
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\((\lambda x\,.\,\mathbf{likes}(x)(\mathbf{Josie}))(\mathbf{Jameson}): T\)\\functional application}
+      [{\(\mathbf{Jameson}: E\)}]
+      [{\(\lambda x\,.\,\mathbf{likes}(x)(\mathbf{Josie}): E \to T\)\\functional abstraction}
+      [{\(\mathbf{likes}(x)(\mathbf{Josie}): T\)\\functional application}
+        [{\(\mathbf{Josie}: E\)}]
+        [{\(\mathbf{likes}(x): E \to T\)\\functional application}
+          [{\(\mathbf{likes}:E \to E \to T\)}]
+          [{\(x: E\)}]
+        ]
+      ]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+
+\section{Semantics of the STLC}
+\label{sec:org8363f18}
+
+That's all there is to the syntax of the SLTC, but, since this is a semantics course, we need a way of connecting up these representations with some language-external reality.
+
+\subsection{Typed domains}
+\label{sec:orgfdb311d}
+
+Each type is mapped to a \emph{domain} of values - given that we have a recipe for constructing an infinite number of types, we need a recipe for constructing an infinite number of domains.
+
+We start by specifying the domains of the basic types (in our case, \(E, T\)).
+
+\begin{itemize}
+\item \(\mathbf{Dom}_E = \set{x | x\text{ is an individual} }\)
+\item \(\mathbf{Dom}_T = \set{\mathbf{true},\mathbf{false}}\)
+\end{itemize}
+
+Functional types are assigned domains consisting of sets of \emph{functions}; given a functional type \(\sigma \to \tau\), \(\mathbf{Dom}_{\sigma }\) gives the \emph{domain} of the function, and \(\mathbf{Dom}_{\tau}\) gives the \emph{codomain} of the function.  
+
+\begin{definition}
+\textbf{Domain of a functional type}: \(\mathbf{Dom}_{\sigma \to \tau } = \set{f | \mathbf{Dom}_\sigma \to \mathbf{Dom}_\tau }\)
+\end{definition}
+
+To give a concrete example, we can in fact enumerate every member in the domain of \(T \to T\) (do this!).
+
+\subsection{Interpreting the STLC}
+\label{sec:org83f0657}
+
+Given typed domains, the semantics of the STLC is specified by defining the interpretation function \(\eval*{.}\), which maps constants to values, subject to the following constraint (this just makes such, for example, \(\mathbf{not}\) isn't mapped to an individual or something):
+
+\begin{definition}
+\textbf{Type-respecting interpretation:} \(\eval*{.}\) is type-respecting if, for any constant \(c: \sigma\), \(\eval*{c} \in \mathbf{Dom}_\sigma\). 
+\end{definition}
+
+Now, we recursively define the denotation of an expression relative to an assignment function \(g\) (a total function from variables to values).
+
+The denotations of variables/constants is easy:
+
+\begin{itemize}
+\item \(\eval*[g]{x} = g(x)\), if \(x\) is a variable.
+\item \(\eval*[g]{c} = \eval*{c}\), if \(c\) is a constant.
+\end{itemize}
+
+The denotation of a function application involves\ldots{}applying a function to an argument!
+
+\begin{itemize}
+\item \(\eval*[g]{\alpha(\beta)} = \eval*[g]{\alpha }(\eval*[g]{\beta })\)
+\end{itemize}
+
+The denotation of a functional abstraction is a little more involved. It always returns a function:
+
+\begin{itemize}
+\item \(\eval*[g]{\lambda x\,.\,\alpha } = f\text{ s.t. }f(a) = \eval*[g[x \to a]]{\alpha }\)
+\end{itemize}
+
+\(g[x \to a]\) is the assignment function that is exactly like \(g\), except the variable \(x\) is mapped to \(a\). This also has to be type-respecting, so if \(x: \sigma\), then \(a \in \mathbf{Dom}_{\sigma }\).
+
+Compute the following:
+
+\begin{exe}
+\ex \((\lambda x\,.\,\mathbf{likes}(x)(\mathbf{Josie}))(\mathbf{Jameson})\)
+\label{org8ee7f9c}
+\end{exe}
+
+\section{Proof theory for the STLC}
+\label{sec:org0c21f6f}
+
+One of the beautiful features of using the STLC for compositional semantics is that it has a simple and elegant proof theory, stated in terms of a notion of simplification called \emph{reduction}, written as \(\Rightarrow\).
+
+This means that we can translate natural language syntax structres into complex expressions of the STLC, then \emph{simplify} complex expressions using our proof theory, without having to compute the semantic value of a given expression at every step.
+
+Thanks to the \emph{soundness} of the STLC, we can be sure that - if we don't make any mistakes in our proof - the resulting expression can be interpreted without having to interpret every intermediate step.
+
+The standard axioms for the STLC are as follows:
+
+\subsection{\(\beta\)-reduction}
+\label{sec:org9a7a0ce}
+
+Beta-reduction is a straightforward simplification scheme for applications; when we beta-reduce, we remove the \(\lambda x.\) from the functional expression, and subsistute all occurrences of \(x\) in the function body with the argument expression. 
+
+\begin{exe}
+\ex \(\vdash (\lambda x_\sigma \,.\,\alpha)(\beta_\sigma) \Rightarrow \alpha[x \mapsto \beta]\)
+\label{org5a18257}
+\end{exe}
+
+Example:
+
+\begin{exe}
+\ex \(\vdash (\lambda x\,.\,\mathbf{likes}(x)(\mathbf{Josie}))(\mathbf{Jameson}) \Rightarrow \mathbf{likes}(\mathbf{Jameson})(\mathbf{Josie})\)
+\label{org9919965}
+\end{exe}
+
+We can exploit this axiom to simplify complex expressions like (\ref{org9919965}) before interpretation!
+
+
+\subsection{\(\alpha\)-reduction}
+\label{sec:org9aefb62}
+
+The intuition behind alpha reduction is that we can freely rename bound variables, as long as the result is meaning-preserving, e.g.:
+
+\begin{exe}
+\ex \(\vdash \lambda x\,.\,\lambda y\,.\,\mathbf{likes}(x)(y) \Rightarrow \lambda z\,.\,\lambda y\,.\,\mathbf{likes}(z)(y)\)
+\label{orgac6238c}
+\end{exe}
+
+Th definition of alpha reduction is a little complex, since we don't want to accidentally change the meaning of the lambda term.
+
+\begin{exe}
+\ex \(\vdash \lambda x\,.\,\alpha \Rightarrow\lambda y\,.\,(\alpha[x \mapsto y])\), where \(y\) isn't a free variable in \(\alpha\), and \(y\) is free for \(x\) in \(\alpha\).
+\label{org5b9c5d5}
+\end{exe}
+
+The first application condition ensures that we don't accidentally bind free variables using alpha reduction, i.e.:
+
+\begin{exe}
+\ex \(\nvdash \lambda x\,.\,\mathbf{likes}(x)(y) \Rightarrow \lambda y\,.,\mathbf{likes}(y)(y)\)
+\label{org4edcd5a}
+\end{exe}
+
+The second application condition ensures that, e.g., the \(y\) substituted for \(x\) is not bound in \(\alpha [x \mapsto y]\), since: 
+
+\begin{exe}
+\ex \(\nvdash \lambda x\,.\,\lambda y\,.\,\mathbf{likes}(x)(y) \Rightarrow \lambda y\,.\,\lambda y\,.\,\mathbf{likes}(y)(y)\)
+\label{orgfb8771f}
+\end{exe}
+
+\subsection{\(\eta\)-reduction}
+\label{sec:orgbfcb37b}
+
+Eta-reduction is another straightforward simplification scheme that we can use to get rid of lambda terms:
+
+\begin{exe}
+\ex \(\vdash \lambda x\,.\,(\alpha(x))\Rightarrow \alpha\)
+\label{org9d4f5e8}
+\end{exe}
+
+You'll often see semanticists write things like:
+
+\begin{exe}
+\ex \(\lambda x\,.\,\mathbf{happy}_{E \to T}(x)\)
+\label{org1ed1a7b}
+\end{exe}
+
+Note that, by \(\eta\)-reduction, this is equivalent to just the constant \(\mathbf{happy}_{E \to T}\).
+
+(\ref{org1ed1a7b}) is known as the \textbf{long form} of an expression of the STLC, and can sometimes be useful for making typing more obvious without explicit annotations.  
+
+\subsection{Applications}
+\label{sec:orgb6644fa}
+
+Our analysis of natural language sentences will typically consist of a couple of steps:
+
+\begin{itemize}
+\item Starting from a syntactic analysis, translate into a complex expression of the STLC, where each non-terminal node corresponds to a functional application, and movement/binding corresponds to a functional abstraction.
+\item Simplify the result as much as possible using the proof theory of the STLC.
+\item Interpret the result in order to provide the truth conditions of the sentence.
+\end{itemize}
+
+Let's go through a relatively complex example to see how this all works.
+
+\begin{exe}
+\ex Every window isn't closed.
+\label{orgddf0a94}
+\end{exe}
+
+The example in (\ref{orgddf0a94}) has a salient reading according to which negation takes scope over the universal quantifier. In order to capture this, we'll exploit a syntactic analysis where ``every window'' moves across negation. We'll assume that movement can be translated as functional abstraction of \emph{any} type; here, the trace will be translated as a variable of type \(E \to E \to T\).
+
+I'll start by providing you with a syntactic structure and the type of each corresponding STLC expression.
+
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{functional application}
+    [{functional application}
+      [{\(\mathbf{every}: ET \to ET \to T\)}]
+      [{\(\mathbf{window}: E \to T\)}]
+    ]
+    [{\(\lambda Q\,.\,\ldots\)\\functional abstraction}
+    [{functional application}
+      [{\(\mathbf{not}: T \to T\)}]
+      [{functional application}
+        [{\(Q: ET \to T\)}]
+        [{\(\mathbf{closed}: E \to T\)}]
+      ]
+    ]
+    ]
+    ]
+    \end{forest}
+\end{exe}
+
+\(\mathbf{every}\) is interpreted as the following function:
+
+\begin{exe}
+\ex \(\eval*{\mathbf{every}}(f)(g) = \set{x | f(x) = \mathbf{true}} \subseteq \set{x' | g(x') = \mathbf{true} }\)
+\label{org84450d9}
+\end{exe}
+
+Go through the following steps:
+
+\begin{itemize}
+\item Translate into a complex expression of the STLC, going through each intermediate step.
+\item Simplify the result using the proof theory of the STLC.
+\item Interpret the simplified result. What are the resulting truth-conditions?
+\end{itemize}
+
+You should be able to appreciate how the proof theory side-steps many of the complications of directly interpreting complex expressions.
+
+\printbibliography
+\end{document}

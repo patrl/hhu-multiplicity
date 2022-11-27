@@ -1,0 +1,508 @@
+% Created 2022-10-10 Mon 03:10
+% Intended LaTeX compiler: pdflatex
+\documentclass[letterpaper,parskip=half]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{braket}
+\input{boilerplate}
+\author{Patrick D. Elliott}
+\date{\today}
+\title{The many lives of \emph{and}\\\medskip
+\large Handout 1}
+\hypersetup{
+ pdfauthor={Patrick D. Elliott},
+ pdftitle={The many lives of \emph{and}},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.5.5)}, 
+ pdflang={English}}
+\usepackage{biblatex}
+\addbibresource{/home/patrl/repos/bibliography/master.bib}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Reading}
+\label{sec:org5e75e44}
+
+\begin{itemize}
+\item Chapter 1 of \autocite{Winter2001} (read this before next week's class).
+\item Additional background: \autocite{ParteeRooth1983}\footnote{This paper will probably be extremely hard to understand, since many of the notational conventions in compositional semantics have changed dramatically since the early 1980s. I've included it here in case you're interested in the history behind flexible coordination.}
+\end{itemize}
+
+\section{The flexibility of coordination}
+\label{sec:orgaa113e9}
+
+In the general case, selectional restrictions delimit the range of combinatorial possibilities:
+
+\begin{exe}
+  \ex {}[\sub{DP} Sally] went [\sub{PP} to the shops]
+  \ex *[\sub{DP} Sally] went [\sub{DP} the shops]
+  \ex *[\sub{PP} to Sally] went [\sub{PP} to the shops]
+\end{exe}
+
+The combinatorial restrictions we observe associated with a predicate such as \emph{go}, are closely related to its lexical semantics and how sentences compose. 
+
+A truly remarkable property of natural language coordination (\emph{and/or}; \emph{und/oder}, etc.) is its syntactic flexibility.
+
+\begin{exe}
+  \ex {}[\sub{TP} Louise sneezed] and/or [\sub{TP} Josie laughed].
+  \ex Louise [\sub{VP} sneezed] and/or [\sub{VP} barked].
+  \ex Louise is [\sub{DegP} very badly behaved] and/or [\sub{DegP}
+  badly trained].
+  \ex Josie skipped down the street [\sub{AdjP} happily] and/or
+  [\sub{AdjP} carelessly].
+  \ex {}[\sub{DP} Every linguist] and/or [\sub{DP} most philosophers]
+  love the lambda calculus.
+\end{exe}
+
+One of the main questions we'll be investigating in this class:
+
+\begin{itemize}
+\item What interpretive property of coordination \emph{explains} its flexibility?
+\end{itemize}
+
+Ultimately, we'd like our semantic theory of coordination to account for the validity of certain conjunctive/disjunctive inferences: 
+
+\begin{exe}
+\ex Every linguist and most philosophers love the lambda calculus.\\
+\(\Rightarrow\) \emph{Every linguist loves the lambda calculus} \textbf{and} \emph{most philosophers love the lambda calculus}
+\ex Every linguist or most philosophers love the lambda calculus (I don't remember which)\\
+\(\Rightarrow\) \emph{Every linguist loves the lambda calculus} \textbf{or} \emph{most philosophers love the lambda calculus}
+\label{org64d4e31}
+\end{exe}
+
+But hang on, these inferences don't always go through with \emph{and} - sometimes it depends on the predicate!
+
+\begin{exe}
+\ex Josie and Sarah sneezed.\\
+\(\Rightarrow\) \emph{Josie sneezed} \textbf{and} \emph{Sarah sneezed}.
+\ex Josie and Sarah met at the bowling alley.\\
+\(\not\Rightarrow\) \emph{Josie met at the bowling alley} and \emph{Sarah met at the bowling alley}.
+\ex Josie and Sarah lifted the couch.\\
+\(\not\Rightarrow\) \emph{Josie lifted the couch} and \emph{Sarah lifted the couch}.
+\label{org379559f}
+\end{exe}
+
+The ``standard picture'' which addresses this state of affairs is as follows:
+
+\begin{itemize}
+\item \emph{and} in fact has two distinct lives:
+\begin{itemize}
+\item \emph{and} can convery \textbf{logical conjunction}, in which case the kinds of conjunctive inferences in (\ref{org64d4e31}) go through (although we still need to say something about combinatorial flexibility).
+\item \emph{and} can allow us to create a \textbf{group}, in which case the kinds of conjunctive inferences in (\ref{org64d4e31}) don't go through; see (\ref{org379559f}). The most famous incarnation of this idea is \autocite{Link1983a}. We'll discuss this in some detail later in the semester.
+\end{itemize}
+\end{itemize}
+
+This brings us to another central question in this class:
+
+\begin{itemize}
+\item Just how many meanings does \emph{and} have? Why do we use the same operator for both logical conjunction and group formation?
+\end{itemize}
+
+Logical conjunction and group formation are sufficiently different operations that it seems like there's no escape from treating \emph{and} as ambiguous, i.e., we have 'and\textsubscript{1}' and 'and\textsubscript{2}'.
+
+This is a rather strange state of affairs - using \emph{and} for both of these purposes is not just a quirk of English - overwhelmingly, cross-linguistically the same coordinator is used both for logical conjunction and sum formation.
+
+As we'll see later in the semester, the situation is even worse than that - we can find evidence for a third incarnation of \emph{and} \autocite{Link1984}.
+
+The natural question is whether all of these different usages of \emph{and} can be unified under a single, basic, semantics. At first, this seems to be an insurmountable problem, but the resolution will ultimately be related to \emph{flexible} composition.
+
+Before we tackle this harder problem, we'll begin by developing an analysis of flexible boolean conjunction. 
+
+\section{Boolean conjunction in the STLC}
+\label{sec:orgb3990a2}
+
+\subsection{Preliminaries: sentential coordination}
+\label{sec:org3be82b1}
+
+In propositional logic, the semantics of conjunction is given via a truth-table:
+
+\begin{center}
+\begin{tabular}{lll}
+\(\phi \wedge \psi\) & \(\mathbf{true}\) & \(\mathbf{false}\)\\
+\hline
+\(\mathbf{true}\) & \(\mathbf{true}\) & \(\mathbf{false}\)\\
+\(\mathbf{false}\) & \(\mathbf{false}\) & \(\mathbf{false}\)\\
+\end{tabular}
+\end{center}
+
+
+Just what information does a truth table encode? One way of thinking about this is that is tells us, for any pair of truth values representing the denotations of the individual conjuncts \((t,t')\), what the denotation of the conjunctive sentence \(u\) is.
+
+In other words, a truth-table encodes a \emph{function}.
+
+In order to maintain a simple syntax-semantics interface, however, we're not going to treat \emph{and} as a function from pairs of truth-values to truth-values, but rather as a \emph{curried} function of type \(T \to T \to T\).
+
+\begin{exe}
+\ex \(\mathbf{and} : T \to T \to T\)
+\label{orgeff1a05}
+\end{exe}
+
+This delimits the combinatorial properties of \emph{and} such that it has to combine with each conjunct successively.
+
+N.b., however we'll sometimes use infix notation as a notational convenience:
+
+\begin{exe}
+\ex \(\alpha\mathbin{\mathbf{and}}\beta := \mathbf{and}(\beta)(\alpha)\)
+\label{orgd3ffe46}
+\end{exe}
+
+The standard syntactic assumption (based on evidence from the binding principles; \autocite{Kayne1994}), is that \emph{and} composes with the latter conjunct first, followed by the initial conjunct. It should therefore denote the following function in \(\mathbf{Dom}_{T \to T \to T}\).
+
+\begin{exe}
+\ex \(\left[\begin{aligned}[c]
+&\mathbf{true} \to \left[
+\begin{aligned}[c]
+&\mathbf{true} \to \mathbf{true}\\
+&\mathbf{false} \to \mathbf{false}
+\end{aligned}\right]\\
+&\mathbf{false} \to \left[\begin{aligned}[c]
+&\mathbf{true} \to \mathbf{false}\\
+&\mathbf{false} \to \mathbf{false}
+\end{aligned}\right]
+\end{aligned}\right]\)
+\label{orgde073ec}
+\end{exe}
+
+This accounts neatly for sentential conjunction:
+
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(\mathbf{and}(\mathbf{laugh}(\mathbf{Josie}))(\mathbf{sneeze}(\mathbf{Louise})):T\)}
+    [{\(T\)}
+      [{\(\mathbf{Josie}:E\)}]
+      [{\(\mathbf{laugh}:E \to T\)}]
+    ]
+      [{\(T \to T\)}
+        [{\(\mathbf{and}:T \to T \to T\)}]
+        [{\(T\)}
+          [{\(\mathbf{Louise}: E\)}]
+          [{\(\mathbf{sneeze}: E \to T\)}]
+        ]
+      ]
+    ]\end{forest}
+\end{exe}
+
+The sentence will be true just in case the denotations of both conjunctions are true, after (\ref{orgde073ec}).
+
+However, the typing of \emph{and} is rigid, it won't account for, e.g., VP-coordination or any varities of coordination we've seen beyond TP coordination (why?).
+
+\begin{exe}
+\ex Louise [sneezed] and/or [barked].
+\label{org58c1985}
+\end{exe}
+
+\subsection{Conjunction reduction}
+\label{sec:org073fecb}
+
+One well-known approach to flexibility, which goes back to \autocite{Chomsky1957}, is to assume that the underlying syntactic structure of (\ref{org58c1985}) actually involves sentential conjunction.
+
+For Chomsky, this involved a special transformation rule, but a recent (re-)incarnation of conjunction reduction \autocite{Hirsch2017a} aims to derive conjunction reduction from the VP-internal subject hypothesis + ellipsis and across-the-board movement.
+
+For example, for (\ref{org58c1985}) all we need is ATB movement from SpecVP/vP:
+
+\begin{exe}
+\ex Louise\(_1\) [\(t_1\) sneezed] and [\(t_1\) barked].
+\label{org0d13f83}
+\end{exe}
+
+We're going to put this possibility to one side for the time being, and see how far we can get by developing a flexible compositional apparatus.
+
+If there's interest, we might spend one class explicitly comparing flexible composition with syntactic approaches.
+
+\subsection{Flexible boolean coordination}
+\label{sec:org9d0a1ab}
+
+Consider again our illustration of flexible coordination:
+
+\begin{exe}
+  \ex {}[\sub{TP} Louise sneezed] and/or [\sub{TP} Josie laughed].
+  \ex Louise [\sub{VP} sneezed] and/or [\sub{VP} barked].
+  \ex Louise is [\sub{DegP} very badly behaved] and/or [\sub{DegP}
+  badly trained].
+  \ex Josie skipped down the street [\sub{AdjP} happily] and/or
+  [\sub{AdjP} carelessly].
+  \ex {}[\sub{DP} Every linguist] and/or [\sub{DP} most philosophers]
+  love the lambda calculus.
+\end{exe}
+
+\subsubsection{Boolean types}
+\label{sec:org74bc57b}
+
+Let's consider the \emph{types} of the conjuncts:\footnote{I'm taking a shortcut here by treating some complex expressions as constants. ``Every linguist'' should of course be decomposed as \(\mathbf{every}(\mathbf{linguist})\), but its internal structure isn't relevant for the discussion here. One of the virtues of explicitly using an analytical tool such as the STLC is that these idealizations become transparent.}
+
+\begin{itemize}
+\item \(\mathbf{sneezed}(\mathbf{Louise}): T\)
+\item \(\mathbf{sneezed} : E \to T\)
+\item \(\mathbf{badlyBehaved} : E \to T\)
+\item \(\mathbf{happily} : (E \to T) \to E \to T\)
+\item \(\mathbf{everyLinguist} : (E \to T) \to T\)
+\end{itemize}
+
+Note that every type \emph{ends in \(T\)}. What this tells us is that, once the function has all of its arguments saturated, it will return a sentential value.
+
+This is exactly what \autocite{ParteeRooth1983} exploit in order to account for the flexibility of coordination.
+
+First, we'll state a formal algorithm for determining the types of expressions which can be conjoined - following \autocite{Winter2001} we'll call these the \textbf{boolean types}.\footnote{\autocite{ParteeRooth1983} call these \emph{conjoinable types}; it's exactly the same notion.}
+
+\begin{definition}
+\textbf{Boolean types}: \(T\) is a boolean type.
+\begin{itemize}
+\item If \(\tau\) is a boolean type, then \(\sigma \to \tau\) is a boolean type.
+\item Nothing else is a boolean type.
+\end{itemize}
+\end{definition}
+
+As an exercise, show whether or not \(E \to (E \to E) \to T\) is a boolean type. Go step by step.
+
+\subsubsection{Generalized conjunction: \(\sqcap\)}
+\label{sec:org9ff81c1}
+
+The key intuition behind our account of flexible conjunction will be that some expressions have a \emph{polymorphic} type-signature; instead of a fixed type, we have some \emph{type variables} which must be resolved before composition can proceed.
+
+The STLC doesn't really have the logical resources to capture this intuition directly.\footnote{This is because the STLC doesn't allow quantification over types; an extension of the STLC which allows (universal) quantification over types is called \texttt{SystemF}.} One way of encoding this idea is that we have an algorithm \emph{generating} constants, depending on the resolution of a given type.
+
+Following \autocite{Winter2001}, we'll write generalized conjunction as \(\sqcap\). \(\sqcap\) specifies a \emph{family of logical constants} of type \(\tau \to \tau \to \tau\), where \(\tau\) is a boolean type.
+
+We'll now state an algorithm for recursively generating \(\sqcap\)s.
+
+\begin{definition}
+\textbf{Generalized boolean conjunction}: Generalized conjunction specifies a family of expressions \(\sqcap: {\tau \to \tau \to \tau }\), where \(\tau\) is a boolean type. We'll write each expression as \(\sqcap_\tau\)
+
+\[\sqcap_{\tau} := \begin{cases}
+\mathbf{and}&\tau = T\\
+\lambda p_{\sigma \to \rho}\,.\,\lambda q_{\sigma \to \rho}\,.\,\lambda x_{\sigma }\,.\,\,\sqcap_{\rho \to \rho \to \rho}(p(x))(p(x))&\tau = \sigma \to \rho
+\end{cases}\]
+\end{definition}
+
+\begin{itemize}
+\item \(\sqcap_{T} = \mathbf{and}\)
+\item \(\sqcap_{ET} = \lambda p_{ET}\,.\,\lambda q_{ET}\,.\,\lambda x\,.\,\mathbf{and}(p(x))(q(x))\)
+\item \(\sqcap_{ET,T} = \lambda Q_{ET \to T}\,.\,\lambda \underline{Q}_{ET \to T}\,.\,\lambda p\,.\,\mathbf{and}(Q(p))(\underline{Q}(q))\)
+\end{itemize}
+
+Let's work through a complicated example together:
+
+\begin{exe}
+\ex Josie skipped [happily and carelessly]
+\label{org57ddb56}
+\end{exe}
+
+Let's assume the following Logical Form:
+
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(T\)}
+      [{\textbf{Josie}\(: E\)}]
+    [{\(ET\)} 
+      [{\textbf{skipped}\(: ET\)}]
+[{\(ET \to ET\)}
+      [{\textbf{happily}\(: ET \to ET\)}]
+    [{...}
+      [{\(\sqcap:\tau \to \tau \to \tau \)}]
+      [{\textbf{carelessly}\(: ET \to ET\)}]
+    ]
+    ]
+    ]
+    ]
+  \end{forest}
+\end{exe}
+
+\begin{exe}
+\ex \(\sqcap(\mathbf{carelessly})(\mathbf{happily})(\mathbf{skipped})(\mathbf{Josie})\)
+\label{org2303c15}
+\end{exe}
+
+\begin{itemize}
+\item What's the type of \(\sqcap\) here? Resolve the definition.
+\item Reduce (\ref{org2303c15}) (remember application associates to the left).
+\end{itemize}
+
+\section{Generalized conjunction and DP coordination}
+\label{sec:org93af569}
+
+\subsection{QP coordination}
+\label{sec:org9b525cf}
+
+Certain instances of DP coordination fall under the remit of generalized conjunction:
+
+\begin{exe}
+\ex Every linguist and most philosophers love the lambda calculus.
+\label{org4969197}
+\end{exe}
+
+What's special about quantificational DPs like \emph{every linguist}? unlike ordinary, individual-denoting arguments, the function-argument relation is reversed.
+
+\begin{itemize}
+\item \(\mathbf{love}_{E \to E \to T}(\mathbf{LamCalc}_E)(\mathbf{Patrick}_E)\)
+\item \(\mathbf{everyLing}_{ET \to T}(\mathbf{love}_{E \to E \to T}(\mathbf{LamCalc}_E))\)
+\end{itemize}
+
+N.b. it's often assumed that quantificational DPs undergo a covert movement operation (\emph{quantifier raising}; \autocite{May1977}). We'll talk about this more later in the semester, but for now observe that there is no motivation for such a transformation in the case of a subject quantifier such as \emph{every linguist}.
+
+Note, furthermore, that \emph{every linguist} has a \emph{boolean type}.
+
+let's compute the expression \(\sqcap_{ET \to T}\):
+
+\begin{exe}
+\ex \(\sqcap_{ET \to T} := \lambda Q_{ET\to T}\,.\,\lambda Q'_{ET \to T}\,.\,\lambda P_{ET}\,.\,\mathbf{and}(Q(P))(Q'(P))\)
+\label{orgc28c45a}
+\end{exe}
+
+Now we can compositionally translate (\ref{org4969197}) into the STLC.
+
+The result should be the following:
+
+\begin{exe}
+\ex \(\mathbf{and}(\mathbf{mostPhil}(\mathbf{love}(\mathbf{lamCalc})))(\mathbf{everyLing}(\mathbf{love}(\mathbf{lamCalc})))\)
+\label{org9f21805}
+\end{exe}
+
+Note that generalized conjunction is a way of encoding something like conjunction reduction in the compositional semantic apparatus - essentially, the VP gets repeated in the argument of each DP. Just how different do you think these approaches really are?
+
+Note that this derives the inferences:
+
+\begin{exe}
+\ex \(\Rightarrow\) \emph{Most philosophers love the lambda calculus}
+\ex \(\Rightarrow\) \emph{Every linguist loves the lambda calculus}
+\label{orgb2fa432}
+\end{exe}
+
+\subsection{Montague lift}
+\label{sec:org08698d8}
+
+Consider a simple example of DP coordination such as the following:
+
+\begin{exe}
+\ex Josie and Sarah love Bunny.
+\label{orga7b9da5}
+\end{exe}
+
+I've implied that perhaps we need a different variant of \emph{and} for DP coordination, but now consider the following:
+
+\begin{exe}
+\ex Patrick and every philosopher love the lambda calculus.
+\label{org6d74515}
+\end{exe}
+
+An insight that goes back to \autocite{Montague1973}, is that even apparently individual-denoting expressions can be `lifted' into expressions that denote quantifiers.
+
+Recall from intro semantics that the standard treatment of expressions such as \emph{every philosopher} is in terms of \emph{generalized quantifier theory} \autocite{BarwiseCooper1981}, i.e., as sets of sets of individuals.
+
+In STLC, we reason about functions rather than sets; the way that we encode a set is via a characteristic function, therefore a set of sets of individuals is encoded via an expression of type \((E \to T) \to T\). 
+
+The intuition behind generalized quantifier theory is that a generalized quantifier must inspect the denotation of the VP in order to determine the truth of the sentence - for example, \(\mathbf{everyPhil}(P)\) returns \emph{true} iff \(P\) contains every philosopher.
+
+In other words, \(\mathbf{everyPhil}\) has the following semantics:
+
+\begin{exe}
+\ex \(\eval*{\mathbf{everyPhil}}(P) = \mathbf{true}\text{ iff  }\set{x | x\text{ is a philosopher} } \subseteq \set{x | P(x) = \mathbf{true}}\)
+\label{org4268fc0}
+\end{exe}
+
+Now let's say we have a sentence such as ``Patrick loves the lambda calculus''.
+
+\begin{itemize}
+\item What property must the set derived from the VP denotation have in order for the sentence to be true?
+\end{itemize}
+
+We can reframe the meaning of \(\mathbf{Patrick}\) as inspecting the VP denotation:
+
+\begin{exe}
+\ex \(\eval*{\mathbf{Patrick}}(P) = \mathbf{true} \text{ iff } \text{Patrick} \in \set{x | P(x) = \mathbf{true}}\)
+\label{orgea3c67d}
+\end{exe}
+
+We encode this in the lambda calculus as follows (we'll write \(\alpha^\uparrow\) for the ``lifted'' variant of expression \(\alpha\)).
+
+\begin{exe}
+\ex \(\mathbf{Patrick}^\uparrow := \lambda P_{ET}\,.\,P(\mathbf{Patrick})\)
+\label{orgb1d0a0a}
+\end{exe}
+
+We can encode the lift operation itself in the STLC as a distinct function:
+
+\begin{exe}
+\ex \(.^{\uparrow} := \lambda x\,.\,\lambda P\,.\,P(x)\)\hfill\(E \to (E \to T) \to T\)
+\label{org78812ee}
+\end{exe}
+
+Operations like \emph{lift} are often referred to in the semantics literature as \emph{type shifters} \autocite{Partee1986}.
+
+There are some interesting questions to ask about the ontological status of these operators. For our purposes, we'll assume that a type-shifter can always be freely inserted in course of semantic composition.
+
+We now have a way of converting \(\mathbf{Patrick}\) into something with a GQ type \(\lambda P\,.\,P(\mathbf{Patrick})\) (which denotes the set of sets that contain \emph{Patrick}).
+
+Show the following:
+
+\begin{exe}
+\ex \(a^\uparrow(P) \Rightarrow P(a)\)\hfill for any expression \(a: E\), any expression \(P:E \to T\)
+\label{orga5e7ab2}
+\end{exe}
+
+This means that it is harmless to assume that individual-denoting subject DPs are always lifted (in fact, this is exactly what Montague assumed).
+
+More importantly, this allows us to account for (\ref{org6d74515})! (show this in detail).
+
+\begin{exe}
+\ex \(\sqcap_{ET \to T}(\mathbf{everyPhil})(\mathbf{Patrick}^{\uparrow})(\mathbf{love}(\mathbf{lamCalc}))\)\\
+\(\Rightarrow\)
+\label{orga641d1c}
+\end{exe}
+
+Derived inferences:
+
+\begin{itemize}
+\item \emph{Patrick loves the lambda calculus}
+\item \emph{Every philosopher loves the lambda calculus}
+\end{itemize}
+
+In fact, we can now every account for conjunction of individual-denoting DPs with generalized conjunction.
+
+\begin{exe}
+\ex \(\sqcap_{ET \to T}(\mathbf{Josie}^\uparrow)(\mathbf{Sarah}^\uparrow)(\mathbf{love}(\mathbf{Bunny}))\)\\
+\(\Rightarrow \mathbf{and}(\mathbf{love}(\mathbf{Bunny})(\mathbf{Josie}))(\mathbf{love}(\mathbf{Bunny}(\mathbf{Sarah})))\)
+\label{org7673ca3}
+\end{exe}
+
+Derived inferences:
+
+\begin{itemize}
+\item \emph{Josie loves Bunny}
+\item \emph{Sarah loves Bunny}
+\end{itemize}
+
+Note that this still won't make the right predictions for certain kinds of predicates:
+
+\begin{exe}
+\ex Sarah and Josie met.
+\label{org9862da9}
+\end{exe}
+
+In fact, we can even find an incarnation of the same kind of problem with bona fide QP coordination.
+
+\begin{exe}
+\ex Josie and every linguist met.
+\label{org95015c2}
+\end{exe}
+
+Informally, this can mean that, for every linguist \(x\), the group consisting of Josie and \(x\) met.
+
+Next week we'll discuss an approach to conjunction with predicates such as \emph{met}.
+
+\printbibliography
+\end{document}

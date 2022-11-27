@@ -1,0 +1,71 @@
+% Created 2022-11-07 Mon 16:07
+% Intended LaTeX compiler: pdflatex
+\documentclass[letterpaper,parskip=half]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{braket}
+\input{boilerplate}
+\author{Patrick D. Elliott}
+\date{\today}
+\title{Optional homework}
+\hypersetup{
+ pdfauthor={Patrick D. Elliott},
+ pdftitle={Optional homework},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.5.5)}, 
+ pdflang={English}}
+\usepackage{biblatex}
+\addbibresource{/home/patrl/repos/bibliography/master.bib}
+\addbibresource{~/repos/bibliography/master.bib}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Set intersection and generalized conjunction}
+\label{sec:org3e31a83}
+
+The set characterized by a function \(f:\mathbf{Dom}_\sigma \mapsto \mathbf{Dom}_E\) is defined as follows:
+
+\[Set(f) = \set{x \in \mathbf{Dom}_\sigma | f(x) = \mathbf{true}}\]
+
+Generalized conjunction for predicates \(\sqcap_{ET}\) encodes set intersection.
+
+Use the definition of generalized conjunction from the first handout to demonstrate that the following are equivalent:
+
+\begin{itemize}
+\item \(Set\eval*{\mathbf{sleep}_{ET}} \cap Set\eval*{\mathbf{laugh}_{ET}}\)
+\item \(Set\eval*{\mathbf{sleep}_{ET} \sqcap_{ET} \mathbf{laugh}_{ET}}\)
+\end{itemize}
+
+\section{Generalized negation}
+\label{sec:org6d52a83}
+
+Use the definition of generalized conjunction in handout 1 as a basis for definining \emph{generalized negation}. Use boolean negation as a base:
+
+\begin{itemize}
+\item \(\mathbf{not}: T \to T\)
+\end{itemize}
+
+Show how this accounts for predicate negation:
+
+\begin{itemize}
+\item ``John is not tall''
+\end{itemize}
+
+Assume the translation: \(\mathbf{not}(\mathbf{tall})(\mathbf{John})\)
+
+
+\printbibliography
+\end{document}

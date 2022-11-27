@@ -1,0 +1,385 @@
+% Created 2022-11-14 Mon 10:28
+% Intended LaTeX compiler: pdflatex
+\documentclass[letterpaper,parskip=half]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{braket}
+\input{boilerplate}
+\author{Patrick D. Elliott}
+\date{\today}
+\title{Plurality and collective predication cont.\\\medskip
+\large Handout 3}
+\hypersetup{
+ pdfauthor={Patrick D. Elliott},
+ pdftitle={Plurality and collective predication cont.},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.5.5)}, 
+ pdflang={English}}
+\usepackage{biblatex}
+\addbibresource{/home/patrl/repos/bibliography/master.bib}
+\addbibresource{~/repos/bibliography/master.bib}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Reading}
+\label{sec:orgab63bcb}
+
+\begin{itemize}
+\item \autocite{Champollion2016}
+\end{itemize}
+
+\section{Recap: distributive and collective predication}
+\label{sec:orgdfc04c0}
+
+\subsection{Distributive and collective predication}
+\label{sec:org69f0dfa}
+
+Generalized conjunction (\(\sqcap\)) and generalized disjunction (\(\sqcup\)), which are recursive generalizations of boolean conjunction/disjunction respectively, predict \textit{distributive inferences} across a broad variety of example sentences.
+
+\begin{exe}
+\ex \textbf{Generalized conjunction:}\\[0pt]
+ \(P_\tau \sqcap Q_\tau = \begin{cases}
+P \wedge Q&\text{if }\tau = T\\
+\lambda x\,.\,P(x) \sqcap_\rho Q(x)&\text{if }\tau = \sigma \rightarrow \rho  
+\end{cases}\)
+\label{org3053c4c}
+\end{exe}
+
+\begin{exe}
+\ex Mary and John slept.\\[0pt]
+\(\iff\) Mary slept and John slept.
+\ex Most women or most men are tall.\\[0pt]
+\(\iff\) Most women are tall or most men are tall.
+\ex Neither the milkman nor the postman arrived.\\[0pt]
+\(\iff\) Neither did the milkman arrive, nor did the postman.
+\label{org1b3d0ee}
+\end{exe}
+
+\subsection{Montague Lift}
+\label{sec:orgdaaa2ea}
+
+\emph{Montague lift} converts expressions such as \textbf{Mary} and \textbf{John} into expressions with a boolean type, allowing them to be subject to generalized conjunction.
+
+\begin{exe}
+\ex \(\mathbf{Mary}^\uparrow := \lambda P_{_{ET}}\,.\,P(\mathbf{Mary})\)
+\label{orgf4c2814}
+\end{exe}
+
+\begin{exe}
+\ex \(\mathbf{Mary}^\uparrow \sqcap \mathbf{John}^\uparrow(\mathbf{sleep})\)
+\ex \(((\lambda P\,.\,P(\mathbf{Mary})) \sqcap (\lambda P\,.\,P(\mathbf{John})))(\mathbf{sleep})\)
+\ex \((\lambda P\,.\,P(\mathbf{Mary}) \wedge P(\mathbf{John}))(\mathbf{sleep})\)
+\ex \(\mathbf{sleep}(\mathbf{Mary}) \wedge \mathbf{sleep}(\mathbf{John})\)
+\label{orge9548a2}
+\end{exe}
+
+\subsection{Collective predication}
+\label{sec:orge1d507b}
+
+Verbs:
+
+\begin{exe}
+\ex Lexically collective: \emph{gather}, \emph{disperse}, \emph{meet} (when used intransitively), \emph{outnumber} (both arguments).
+\ex Lexically ``mixed'' collective/distributive: the subject argument of \emph{write}, \emph{lift}, \emph{eat}, and \emph{carry}.
+\ex \emph{together} modification: \emph{sing together}, \emph{live together}, \emph{write NP together}.
+\ex \emph{between them} modification: \emph{grade over 200 papers between them}, \emph{ate 15 pizzas between them}.
+\ex Reciprocal modification: \emph{like each other}, \emph{look at one another}.
+\label{orgc8683a2}
+\end{exe}
+
+Adjectives:
+
+\begin{exe}
+\ex Lexically collective: \emph{numerous}, \emph{similar}, \emph{alike}, \emph{parallel}, \emph{antagonistic}, \emph{equivalent}, \emph{neighboring}.
+\ex \emph{together} modification: \emph{happy together}, \emph{irritating together}.
+\ex Reciprocal modification: \emph{nice to each other}, \emph{fond of one another}.
+\label{orgd4ea27a}
+\end{exe}
+
+Predicative constructions with nominals:
+
+\begin{exe}
+\ex Group denoting nominals: \emph{seem a big group}, \emph{be the organizing committee}, \emph{be a nice couple}.
+\ex Relational nominals: \emph{be brothers}, \emph{sisters}, \emph{friends}.
+\ex Nominals modified by collective adjectives: \emph{be numerous people}, \emph{similar students}, \emph{parallel lines}.
+\ex Reciprocal possessives: \emph{be teachers of each other}, \emph{be admirers of one another}.
+\label{org542b69f}
+\end{exe}
+
+\section{A type-theoretic approach to plural individuals}
+\label{sec:orgd069a5c}
+
+\subsection{Plural individuals}
+\label{sec:orgf1fe5d5}
+
+Fundamental hypothesis: a plural individual is a \emph{set of individuals}.
+
+\begin{exe}
+\ex John, Mary and Sue = \(\set{\mathbf{J}, \mathbf{M}, \mathbf{S}}\)
+\ex The boys = \(\set{\mathbf{J},\mathbf{B},\mathbf{H}}\)
+\label{orgc3db457}
+\end{exe}
+
+How do we model sets of individuals in the Simply-Typed \(\lambda\)-calculus? Recall, the denotation of an expression of type \(E \to T\) is a function \(f:\mathbf{Dom}_E \mapsto \mathbf{Dom}_E\).
+
+A \emph{set} of individuals can be modelled as a function from individuals to truth-values, where members of the set are mapped to \textbf{true}, and non-members are mapped to \textbf{false}. This is called the \textbf{characteristic function} of the set.
+
+Here's the characteristic function of the set of \emph{John}, \emph{Mary}, and \emph{Sue}:
+
+\[\left[\begin{aligned}[c]
+&\mathbf{J} &\mapsto \mathbf{true}\\
+&\mathbf{M} &\mapsto \mathbf{true}\\
+&\mathbf{S} &\mapsto \mathbf{true}\\
+&\mathbf{B} &\mapsto \mathbf{false}\\
+&\mathbf{H} &\mapsto \mathbf{false}\\
+&\ldots
+\end{aligned}\right]\]
+
+Here's the characteristic function of the set of \emph{John}, \emph{Bill}, and \emph{Harry} (i.e., \emph{the boys}):
+
+\[\left[\begin{aligned}[c]
+&\mathbf{J} &\mapsto \mathbf{true}\\
+&\mathbf{M} &\mapsto \mathbf{false}\\
+&\mathbf{S} &\mapsto \mathbf{false}\\
+&\mathbf{B} &\mapsto \mathbf{true}\\
+&\mathbf{H} &\mapsto \mathbf{true}\\
+&\ldots
+\end{aligned}\right]\]
+
+Our hypothesis will be that a \emph{group-denoting NP} is translated to an \emph{expression of type \(E \to T\)}
+
+Since \emph{characteristic functions} are ways of encoding sets, we can also translate familiar set-theoretic notions of \emph{intersection} and \emph{union} into operations on functions. Look familiar?  
+
+\begin{exe}
+\ex \(P_{ET} \sqcap Q_{ET}= \lambda x\,.\,P(x) \wedge Q(x)\)
+\ex \(P_{ET} \sqcup Q_{ET}= \lambda x\,.\,P(x) \vee Q(x)\)
+\label{orgf060a17}
+\end{exe}
+
+If group-denoting NPs are of type \(E \to T\), there's an obvious way to encode the selectional requirements of strictly collective predicates - we can translate them as expressions of type \((E \to T) \to T\).
+
+\begin{center}
+\begin{tabular}{lll}
+ & Singular/Distributive & Plural/Collective\\[0pt]
+\hline
+Individual & \(E\) & \(E \to T\)\\[0pt]
+Predicate & \(E \to T\) & \((E \to T) \to T\)\\[0pt]
+Quantifier & \((E \to T) \to T\) & \(((E \to T) \to T) \to T\)\\[0pt]
+\end{tabular}
+\end{center}
+
+\subsection{Collective predication in practice}
+\label{sec:orga3641d4}
+
+Collective predicates denote \emph{higher-order functions} from functions \(f: \mathbf{Dom}_E \to \mathbf{Dom}_T\) to \(\mathbf{Dom}_T\).
+
+What does this mean? \emph{met} takes a function \(P_{ET}\), and maps it to true, just in case the individuals that \(P\) maps to true met each other.
+
+Imagine that the set of individuals is \(\set{a,b,c}\), and the only meetings that happened were between \(a,b\) and \(a,c\). The denotation of \(\mathbf{met}_{ET \to T}\) would be as follows:
+
+\[\left[\begin{aligned}[c]
+\left[\begin{aligned}[c]
+&a \to \mathbf{t}\\
+&b \to \mathbf{t}\\
+&c \to \mathbf{t}
+\end{aligned}\right] \to \mathbf{f}
+\left[\begin{aligned}[c]
+&a \to \mathbf{t}\\
+&b \to \mathbf{t}\\
+&c \to \mathbf{f}
+\end{aligned}\right] \to \mathbf{t}
+\left[\begin{aligned}[c]
+&a \to \mathbf{t}\\
+&b \to \mathbf{f}\\
+&c \to \mathbf{t}
+\end{aligned}\right] \to \mathbf{t}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{f}\\
+&b \to \mathbf{t}\\
+&c \to \mathbf{t}
+\end{aligned}\right] \to \mathbf{f}
+\left[\begin{aligned}[c]
+&a \to \mathbf{t}\\
+&b \to \mathbf{f}\\
+&c \to \mathbf{f}
+\end{aligned}\right] \to \mathbf{f}
+\left[\begin{aligned}[c]
+&a \to \mathbf{f}\\
+&b \to \mathbf{t}\\
+&c \to \mathbf{f}
+\end{aligned}\right] \to \mathbf{f}\\
+\left[\begin{aligned}[c]
+&a \to \mathbf{f}\\
+&b \to \mathbf{f}\\
+&c \to \mathbf{t}
+\end{aligned}\right] \to \mathbf{f}
+\left[\begin{aligned}[c]
+&a \to \mathbf{f}\\
+&b \to \mathbf{f}\\
+&c \to \mathbf{f}
+\end{aligned}\right] \to \mathbf{f}
+\end{aligned}\right]\]
+
+Due to the equivalence between characteristic functions and sets, we can also write the denotation of a collective predicate as a \emph{set of sets}. This will often be much more convenient. I.e., the following set of sets encodes the same information.
+
+\[\set{\set{a,b},\set{a,c}}\]
+
+As a starting point, we'll assume that plural definites such as ``the boys'', and conjunctions of singular definites such as ``John, Mary, and Sue'', are translated as expressions of type \(E \to T\), and therefore denote sets of individuals.
+
+\begin{exe}
+\ex \(\mathbf{theBoys}_{ET}\)
+\ex \(\mathbf{JohnMaryAndSue}_{ET}\)
+\label{org99991fd}
+\end{exe}
+
+\section{The quantifier-collectivity connection and NP conjunction}
+\label{sec:org2881e11}
+
+\subsection{Generalized quantifiers and collective predicates}
+\label{sec:org8131195}
+
+On the approach to collective predicates outlined here, not that a collective predicate and a generalized quantifier are of the same type.
+
+\begin{exe}
+\ex \(\mathbf{meet}_{ET \to T} := \lambda X\,.\,\mathbf{meet}(X)\)
+\ex \(\mathbf{noBoy}_{ET \to T} := \lambda X\,.\,\neg\exists x[\mathbf{boy}(x) \wedge X(x)]\)
+\label{org97ba063}
+\end{exe}
+
+In set-talk:
+
+\begin{exe}
+\ex \(Set(\eval*{\mathbf{meet}}) = \set{X | \text{individuals in } X\text{ met}}\)
+\ex \(Set(\eval*{\mathbf{noBoy}}) = \set{X | \text{there are no boys in }X }\)
+\label{org1d45a63}
+\end{exe}
+
+For this reason, we (correctly in this case) predict that a quantificational NP and a collective predicate can't compose.
+
+\begin{exe}
+\ex *No boy met.
+\label{org9b10039}
+\end{exe}
+
+\subsection{The problem of NP conjunction}
+\label{sec:org367dfa3}
+
+Now we're in a position to start thinking about how to account for the fact that conjoined NPs are compatible with collective predicates.
+
+\begin{exe}
+\ex Mary and Sue met.
+\label{org6ce102b}
+\end{exe}
+
+Recall that conjunction can't even compose with \textbf{Mary} and \textbf{Sue} unless they undergo Montague lift.
+
+Once we lift the NPs, doing generalized conjunction gives us back a generalized quantifier.
+
+\begin{exe}
+\ex \(\mathbf{Mary}^\uparrow \sqcap \mathbf{Sue}^\uparrow = \lambda P_{ET}\,.\,P(\mathbf{Mary}) \wedge P(\mathbf{Sue})\)
+\label{org486f000}
+\end{exe}
+
+In set-talk:
+
+\begin{exe}
+\ex \(\set{P |\mathbf{Mary} \in P \text{ and }\mathbf{Sue} \in P}\)
+\label{org6e83990}
+\end{exe}
+
+Note that aside from the typing problem, these aren't the right kind of sets to feed in as the argument of \textbf{meet} - they contain too many other individuals!
+
+What we want is a type shifting function which takes the type \(ET \to T\) expression in (\ref{org486f000}), and gives back a \emph{generalized quantifier over collections} of type \((ET \to T) \to T\).
+
+Winter posits two type-shifters to derive this (which we'll discuss in more detail next week).
+
+\begin{itemize}
+\item Minimum sort.
+\item Existential raising.
+\end{itemize}
+
+\subsection{Minimum sort}
+\label{sec:org7e978ef}
+
+\textbf{Min} is an operator that takes a generalized quantifier \(Q\) of type \(ET \to T\), and gives back the \emph{minimal members} of \(Q\). This is defined formally as in (\ref{orgc2f0664}) (note that Winter gives a generalized version of ([[mmm\ref{orgc2f0664}), but we'll only need the formulation for quantifiers over individuals).
+
+\begin{exe}
+\ex \(\mathbf{Min}_{ETT \rightarrow ETT} := \lambda Q_{ETT}_{}\lambda A_{ET}\,.\, Q(A) \wedge \forall B \in Q[B \subseteq A \rightarrow B = A]\)
+\label{orgc2f0664}
+\end{exe}
+
+\begin{itemize}
+\item What is the result of applying \textbf{Min} to \emph{a boy}?
+\item What is the result of applying \textbf{Min} to \emph{every boy}?
+\item What is the result of applying \textbf{Min} to lifted \textbf{Mary}?
+\item What is the result of applying \textbf{Min} to 'Mary and Sue'?
+\end{itemize}
+
+\begin{exe}
+\ex \(\mathbf{Min}(\lambda P\,.\,P(\mathbf{Mary}) \wedge P(\mathbf{Sue})) = \set{\set{\mathbf{Mary},\mathbf{Sue}}}\)
+\label{org5f07592}
+\end{exe}
+
+This still isn't of the right type to combine with a collective predicate, but we're getting closer.
+
+\subsection{Existential raising}
+\label{sec:orgc7f7afc}
+
+\begin{exe}
+\ex \(\mathbf{E}_{ETT \rightarrow ETT \to T} := \lambda A\,.\,\lambda P\,.\,\exists X[A(X) \wedge P(X)]\)
+\label{org38878ae}
+\end{exe}
+
+\subsection{NP conjunction with collective predicates}
+\label{sec:orgcba5a45}
+
+\begin{exe}
+\ex \(\mathbf{E}(\mathbf{Min}(\mathbf{Mary}^\uparrow \sqcap \mathbf{Sue}^\uparrow))(\mathbf{met})\)
+\label{orgb670f0f}
+\end{exe}
+
+\subsection{Collectivity in Boolean domains}
+\label{sec:org577b18e}
+
+Why do we need to do minimum sort, and \emph{then} existentially raise? Since the minimum sort of a generalized conjunction of lifted individuals is a singleton set, why don't we define an operator which returns the unique minimal set of a quantifier.
+
+Winter shows that this doesn't generalize to more complex examples involving conjunction \emph{and} disjunction.
+
+\begin{exe}
+\ex Mary and either Sue or John met.
+\label{org0d14a68}
+\end{exe}
+
+Verify that the minimum sort has more than one member:
+
+\begin{exe}
+\ex \(\mathbf{Min}(\mathbf{Mary} \sqcap (\mathbf{Sue} \sqcup \mathbf{John}))\)
+\label{org6a71835}
+\end{exe}
+
+\subsection{Super-generalized disjunction}
+\label{sec:orgb2bdb49}
+
+\begin{exe}
+\ex Either Mary and Sue, or Sue and Bill met.
+\label{orga5a4b54}
+\end{exe}
+
+
+
+
+\printbibliography
+\end{document}
