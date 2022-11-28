@@ -1,0 +1,314 @@
+#+title: Ten men and women got married today
+#+subtitle: Champollion (2016) 
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Recap
+
+We can recast the semantics of the basic fragment we've been discussing in terms of \textit{sets}, by exploiting the equivalence between sets and their characteristic functions.
+
+Type \(E\) expressions are interpreted as individuals, of course.
+
+#+name: josie
+#+begin_exe
+\ex \(\eval*{\mathbf{Josie}} = j\)
+#+end_exe
+
+Type \(E \to T\) expressions are interpreted as sets of individuals.
+
+#+name: laugh
+#+begin_exe
+\ex \(\eval*{\mathbf{laugh}} = \set{x \in \mathbf{Dom}_E |x\text{ laughs} }\)
+#+end_exe
+
+On this framing, funtional applications involving characteristic functions are interpreted as set membership:
+
+#+name: set-mem
+#+begin_exe
+\ex \(\eval*{\alpha{}_{\sigma \to T}(\beta_\sigma 
+)} = \text{true iff }\eval*{\alpha } \in \eval*{\beta}\)
+#+end_exe
+
+#+name: j
+#+begin_exe
+\ex \(\eval*{\mathbf{laugh}(\mathbf{Josie})} = \text{true iff }j \in \set{x \in \mathbf{Dom}_E |x \text{ laughs} }\)
+#+end_exe
+
+Quantificational NPs such as \textit{everyone} are expressions of type \((E \to T) \to T\) - they're interpreted as /sets of sets/ of individuals.
+
+#+name: ev
+#+begin_exe
+\ex \(\eval*{\mathbf{everyone}} = \set{P | P = \mathbf{Dom}_E }\)
+#+end_exe
+
+#+name: ev-laugh
+#+begin_exe
+\ex \(\eval*{\mathbf{everyone}(\mathbf{laughed})} = \text{ true iff }\set{x | x\text{ laughs} }  = \mathbf{Dom}_E\)
+#+end_exe
+
+In class, we introduced a way of /lifting/ type \(E\) expressions into type \((E \to T) \to T\) expressions. An individual \(x\) can be re-interpreted as the set of \(P\)s which are true of \(x\). This is written as \(x^\uparrow \).
+
+#+name: lift
+#+begin_exe
+\ex \(\eval*{x^\uparrow} = \set{P \subseteq \mathbf{Dom}_E | x \in  P}\)
+#+end_exe
+
+When a lifted type \(E\) expression takes a type \((E \to T)\) expression as its argument, the result is the same as applying the type \((E \to T)\) expression as the function.
+
+#+name: jo
+#+begin_exe
+\ex \(\eval*{\mathbf{Josie}^\uparrow(\mathbf{laugh})} \begin{aligned}[t]
+&= \text{true iff }\set{x | x\text{ laughs} } \in \set{P \subseteq \mathbf{Dom}_E | j \in P}\\
+&= \text{true iff }j \in \set{x | x\text{ laughs} } 
+\end{aligned}\)
+#+end_exe
+
+Lifting is generally harmless, then, but it will be essential for dealing with NP conjunction.
+
+Following [cite:@Winter2001], we've been treating /collective predicates/ as type \((E \to T) \to T\) expressions, like quantificational NPs.
+
+#+name: coll
+#+begin_exe
+\ex \(\eval*{\mathbf{met}} = \set{P \subseteq \mathbf{Dom}_E | P\text{ met}}\)
+#+end_exe
+
+This predicts that collective predicates can only compose with expressions that are interpreted as sets of individuals. Putting aside the compositional details, we assume that conjoined names and definite plurals are type \(E \to T\).
+
+#+name: jandm
+#+begin_exe
+\ex \(\eval*{\mathbf{JohnandMary}} = \set{j,m}\)
+#+end_exe
+
+#+name: jandm
+#+begin_exe
+\ex \(\eval*{\mathbf{met}(\mathbf{John and Mary})} = \text{true iff }\set{j,m} \in  \set{P|P\text{ met} }\)
+#+end_exe
+
+We've spent quite a lot of time discussing how to generalize boolean conjunction to in order to conjoin expressions of a boolean type.
+
+Conjunction of expressions of type \(\sigma \to T\) has quite a simple interpretation - set intersection:
+
+#+name: set
+#+begin_exe
+\ex \(\eval*{\alpha_{\sigma  \to  T}\sqcap \beta_{\sigma  \to T}} = \eval*{\alpha } \cap \eval*{\beta }\)
+#+end_exe
+
+This accounts for predicate conjunction, as well distributive readings of NP conjunction (collective readings are still out of bounds).
+
+#+name: lsn
+#+begin_exe
+\ex \(\eval*{\mathbf{laugh} \sqcap \mathbf{sneeze}} = \set{x | x \text{ laughs} } \cap \set{x | x\text{ sneezes} }\)
+#+end_exe
+
+#+name: everyand
+#+begin_exe
+\ex \(\begin{aligned}[t]
+&\eval*{\mathbf{everyLinguist} \sqcap \mathbf{somePhilosopher}}\\
+&= \set{P \subseteq \mathbf{Dom}_E | \set{x | x\text{ is a linguist}\subseteq P}} \cap \set{P \subseteq \mathbf{Dom}_E | P \cap \set{x | x\text{ is a philosopher}} \neq \emptyset }\\
+&= \set{P \subseteq \mathbf{Dom}_E | \mathbf{linguist} \subseteq P\text{ and }P \cap \mathbf{philosopher} \neq \emptyset }
+\end{aligned}\)
+#+end_exe
+
+This also works for (lifted) non-quantificational NPs:
+
+#+name: lift
+#+begin_exe
+\ex \(\eval*{\mathbf{John}^\uparrow \wedge \mathbf{Mary}^\uparrow} = \set{P \subseteq \mathbf{Dom}_E | j \in P, m \in P}\)
+#+end_exe
+
+Last time, we dicussed a method for deriving collective readings of conjoined names using an inventory of type-shifters:
+
+- Lift
+- Minimization
+- Existential raising.
+  
+The focus of [cite:@Champollion2016] is on a surprising related phenomenon: collective readings of /noun/ (i.e., predicate) cojunction.
+
+#+name: man
+#+begin_exe
+\ex A [man and woman] met in the park last night.
+#+end_exe
+
+* Conjunction and collectivity
+
+** Background
+
+Typically, conjunction of type \(E \to T\) expressions is /intersective/. This is exactly what we expect on the basis of boolean conjunction generalized to type \(E \to T\) expressions.
+
+#+name: int
+#+begin_exe
+\ex John [lies and cheats].
+\ex That liar and cheat cannot be trusted.
+#+end_exe
+
+The most salient reading of the following however isn't that someone who is both a man and a woman met in the park last night, but rather that a group consisting of a man in the woman met.
+
+There is no obvious way of explaining this given what we know about how to conjoin type \(E \to T\) expressions.
+
+#+name: man2
+#+begin_exe
+\ex A [man and woman] met in the park last night
+#+end_exe
+
+Conjunction of nouns in fact gives rise to /ambiguities/.
+
+#+name: ambig
+#+begin_exe
+\ex Every linguist and philosopher knows the Gödel thereom
+\begin{xlist}
+\ex Everyone who is both a linguist and a philosopher knows the Gödel theorem.
+\ex Every linguist knows the G̈odel theorem, and every philosopher knows the Gödel theorem.
+\end{xlist}
+#+end_exe
+
+Big question: how do we unify these two uses of /and/?
+
+- Intersective theory.
+- Collective theory.
+
+[cite:@Champollion2016] argues for the intersective (i.e., boolean) theory.
+
+* Champollion (2916)
+
+** Pair conjunction
+
+Champollion argues that /man and woman/ must be able to mean, roughly, the same thing as "man woman pair" - namely, a collective predicate that is true just of pairs of individuals consisting of a man and a woman.
+
+#+name: mandw 
+#+begin_exe
+\ex \(\set{\set{x,y}|x\text{ is a man and }y\text{ is a woman}}\)
+#+end_exe
+
+Evidence for this comes from a construction discussed by [cite:@Link1984] under the rubrik of /Hydras/.
+
+#+name: hydra1
+#+begin_exe
+\ex A man and woman who dated met in the park.
+#+end_exe
+
+As a starting point, Champollion makes the uncontroversial assumption that "who dated" basically means the same thing as "dated" — namely, it is a collective predicate that is true of a set of individuals that dated.
+
+#+name: dated
+#+begin_exe
+\ex \(\eval*{\mathbf{dated}} = \set{P \subseteq \mathbf{Dom}_E |P\text{ dated} }\)
+#+end_exe
+
+It's known that relative claused such as "who dated" are interpreted as intersectively modifying the nominal they combine with (in this case, man and woman).
+
+#+name: relative-clause
+#+begin_exe
+\ex \(\eval{man and woman who dated} = \eval{man and woman} \cap \set{P \subseteq \mathbf{Dom}_E | P\text{ dated} }\)
+#+end_exe
+
+from this it follows that "man and woman" must also denote a property of sets of individuals - namely, sets of individuals consisting just of a man and a woman. 
+
+name: relative-clause2
+#+begin_exe
+\ex \(\eval{man and woman who dated} = \set{\set{x,y}|x\text{ is a man and }y\text{ is a woman}} \cap \set{P \subseteq \mathbf{Dom}_E | P\text{ dated} }\)
+#+end_exe
+
+More evidence that /man and woman/ is true of /couples/, not individuals:
+
+#+name: ill
+#+begin_exe
+\ex That ill-matched man and woman (\(\neq\) that ill-matched man and ill-matched woman)
+\ex That mutually incompatible man and woman (\(\neq\) that mutually incompatible man and mutually incompatible woman)
+#+end_exe
+
+We'll follow Champollion as abbreviating the collective predicate "man and woman" as *mw-pair*.
+
+One way to derive *mw-pair* as the meaning of "man and woman" would be to simply treat /and/ as ambiguous and give "and" the following meaning in this context:
+
+#+name: andand
+#+begin_exe
+\ex \(\eval*{\alpha_{E \to T}\text{ and } \beta_{E \to T}} = \set{\set{x,y} | \eval*{\alpha(x)}\text{ is true  and }\eval*{\beta (y)}\text{ is true} }\)
+#+end_exe
+
+However, for reasons we've discussed, this would be dissatisfying.
+
+** Deriving pair conjunction
+
+Champollions deriviation for pair conjunction involes three independently motivated type-shifters, all of which should be familiar from the previous session.
+
+- Raising.
+- Intersection.
+- Minimization.
+  
+*** Existential raising
+
+Existential raising, when applied to /man/, will convert the set of men into the set of all the sets that containin a man and possibly other entities.
+
+#+name: er
+#+begin_exe
+\ex \(\eval*{\mathbf{ER}(P)} = \set{Q \subseteq \mathbf{Dom}_E | Q \cap \eval*{P} \neq \emptyset }\)
+\ex \(\eval*{\mathbf{ER}(\mathbf{man})} = \set{Q \subseteq \mathbf{Dom}_E | Q \cap \set{x | x\text{ is a man} } \neq \emptyset }\)
+#+end_exe
+
+Imagine that the men are \(m_1, m_2, \ldots\). Appliying *ER* to *man* will deliver the following kind of set:
+
+#+name: er2
+#+begin_exe
+\ex \(\set{\set{m_1},\set{m_2},\set{m_1, m_2},\set{m_1, a},\set{m_1, a, b},\set{m_2, a}, \set{m_1, m_2 , a , b}, \ldots}\)
+#+end_exe
+
+*** Intersection
+
+The second step, intersective, follows immediately from the generalized boolean theory of conjunction we've developed.
+
+Concretely, applying generalized conjunction to any two expressions of type \(\sigma  \to  T\) results in /set intersection/.
+
+name: set
+#+begin_exe
+\ex \(\eval*{\alpha_{\sigma  \to  T}\sqcap \beta_{\sigma  \to T}} = \eval*{\alpha } \cap \eval*{\beta }\)
+#+end_exe
+
+The next step in the account of pair conjunction will be to intersect (i.e., conjoin) the existentially-raised nominals.
+
+Note that it's crucial that we do existential raising before intersection, since we explicitly /don't/ want to derive the intersective reading.
+
+#+name: next
+#+begin_exe
+\ex \(\begin{aligned}[t]
+&\eval*{\mathbf{ER}(\mathbf{man}) \sqcap \mathbf{ER}(\mathbf{woman})}\\
+&= \eval*{\mathbf{ER}(\mathbf{man})} \cap \eval*{\mathbf{ER}(\mathbf{woman})}\\
+&= \set{Q \subseteq \mathbf{Dom}_E | Q \cap \set{x | x\text{ is a man} } \neq \emptyset } \cap \set{Q \subseteq \mathbf{Dom}_E | Q \cap \set{x | x\text{ is a woman} } \neq \emptyset }\\
+&= \set{Q \subseteq \mathbf{Dom}_E | Q \cap \set{x | x\text{ is a man} } \neq \emptyset \text{ and } Q \cap \set{x | x\text{ is a woman} } \neq \emptyset }\\
+& = \set{\set{m_1, w_1},\set{m_1, w_2},\set{m_2, w_1},\set{m_2, w_2}, \set{m_1, m_2, w_2},\set{m_1, w_2, a, b}, \set{m_1, m_2, w_1, w_2, a, b, c}, \ldots}
+\end{aligned}\)
+#+end_exe
+
+The result of existentially raising *man* and *woman*, and intersecting the result gives back a set of sets, all of which contain at least one man and one woman, but which also may contain many other individuals too.
+
+*** Minimization
+
+We encountered minimization last time. Let's go through the definition again.
+
+*MIN* takes a set of sets \(P\), and gives back the \(P\)'s which don't have any proper subsets present in the original set.
+
+#+name: min
+#+begin_exe
+\ex \(\eval*{\mathbf{MIN}(Q_{(\sigma \rightarrow T) \to T})} = \set{P \in \eval*{Q} | \forall P'[P' \subset P \rightarrow \neg(P' \in \eval*{Q})]}\)
+#+end_exe
+
+*MIN* maps an expression of type \((\sigma \rightarrow T) \rightarrow T\) to an expression of type \((\sigma \to T) \to T\) (i.e., a set of sets to a set of sets). 
+
+There's a conceptual difference between the input and the output of *MIN*:
+
+- The input is best thought of as a complex generalized quantifier.
+- The output is best thought of as a predicate of collective individuals.
+  
+Let's see what happens when we apply *MIN* to \(\mathbf{ER}(\mathbf{man}) \sqcap \mathbf{ER}(\mathbf{woman})\).
+
+#+name: erer
+#+begin_exe
+\ex \(\begin{aligned}[t]
+&\eval*{\mathbf{MIN}(\mathbf{ER}(\mathbf{man}) \sqcap \mathbf{ER}(\mathbf{woman}))}\\
+&= \set{P \in \eval*{\mathbf{ER}(\mathbf{man}) \sqcap \mathbf{ER}(\mathbf{woman})}| \forall P' \subset P \rightarrow \neg(P' \in \eval*{Q})}\\
+&= \set{\set{m_1, w_1},\set{m_1, w_2},\set{m_2, w_1},\set{m_2 , w_2}}
+\end{aligned}\)
+#+end_exe
+
+Finally, we end up with the set of sets that contain a man, a woman, and nothing else.
