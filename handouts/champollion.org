@@ -378,3 +378,9 @@ Now we can derive the attested reading of ([[beer]]).
 \ex \(\eval*{\mathbf{a}(\text{\bf mw-pair})(\mathbf{PDIST}(\mathbf{hadABeer}))}\)
 \ex \(= \text{true iff }\set{\set{x,y}|x\text{ is a man and }y\text{ is a woman and }\set{x,y}\text{ had a beer} } \neq \emptyset \)
 #+end_exe
+
+* Reading for next week
+
+- Section 3-5 of [cite:@Champollion2016].
+  
+#+print_bibliography:
