@@ -116,7 +116,7 @@ This also works for (lifted) non-quantificational NPs:
 
 #+name: lift
 #+begin_exe
-\ex \(\eval*{\mathbf{John}^\uparrow \wedge \mathbf{Mary}^\uparrow} = \set{P \subseteq \mathbf{Dom}_E | j \in P, m \in P}\)
+\ex \(\eval*{\mathbf{John}^\uparrow \sqcap \mathbf{Mary}^\uparrow} = \set{P \subseteq \mathbf{Dom}_E | j \in P, m \in P}\)
 #+end_exe
 
 Last time, we dicussed a method for deriving collective readings of conjoined names using an inventory of type-shifters:
@@ -312,3 +312,69 @@ Let's see what happens when we apply *MIN* to \(\mathbf{ER}(\mathbf{man}) \sqcap
 #+end_exe
 
 Finally, we end up with the set of sets that contain a man, a woman, and nothing else.
+
+We've successfully derived the *mw-pair* reading for nominal conjunction!
+
+** Using /man and woman/ in context
+
+#+name: hydra
+#+begin_exe
+\ex A man and a woman who dated met in the park.
+#+end_exe
+
+We're going to need a more type-general semantics for /a/.
+
+#+name: a
+#+begin_exe
+\ex \(\eval*{\mathbf{a}_{(\sigma \to T) \to (\sigma \to T) \to T}} = \lambda R\,.\,\set{P \subseteq \mathbf{Dom}_{\sigma } | R \cap P \neq \emptyset}\)
+#+end_exe
+
+#+name: date
+#+begin_exe
+\ex \(\eval*{\mathbf{dated}} = \set{P \subseteq \mathbf{Dom}_E | P\text{ dated} }\)
+#+end_exe
+
+#+name: met
+#+begin_exe
+\ex \(\eval*{\mathbf{met}} = \set{P \subseteq \mathbf{Dom}_E | P\text{ met} }\)
+#+end_exe
+
+#+name: ex
+#+begin_exe
+\ex \(\eval*{\mathbf{a}((\mathbf{MIN}(\mathbf{ER}(\mathbf{man}) \sqcap \mathbf{ER}(\mathbf{woman}))) \sqcap \mathbf{dated})(\mathbf{met})}\)
+\ex \(\begin{aligned}[t]
+&\eval*{((\mathbf{MIN}(\mathbf{ER}(\mathbf{man}) \sqcap \mathbf{ER}(\mathbf{woman}))) \sqcap \mathbf{dated})}\\
+&= \set{\set{x,y}|x\text{ is a man and }y\text{ is a man and }\set{x,y}\text{ dated}}
+\end{aligned}\)
+\ex \(= \text{true iff }{\set{x,y}|x\text{ is a man and }y\text{ is a man and }\set{x,y}\text{ dated}} \cap \set{P \subseteq \mathbf{Dom}_E | P\text{ met} } \neq \emptyset \)
+#+end_exe
+
+** Distributivity
+
+#+name: beer
+#+begin_exe
+\ex A man and woman had a beer.
+\ex \(\Rightarrow\) a man had a beer and a woman had a beer
+#+end_exe
+
+Predicate distributivity:
+
+#+name: dist
+#+begin_exe
+\ex \(\eval*{\mathbf{PDIST}(P)} = \set{P' \subseteq \mathbf{Dom}_e | P' \neq \emptyset , P' \subseteq P}\)
+#+end_exe
+
+*PDIST* applies to \(P\) and returns a set of sets, each of which is non-empty, and each member of which is true of \(P\).
+
+#+name: dist
+#+begin_exe
+\ex \(\eval*{\mathbf{PDIST}(\mathbf{hadABeer})} = \set{P' \subseteq \mathbf{Dom}_e | P' \neq \emptyset , P' \subseteq \set{x | x\text{ had a beer}}}\)
+#+end_exe
+
+Now we can derive the attested reading of ([[beer]]).
+
+#+name: p
+#+begin_exe
+\ex \(\eval*{\mathbf{a}(\text{\bf mw-pair})(\mathbf{PDIST}(\mathbf{hadABeer}))}\)
+\ex \(= \text{true iff }\set{\set{x,y}|x\text{ is a man and }y\text{ is a woman and }\set{x,y}\text{ had a beer} } \neq \emptyset \)
+#+end_exe
