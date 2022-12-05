@@ -1,0 +1,192 @@
+#+title: Champollion 2016 cont.
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Recap Exercises 
+
+** Backround on collective conjunction of individuals
+
+[cite:@Winter2001] develops an account of /collective conjunction of individuals/ based on the idea that the core semantic contribution of /and/ is boolean conjunction.
+
+#+name: coll-conj
+#+begin_exe
+\ex John, Mary, and Sue gathered in the hallway.
+#+end_exe
+
+Winter's account made use of four essential ingredients; generalized boolean conjunction is the meaning of /and/, whereas the other three ingredients are "type shifters".
+
+- Montague lift.
+- (Generalized) boolean conjunction (i.e., set intersection).
+- Minimization.
+- Existential raising.
+  
+Step-by-step, the story is as follows:
+
+1. Apply /Montague/ lift to the type \(E\) coordinands (result: \((E \to T) \to T\)). 
+2. Conjoin the resulting expressions using generalized boolean conjunction (result: \((E \to T) \to T\)).
+3. Apply minimization to the result (result: \((E \to T) \to T\)).
+4. Apply existential raising to create a quantifier over pluralities (result: \(((E \to T) \to T) \to T\)).
+5. Apply the resulting quantifier to the collective predicate.
+   
+** Exercise 1
+
+Let's compute the meaning of "John, Mary and Sue gathered", in terms of /sets/.
+
+I'll provide you with the meaning of each atomic expressions:
+
+- \(\eval*{\mathbf{John}}, \eval*{\mathbf{Mary}}, \eval*{\mathbf{Sue}} = j, m, s \)
+- \(\eval*{\mathbf{gathered}} = \set{ x \in \mathbf{Dom}_E | x\text{ gathered} }\)
+- \(\eval*{\mathbf{and}(P_{ET})(Q_{ET})} = \set{x \in \mathbf{Dom}_E | x \in \eval*{P}\text{ and }x \in \eval*{Q}}\)  
+
+In addition, we'll need to make use of the following type-shifters:  
+
+- \(\eval*{\mathbf{LIFT}(x_E)} = \set{P \subseteq \mathbf{Dom}_E | x\in  P}\)
+- \(\eval*{\mathbf{MIN}(Q_{(\sigma \rightarrow T) \to T})} = \set{P \in \eval*{Q} | \forall P'[P' \subset P \rightarrow \neg(P' \in \eval*{Q})]}\)
+- \(\eval*{\mathbf{ER}(P)} = \set{Q \subseteq \mathbf{Dom}_E | Q \cap \eval*{P} \neq \emptyset }\)
+  
+You may assume the following structure for our collective coordination example.
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(T\)}
+    [{\(((E \to T) \to T) \to T\)}
+      [{???}]  
+      [{\((E \to T) \to T\)}
+        [{???}]
+        [{\((E \to T) \to T\)}
+        [{\((E \to T) \to T\)}
+          [{???}]
+          [{John: \(E\)}]
+        ]
+        [{\ldots}
+          [{and: ?}]
+          [{?}
+          [{\((E \to T) \to T\)}
+            [{???}]
+            [{Mary: \(E\)}]
+          ]
+          [{\ldots}
+            [{and: ?}]
+            [{\((E \to T) \to T\)}
+              [{???}]
+              [{Sue: \(E\)}]
+            ]
+          ]
+          ]
+        ]
+        ]
+      ]
+    ]
+      [{gathered: \((E \to T) \to T\)}]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+- Fill in the missing type-shifters.
+- Fill in the missing type-signatures, and verify that the structure is well-typed.
+- Give the interpretation (as a set) for every non-atomic node (except for those labelled "\ldots").
+- What are the truth-conditions for the sentence?
+  
+Now, provide a concrete /model/ at which:
+1. The sentence is true (explain why).
+2. The sentence is false (explain why).
+This involves specifying a concrete domain of individuals and an extension for the lexical constants.
+
+** Background on collective conjunction of predicates
+
+[cite:@Champollion2016] builds on [cite:@Winter2001], by developing an account of collective conjunction of predicates, as in the following: 
+
+#+name: disagree
+#+begin_exe
+\ex Every *linguist and philosopher* who disagreed with each other walked in together.
+#+end_exe
+
+- (Generalized) boolean conjunction (i.e., set intersection).
+- Minimization. 
+- Existential raising.
+  
+Step-by-step, the story is as follows:
+
+- In order to avoid immediately deriving an intersective reading, the coordinated predicates are /existentially raised/ (result: \((E \to T) \to T\)).
+- The resulting raised predicates are intersected via generalized boolean conjunction. (result: \((E \to T) \to T\))
+- The resulting quantifier is /minimized/, in order to derive a predicate of collective individuals (result: \((E \to T) \to T\)). 
+- The resulting predicate composes as the restrictor of a more type-general determiner.
+
+** Exercise 2  
+
+We'll go through the following example:
+
+#+name: an-ill
+#+begin_exe
+\ex An ill-matched linguist and philosopher gave a talk together.
+#+end_exe
+
+We'll go through the composition of ([[an-ill]]) in terms of sets. A couple of important assumptions:
+
+- We'll treat "ill-matched" as a modifier of collective individuals, that is only true of /pairs/ (type \(((E \to T) \to T) \to (E \to T) \to T\)).
+- We'll treat "gave a talk together" as a predicate of collective individuals (type \((E \to T) \to T\)).
+  
+Here's the interpretation of the constants in terms of sets:
+
+- \(\eval*{\mathbf{illMatched}(Q_{(ET \to T)})} = \set{P \in Q | P = \set{x,y}\text{ and }x\text{ doesn't match }y}\)
+- \(\eval*{\mathbf{linguist}}  = \set{x \in \mathbf{Dom}_E | x\text{ is a linguist} }\)
+- \(\eval*{\mathbf{philosopher}}  = \set{x \in \mathbf{Dom}_E | x\text{ is a philosopher} }\)
+- \(\eval*{\mathbf{gaveTalkTogether}} = \set{P \subseteq \mathbf{Dom}_E | P = \set{x,y}\text{ and }x\text{ gave a talk with }y}\)
+  
+We'll also need a collective counterpart of the indefinite determiner /a/:
+
+- \(\eval*{\mathbf{a}(Q_{ET \to T})} = \set{Q' \subseteq \mathbf{Dom}_E | Q \cap Q' \neq \emptyset }\)
+  
+Here's the structure you can assume for our example sentence:
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{?}
+    [{?}
+      [{a: ?}]
+      [{\((E \to T) \to T\)}
+        [{ill-matched: \((ET \to T) \to ET \to T\)}]
+        [{\((E \to T) \to T\)}
+          [{???}]
+          [{\((E \to T) \to T\)}
+          [{\((E \to T) \to T\)}
+            [{???}]
+            [{linguist: \(E \to T\)}]
+          ]
+          [{\ldots}
+            [{and: ?}]
+            [{\((E \to T) \to T\)}
+              [{???}]
+              [{philosopher: \(E \to T\)}]
+            ]
+          ]
+          ]
+        ]
+      ]
+    ]
+      [{\((E \to T) \to T\)} [{gave a talk together},roof]]
+    ]\end{forest}
+\end{exe}
+#+end_export
+
+- Fill in the missing type-shifters.
+- Fill in the missing type-signatures, and verify that the structure is well-typed.
+- Give the interpretation (as a set) for every non-atomic node (except for those labelled "\ldots").
+- What are the truth-conditions for the sentence?
+  
+Now, provide a concrete /model/ at which:
+1. The sentence is true (explain why).
+2. The sentence is false (explain why).
+This involves specifying a concrete domain of individuals and an extension for the lexical constants.
+
+
+
+#+print_bibliography:
