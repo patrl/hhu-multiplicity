@@ -29,7 +29,7 @@ On this framing, funtional applications involving characteristic functions are i
 #+name: set-mem
 #+begin_exe
 \ex \(\eval*{\alpha{}_{\sigma \to T}(\beta_\sigma 
-)} = \text{true iff }\eval*{\alpha } \in \eval*{\beta}\)
+)} = \text{true iff }\eval*{\beta  } \in \eval*{\alpha }\)
 #+end_exe
 
 #+name: j
@@ -319,7 +319,7 @@ We've successfully derived the *mw-pair* reading for nominal conjunction!
 
 #+name: hydra
 #+begin_exe
-\ex A man and a woman who dated met in the park.
+\ex A man and woman who dated met in the park.
 #+end_exe
 
 We're going to need a more type-general semantics for /a/.

@@ -188,5 +188,101 @@ Now, provide a concrete /model/ at which:
 This involves specifying a concrete domain of individuals and an extension for the lexical constants.
 
 
+* Justifying existential raising
+
+- \(\eval*{\mathbf{ER}(P)} = \set{Q \subseteq \mathbf{Dom}_E | Q \cap \eval*{P} \neq \emptyset }\)
+  
+Existential raising is a silent operator that lifts its restrictor into an existential quantifier.
+
+Evidence that this should be available as a silent type-shifter comes from /bare plurals/.
+
+#+name: bare
+#+begin_exe
+\ex Dogs are barking outside now.
+\ex Dogs aren't barking outside now.
+#+end_exe
+
+Furthmore, some languages (Russian, Hebrew, etc.) don't typically pronounce the indefinite article at all.
+
+Indefinite noun phrases can be used in predicate position, and conjoined with adjectives:
+
+#+name: pred
+#+begin_exe
+\ex Lucas is an authority on unicorns.
+\ex Lucas is competent in semantics and an authority on unicorns.
+#+end_exe
+
+One conclusion that has been drawn on this basis is that the basic denotation of an indefinite noun phrase is type \(E \to T\).
+
+#+name: indef
+#+begin_exe
+\ex \(\set{x  \in \mathbf{Dom}_E | x \text{ is an authority on unicorns} }\)
+#+end_exe
+
+If this is right, then we need existential raising to interpret indefinite noun phrases in argument position, even for English.
+
+#+name: argument
+#+begin_exe
+\ex An authority on unicorns is teaching this class.
+#+end_exe
+
+A similar point can be made for numerals, which can seemingly occur in predicate position:
+
+#+name: numeral
+#+begin_exe
+\ex Those are two dolphins.
+#+end_exe
+
+We can extend an /existential raising/ analysis to numerals in argument position:
+
+#+name: two-dolphins
+#+begin_exe
+\ex \(\eval{two dolphins} = \set{X \subseteq \mathbf{Dom}_{ET} | X\text{ are dolphins and }\mathbf{card}(X) = 2}_{}\)
+#+end_exe
+
+#+name: two
+#+begin_exe
+\ex Two dolphins are swimming over there.
+#+end_exe
+
+Note this means that we can simply treat *two* as an adjectival modifier of collections:
+
+#+name: two
+#+begin_exe
+\ex \(\eval{two} = \set{X \subseteq \mathbf{Dom}_{ET} | \mathbf{card}(X) = 2}\)
+#+end_exe
+
+* Overlap and choice raising
+
+The sets encoded by *doctor* and *lawyer* may overlap but not completely coincide.
+
+#+name: overlap
+#+begin_exe
+\ex A doctor and lawyer met.
+#+end_exe
+
+We can't conclude from this sentence that the two people who met aren't also lawyers and doctors respectively.
+
+Minimization gives rise to a problem. We end up with a set of sets \(S\) with the following properties:
+
+- \(S\) contains a doctor \(d\).
+- \(S\) contains a lawyer (who may be identical or distinct from \(d\)).
+- \(S\) has no proper subset that contains a lawyer and a doctor.
+  
+This means that the resulting sets can only either be:
+
+- Singleton sets containing an individual who is both a lawyer and a doctor.
+- Pairs of single-profession doctors and lawyers.
+  
+If the two professions coincide then ([[overlap]]) is predicted to just be deviant for the same reason that "John met" is.
+
+Winter has a similar problem with cases like the following:
+
+#+name: overlap2
+#+begin_exe
+\ex John and some man met.
+#+end_exe
+
+
 
 #+print_bibliography:
