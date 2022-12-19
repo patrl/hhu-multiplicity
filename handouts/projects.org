@@ -1,0 +1,95 @@
+#+title: Some topic ideas
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Generalized negation
+
+A natural extension of /generalized conjunction/ and /generalized disjunction/ is /generalized negation/, i.e., allowing negation to apply to any expression which has a boolean type.
+
+- Consider whether this over-predicts the distribution of negation in natural language, drawing on evidence from sentences with negation in English/German.
+
+Some interesting examples to consider (and attempt to analyze):
+
+#+name: not
+#+begin_exe
+\ex John and not Mary sneezed.
+\ex John, Sue, and not Mary met in the classroom.
+\ex *Not John sneezed.
+#+end_exe
+
+* Atom vs. set predicates
+
+Main references:
+
+- [cite:@Winter1998]
+- [cite:@deVries2015]
+
+In this class, we've talked about collective predicates such as "gather" as if they are a homogeneous class. However, Winter argues that collective predicates come in two distinct categories: /set predicates/ and /atom predicates/.  
+
+Some examples of set predicates include familiar collective predicates like /gather/ and /meet/.
+
+Some examples of atom predicates include /be a good team/, and /be numerous/.
+
+One of the primary diagnostics for set vs. atom predicate is whether or not the predicate is compatible with a Noun Phrase headed by the determiner /all/.
+
+#+name: contrast
+#+begin_exe
+\ex The students gathered.
+\ex All the students gathered.
+\ex The students are numerous.
+\ex *All the students are numerous.
+#+end_exe
+
+Assess Winter's account of atom vs. set (perhaps drawing on linguistic data from atom vs. set predicates in German).
+
+* Overlapping individuals
+
+- Main reference: [cite:@Champollion2016], section 4.
+  
+In class, we learned about Champollion's account of /collective conjunction of predicates/, which makes use of /existential raising/, /generalized conjunction/ (i.e., intersection), and /minimization/. As he points out, the basic story runs intro trouble when we do collective conjunction of /overlapping predicates/.
+
+#+name: doc
+#+begin_exe
+\ex A doctor and lawyer met.
+#+end_exe
+
+([[doc]]) can be used in a context where some individuals might be both lawyers and doctors. If we apply minimization in such a case, it returns (i) singleton sets of individuals who are both doctors and lawyers, and (ii) two element sets consisting of an individual who is a lawyer-and-not-doctor, and another individual who is a doctor-and-not-lawyer.
+
+This (erroneously!) predicts that the sentence should be /false/ if Mary and Sue met, if Mary and Sue are both doctors and lawyers. 
+
+In order to solve this problem, Champollion introduces a more sophisticated notion of existential raising which he calls /choice raising/.
+
+* Comparing generalized conjunction to /conjunction reduction/
+
+- Main references: [cite:@Hirsch2017] (also [cite:@Hirsch2017a]).
+  
+In class, we learned about how /generalized conjunction/ can make sense of the broad distribution of coordination in natural language, together with why it tends to license /distributive inferences/.
+
+For example, in the following sentence, we could analyze /and/ as expressing generalized conjunction, since both /every student/ and /every professor/ are of a boolean type (\(ET \to T\)).
+
+#+name: dist
+#+begin_exe
+\ex John saw [every student] and [every professor].
+#+end_exe
+
+The /generalized conjunction/ of /every student/ and /every professor/ is itself a quantifier of type \(ET \to T\), which may be interpreted as quantifiers in object position usually are (i.e., via /quantifier raising/):
+
+#+name: quant
+#+begin_exe
+\ex \(\lambda P\,.\,\mathbf{every}(\mathbf{student})(P) \wedge \mathbf{every}(\mathbf{professor})(P)\)
+#+end_exe
+
+There is however an alternative to generalized conjunction, which maintains that conjunction is /always/ type \(T \to T \to T\), and appeals to a syntactic mechanism of "conjuntion reduction" to make sense of sentences such as ([[dist]]). According to the conjunction reduction analysis, ([[dist]]) is /underlyingly represented/ as ([[dist2]]).
+
+#+name: dist2
+#+begin_exe
+\ex John saw [every student] and +John saw+ [every professor].
+#+end_exe
+
+This topic is based on comparing the predictions of generalized conjunction and conjunction reduction, using Hirsch's paper as a starting point.
+
+
+#+print_bibliography:
