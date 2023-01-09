@@ -423,7 +423,33 @@ Now, the result when combined with /exactly 5/:
 
 The sentence is true if the cardinality of the students that participated in a meeting is 5.
 
-** TODO Impure atoms
+** Impure atoms
+
+According to Winter all atom predicates are of type \(E \to T\) - yes, even predicates like "be a good team".
+
+In order to capture the fact that atom predicates can nevertheless compose with plural NPs like "the students", Winter assumes a (slightly mystical) type shifter \(\downarrow\), which shifts a set of individuals to the "impure atom" consituting that set.
+
+You can think of \(\mathbf{student}^\downarrow\) simply as the group (qua individual) that the students constitute.
+
+There are certain Noun Phrases in English which inherently denote impure atoms, e.g., "the committee", and the "group".
+
+We need to invoke the inverse of \(\downarrow\) in order to account for how a Noun Phrase like "the group" can nevertheless combine with a set predicate. We'll call this function *mem*.
+
+#+name: mem
+#+begin_exe
+\ex \(\mathbf{mem}(x_E) = \set{x' | x' \text{ is part of }x}\)
+#+end_exe
+
+We can now account for why /all/ and /every/ and so on are incompatible with atom predicates like /be a good team/.
+
+#+name: 
+#+begin_exe
+\ex All the students are a good team.
+#+end_exe
+
+/All/ is shifted via *dfit* in order to combine with /the students/, but /be a good team/ is an atom predicate of type \(E \to T\). *Dfit* lifts determiners into relations between sets of pluralities and collective predicates.
+
+We'll talk more about impure atoms and distributivity next week when we discuss a subtle dialectal alternation in British English that has implications for the theoretical apparatus introduced today.
 
 
 
