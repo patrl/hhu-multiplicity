@@ -1,0 +1,434 @@
+#+title: Distributivity and atom vs. set predicates
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Recap collective vs. distributive predicates
+
+We've looked at (broadly) two types of predicates:
+
+- distributive predicates: /meet/, /gather/, /talk to each other/, etc.
+- collective predicates: /sneeze/, /read a novel/, /swim/, etc. 
+
+Based on our empirical assessment, we concluded:
+
+- Distributive predicates may combine with singular NPs and plural NPs.
+  * When a distributive predicate combines with a plural NP it licenses a /distributive inference/.
+- Collective predicates mat only combine with plural NPs.
+  * Collective predicates with plural NPs don't necessarily license distributive inferences.
+    
+A brief example:
+
+#+name: dist
+#+begin_exe
+\ex The professors sneezed \(\Rightarrow\) /each of the professors sneezed/
+\ex The professors work well together \(\not\Rightarrow\) /each of the professors work well together/
+#+end_exe
+
+We have a relatively satisfactory account, based on type theory, of why collective predicates may only combine with plural NPs.
+
+- Singular NPs are of type \(E\) (they denote individuals).
+- Plural NPs are of type \(E \to T\) (they denote (characteristic functions of) sets of individuals).
+- Distributive predicates are of type \(E \to T\).
+- Collective predicates are of type \(ET \to T\).
+ 
+According to this idea, collective predicates /semantically select/ for sets of individuals.
+
+Distributive predicates, on the other hand, /semantically select/ for individuals.
+
+Before we go much further, you may have noticed there's a hole in our analysis: don't we predict that distributive predicates may not combine with plural NPs? As we've seen, this is wrong!
+    
+* Distributive predicates and pluralities
+
+One possible "solution" to this problem would be to treat all distributive predicates as /ambiguous/ between a type \(E \to T\) meaning and a type \(ET \to T\) meaning.
+
+- Can you comment on why this would unsatisfactory?
+  
+Instead, we'll follow much of the existing literature in defining a /distributive operator/ *Dist* (a kind of type shifter) that allows a distributive predicate to combine with a plural NP.
+
+*Dist* takes a predicate \(P\) of type \(E \to T\), and a plural individual \(X\) of type \(E \to T\) and returns /true/ iff (a) is non-empty, and (b) each element \(x \in X\) is such that \(P(x)\) is true. 
+
+Let's see how to state a formal definition for \(\mathbf{Dist}: ET \to ET \to T\):
+
+#+name: dist
+#+begin_exe
+\ex \(\mathbf{Dist} := \lambda P\,.\,\lambda X\,.\,\exists x, X(x) \wedge \forall x[X(x) \to P(x)]\)
+#+end_exe
+
+An equivalent (and much simpler) formulation in terms of /sets/:
+
+#+name: dist'
+#+begin_exe
+\ex \(\mathbf{Dist}(P)(X) := X \neq \emptyset \wedge X \subseteq P\)
+#+end_exe
+
+One interesting thing to note here is that the distributive operator has /exactly/ the same semantics as the universal determiner /every/, only with its arguments flipped.
+
+We can now use the distributive operator to compose a plural NP with a distributive predicate, by first shifting the predicate with the distributive operator.
+
+The Logical Form is as follows:
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(\mathbf{Dist}(\mathbf{sneezed})(\mathbf{theProfs})\)}
+      [{\(E \to T\)} [{the professors},roof]]
+      [{\(ET \to T\)}
+        [{\(\mathbf{Dist}\)}]
+        [{sneezed: \(E \to T\)}]
+      ]
+    ]\end{forest}
+\end{exe}
+#+end_export
+
+The truth-conditions we arrive at are as follows:
+
+#+name: t
+#+begin_exe
+\ex \(\eval{the professors sneezed} = \mathbf{true} \iff \mathbf{professor} \subseteq \mathbf{sneeze}\)
+#+end_exe
+
+We'll assume that the type mismatch triggered by combining a plural NP with a distributive predicate is always solved by the distributive operator.
+
+** Phrasal distributivity
+
+An interesting property of the distributivity operator *Dist* is that nothing in principle prevents it from applying to /any/ expression of type \(E \to T\).
+
+It turns out that this property of *Dist* is /crucial/ in order to account for ambiguities that arise with plural NPs and other operators.
+
+Consider the following sentence:
+
+#+name: huggingSinging
+#+begin_exe
+\ex The football players are singing or dancing.
+#+end_exe
+
+The sentence can be true in two different kinds of scenarios:
+
+1. There is a mixture of singing and dancing happening amongst the football players.
+
+2. Either all the football players are singing, or all the football players are dancing, but I'm not entirely sure which (perhaps my view is obscured somehow). 
+
+This is really intriguing, since we would typically assume that there is only one operator in the sentence - namely, disjunction - whereas these kinds of ambiguities arise when we have sentences with /two/ operators, especially if one of them is quantificational.   
+
+We can account for this based on the expression that *Dist* combines with. If we assume that *Dist* can combine with any verbal constituent, there are two possible Logical Forms for the sentence:
+
+In the first Logical Form, we compose *Dist* with the complex, disjoined Verb Phrase.
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(T\)}
+      [{\(E \to T\)} [{the football players},roof]]
+      [{\(ET \to T\)}
+        [{\(\mathbf{Dist}\): \(ET \to ET \to T\)}]
+        [{\(ET\)}
+          [{hugging: \(ET\)}]
+          [{\(ET \to ET\)}
+            [{or: \(ET \to ET \to ET\)}]
+            [{singing: \(ET\)}]
+          ]
+        ]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+In the second Logical Form we have /two/ *Dists*; each combines with one of the verbal expressions. Note that we need two *Dists*; only one will result in a type mismatch.
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(T\)}
+      [{\(E \to T\)} [{the football players},roof]]
+      [{\(ET \to T\)}
+      [{\(ET \to T\)}
+        [{\(\mathbf{Dist}\)}]
+        [{singing}]
+      ]
+      [{\(ETT \to ETT\)}
+        [{or: \(ETT \to ETT \to ETT\)}]
+        [{\(ET \to T\)}
+          [{\(\mathbf{Dist}\)}]
+          [{dancing}]
+        ]
+      ]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+The Logical Forms both involve /generalized disjunction/. To simplify, we'll adopt a set-based understanding of generalized disjunction as set-union:
+
+#+name: 
+#+begin_exe
+\ex \(\mathbf{or}(P)(Q) = P \cup Q\)
+#+end_exe
+
+This means that /singing or dancing/ has the following denotation:
+
+#+name: 
+#+begin_exe
+\ex \(\eval{singing or dancing} = \set{x | x\text{ is singing} } \cup \set{x | x\text{ is dancing} }\)
+#+end_exe
+
+With this in hand, we can see that the first Logical Form accounts for the /mixed/ reading. This is because applying *Dist* to the above set gives the following result:
+
+#+name: dis
+#+begin_exe
+\ex \(\lambda X\,.\,X \subseteq (\mathbf{singing} \cup \mathbf{dancing})\)
+\ex \(\mathbf{true} \iff  \mathbf{footballer} \subseteq (\mathbf{singing} \cup \mathbf{dancing})\)
+#+end_exe
+
+Logical Form 1 will result in /true/ just in case the footballers are a subset of the people who are singing or dancing.
+
+Now, onto Logical Form 2. This is a little more complex, since *Dist* shifts each verbal predicate into a predicate of pluralities of type \(ET \to T\). We can render such predicates in set terms as /sets of sets/.
+
+#+name: dist
+#+begin_exe
+\ex \(\mathbf{Dist}(\mathbf{singing}) = \set{X | X \neq \emptyset \wedge X \subseteq \mathbf{singing}}\)
+\ex \(\mathbf{Dist}(\mathbf{dancing}) = \set{X | X \neq \emptyset \wedge X \subseteq \mathbf{dancing}}\)
+#+end_exe
+
+Generalized disjunction, as before, contributes set union.
+
+#+name: 
+#+begin_exe
+\ex \(\set{X | X \neq \emptyset \wedge X \subseteq \mathbf{singing}} \cup \set{X | X \neq \emptyset \wedge X \subseteq \mathbf{dancing}}\)
+#+end_exe
+
+The result is a set of sets, whose elements are either all singing, or all dancing. Finally, we can compose the result with the subject. 
+
+#+name: s
+#+begin_exe
+\ex \(\mathbf{true} \iff  \mathbf{footballer} \neq \emptyset \wedge \mathbf{footballer} \subseteq \mathbf{singing}\text{ or }\mathbf{footballer} \subseteq \mathbf{dancing}\)
+#+end_exe
+
+Logical Form 2 is therefore true if either all footballers are singing, or all footballers are dancing.
+
+Note there's an additional /implicature/, that /it's not the case that the footballers are each singing *and* dancing/. This can be accounted for as an additional, pragmatic inference, but we won't have time to discuss it in this class.
+
+Note that we predict that a collective predicate can be con/disjoined with a distributive predicate, just in case *Dist* type-lifts the distributive predicate first. This seems like a good result.
+
+#+name: 
+#+begin_exe
+\ex The footballers are singing or talking to each other.
+#+end_exe
+
+** Distributivity, negation, and homogeneity
+
+We've treated *Dist* as a kind of universal quantifier with its arguments flipped, i.e., it combines with the verbal predicate first.
+
+It seems that we predict the following equivalence:
+
+#+name: equiv
+#+begin_exe
+\ex The footballers are *Dist* dancing.
+\ex Every/each footballer is dancing.
+#+end_exe
+
+The following logical principle - call it "replacement under negation"- seems like it should hold. Replacement is a straightforward consequence of extensional semantics + the boolean treatment of negation.
+
+#+begin_quote
+*Replacement under negation:* Given two semantically equivalent expressions of type \(T\), \(\phi\) and \(\psi\), \(\mathbf{not}(\phi)\) and \(\mathbf{not}(\psi)\) should be semantically equivalent.
+#+end_quote
+
+An example:
+
+#+name: 
+#+begin_exe
+\ex Sam is a bachelor.
+\ex Sam is an unmarried man.
+\ex It's not the case that Sam is a bachelor.
+\ex It's not the case that Sam is an unmarried man.
+#+end_exe
+
+Now, let's try this out with /every/ and *Dist*.
+
+#+name: homog
+#+begin_exe
+\ex It's not the case that the footballers are dancing.
+\ex It's not the case that every footballer is dancing.
+#+end_exe
+
+In order to assess whether these two sentences are semantically equivalent, consider the following scenarios:
+
+- The footballers are all standing completely still (homogeneous).
+- Some footballers are standing completely still, but some are dancing (mixed).
+  
+You'll hopefully notice that both sentences feel true in the homogeneous scenario, where none of the footballers are dancing, but only the negated /every/ sentence feels true in the mixed scenario.
+
+Moreover, does the first sentence feel true or false in the mixed scenario? 
+
+So far, we've been assuming /the principle of the excluded middle/ a logical principle which asserts that every sentence must be either true or false relative to some state of affairs. A common intuition however is that "it's not the case that the footballers are dancing" is /neither true nor false/ if some but not all of the footballers are dancing.
+
+This phenomenon - whereby the negation of sentences with plurals have unexpectedly strong semantics - is known as /homogeneity/. We won't attempt to give an analysis as this requires a significant revision of our underlying assumptions, in order to circumvent the principle of the excluded middle.
+
+A popular analysis (see, e.g., [cite:@SchwarzschildEtAl1996]) treats homogeneity as a /presupposition/, which is a precondition that a sentence must meet in order to be judged true or false. The idea is that sentences with plurals presuppose that either all or none of the individuals in the plurality possess the salient property.
+
+* Back to collective predicates
+
+We have some interesting correspondences in our theory of collective predicates and plurality:
+
+- Pluralities: \(E \to T\)
+- Distributive predicates: \(E \to T\)
+- Collective predicates: \(ET \to T\)
+- Quantificational NPs: \(ET \to T\)
+  
+We account for:
+
+- Pluralities composing with collective predicates.
+- Pluralities composing with distributive predicates (via *Dist*). 
+- Quantificational NPs composing with distributive predicates.
+- /Quantificational NPs composing with collective predicates?/
+  
+#+name: coll
+#+begin_exe
+\ex All the girls gathered in the hall.
+\ex Exactly five students met.
+\ex No teachers are similar.
+#+end_exe
+
+We've been assuming that expressions like /exactly fives students/ and /all the girls/ are /sets of sets/ - in fact, they have the /same type/ as collective predicates. There is no obvious way for them to compose.
+
+There is however a surprising disanalogy between plural definite NPs and quantificational NPs, in terms of the collective predicates they may combine with.
+
+#+name: dis
+#+begin_exe
+\ex The girls are a good team/numerous.
+\ex *All the girls are a good/numerous.
+\ex *Exactly five students are a good team/numerous.
+\ex *No students are a good team/numerous.
+#+end_exe
+
+It seems like the distinction between "distributive" and "collective" predicates is not fine-grained enough:
+
+- /gather/ and /meet/ are typically classified as collective, but so are /be a good team/, and /be numerous/.
+- Why are only the former compatible with expressions like /all the girls/ and /exactly 5 students/?
+  
+An important factor is that quantificational NPs with singular restrictors remain incompatible:
+
+#+name: 
+#+begin_exe
+\ex *Every girl gathered in the hall.
+#+end_exe
+
+** Atom vs. set predicates
+
+A test to distinguish kinds of collective predicates - does changing /all/ to /every/ change the acceptability of the sentence?
+
+#+name: 
+#+begin_exe
+\ex All the students met/gathered in the hall.
+\ex *Every student met/gathered in the hall.
+\ex *All students are numerous/a good team.
+\ex *Every student is numerous/a good team.
+#+end_exe
+
+This isn't something specific about /all/; we see the same contrast between singular and plural variants of quantificational NPs headed by /no/:
+
+#+name: 
+#+begin_exe
+\ex No students met/gathered in the hall.
+\ex *No student met/gathered in the hall.
+\ex No students are numerous/a good team.
+\ex No student is numerous/a good team.
+#+end_exe
+
+We'll call collective predicates which are acceptable with plural quantificational NPs *set predicates*, and those that are not *atom predicates*.
+
+A list of atom predicates:
+
+- /form a pyramid, elect the representative, constitute a majority/
+  
+Distributive predicates are atom predicates, since the /every/ and /all/ variants are equivalent (but they are both true, rather than both false).
+
+#+name: 
+#+begin_exe
+\ex Every student smiled \(\iff  \) all the students smiled.
+#+end_exe
+
+A list of set predicates:
+
+- /meet, gather, disperse, be similar, admire each other/.
+  
+* A new type shifting operator for plural quantifiers: dfit
+
+If we maintain the assumption that determiners are relations between sets of individuals, we can only account for cases where the determiner relates a singular NP to a distributive predicate.
+
+We need a way of lifting determiners into relations between sets of pluralities and predicates of pluralities. In other words, we want to go from the singular determiner type:
+
+- \(ET \to ET \to T\)
+  
+To a plural determiner type:
+
+- \(ET,T \to ET,T \to T\)
+  
+The operator responsible for this is called *dfit*.
+
+It will take a little while to go through the details:
+
+#+name: dfit
+#+begin_exe
+\ex \(\mathbf{dfit}(D_{ET \to ETT}) = \lambda A_{ETT}\,.\,\lambda B_{ETT}\,.\,D(\bigcup A)(\bigcup(A \wedge B))\)
+#+end_exe
+
+Let's consider a concrete case so we can undertstand the definition procedurally. Consider the determiner /exactly 5/.
+
+#+name: 
+#+begin_exe
+\ex \(\mathbf{exactly5}(R)(S) = \mathbf{true} \iff \mathbf{card}(A \cap B) = 5\)
+#+end_exe
+
+/Exactly 5/ is true of a restrictor and a scope just in case their intersection has a cardinality of 5.
+
+How do we extend this in order to account for a sentence like "Exactly five students met"?
+
+The basic definition of "students" is the set of groups of students.
+
+#+name: 
+#+begin_exe
+\ex \(\mathbf{students} = \set{X | X \neq \emptyset \wedge X \subseteq \mathbf{student}}\)
+\ex \(\bigcup\mathbf{students} = \mathbf{student}\)
+#+end_exe
+
+Now we take the intersection of the plural restrictor and scope - this is the set of all non-empty sets of students that met.
+
+#+name: flat
+#+begin_exe
+\ex \(\mathbf{students} \cap \set{met} = \set{X | X \neq \emptyset \wedge X \subseteq \mathbf{student} \wedge \mathbf{meet}(x) }\)
+#+end_exe
+
+Now, we flatten out this set of sets by taking the grand union. The result is the set of students who participated in a set of students that /met/.
+
+#+name: 
+#+begin_exe
+\ex \(\set{x | \exists X \subseteq \mathbf{student}[x \in X \wedge \mathbf{meet}(X)]}\)
+#+end_exe
+
+Now, the result when combined with /exactly 5/:
+
+#+name: exactly5
+#+begin_exe
+\ex Exactly 5 students met.
+\ex \(\mathbf{card}(\mathbf{student} \cap \set{x | \exists X \subseteq \mathbf{student}[x \in X \wedge \mathbf{meet}(X)]}) = 5\)
+#+end_exe
+
+The sentence is true if the cardinality of the students that participated in a meeting is 5.
+
+** TODO Impure atoms
+
+
+
+
+
+ 
+#+print_bibliography:
+
